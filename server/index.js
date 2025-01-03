@@ -140,12 +140,23 @@ app.get('/findAllDebtsByQuery/search',async(req,res) => {
     console.log(page,limit);
     const pageNumber = Number(page);
     const perPageLimit = Number(limit)
-    const filter = {};
+    const filter = { status: "create" };
 
     if (searchText) {
-        filter.debtsName = { $regex: searchText, $options: "i" };
+        filter.name = { $regex: searchText, $options: "i" };
     }
     // todo:status will make
+    if (status) {
+  if (status === 'unpaid') {
+    filter.$or = [
+      { balance: 0 },   
+      { balance: { $exists: false } },
+    ];
+  } else if (status === 'clear') {
+    filter.balance = { $gt: 0 };
+  }
+}
+
     let sortCriteria = {};
     switch (sorting) {
         case 'lowToHigh':

@@ -1,17 +1,42 @@
 
+import { useState } from "react";
 import Card from "./ShowAllDebtsCard/Card";
-import { Link } from 'react-router-dom'
+import { FaAngleDoubleRight } from "react-icons/fa";
+import { FaAngleDoubleLeft } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import { findAllDebtsByQuery } from "../../../../Api/debtsRelatedApi/debtsApi";
+import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
 const ShowAllDebts = () => {
+    const [currentPage,setCurrentPage] = useState(1);
+    const [totalPage,setTotalPage] = useState(3);
+    const [status, setStatus] = useState('');
+    const [searchText, setSearchText] = useState('');
+    const [sorting, setSorting] = useState('');
+    console.log(status);
+    const { data: filterData = [],isLoading,refetch } = useQuery({
+        queryKey: ['filterData',searchText,sorting,status,currentPage],
+        queryFn: async () => await findAllDebtsByQuery(searchText,sorting,status,currentPage),
+      });
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
-        const searchText = form.searchtext.value;
-        const status = form.status.value;
-        const sorting = form.sorting.value;
-        const searchingData = {searchText,status,sorting}
-        console.log(searchingData);
+        setSearchText(form.searchtext.value)
+        setStatus(form.status.value)
+        setSorting(form.sorting.value)
+        refetch();
     }
+
+    //   pagination handler
+    const handlePageChange = (newPage) => {
+        if(newPage > 0 && newPage <= totalPage)
+            setCurrentPage(newPage);
+        window.scrollTo({top:0,behavior:'smooth'});
+        
+      }
+      if(isLoading) return <Loader />
+      console.log(filterData);
   return (
     <div>
         <div className="w-[98%] md:w-[75%] mx-auto border border-primary p-2 my-6">
@@ -51,13 +76,21 @@ const ShowAllDebts = () => {
         <div className="">
             <div className="grid grid-cols-1 gap-5 place-items-center">
                 {
-                    [1,2,3].map((item,idx)=><div className="" key={idx}>
-                        <Link to={`/debtsDetailsPage/${item}`}><Card /></Link>
+                    filterData.map((item)=><div className="" key={item._id}>
+                        <Card signleDebts={item}/>
                     </div>)
                 }
 
             </div>
 
+                 {/* pagination */}
+                 <div className='flex items-center justify-center mt-12'>
+                <div className="join">
+                <button onClick={()=>handlePageChange(currentPage - 1)} className="join-item btn bg-primary text-neutral"><FaAngleDoubleLeft /></button>
+                <button className="join-item btn">{currentPage} of {totalPage}</button>
+                <button onClick={()=>handlePageChange(currentPage + 1)} className="join-item btn bg-primary text-neutral"><FaAngleDoubleRight /></button>
+                </div>
+                </div>
         </div>
      
     </div>

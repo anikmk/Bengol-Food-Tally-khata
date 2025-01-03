@@ -8,7 +8,7 @@ export const createAllDebts = async (debtsData) => {
 
 // find debts by name searching,sorting by price,status filtering
 export const findAllDebtsByQuery = async(searchText,sorting,status) => {
-    const {data} = await axiosPublic.get(`/findAllDebtsByQuery/search/?searchText=${searchText}/sorting=${sorting}/status=${status}`);
+    const {data} = await axiosPublic.get(`/findAllDebtsByQuery/search/?searchText=${searchText}&sorting=${sorting}&status=${status}&limit=${8}`);
     return data;
 }
 

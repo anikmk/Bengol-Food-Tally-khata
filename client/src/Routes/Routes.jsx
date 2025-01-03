@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
                 element:<ShowAlldebts />
             },
             {
-                path:'/debtsDetailsPage/:id',
+                path:'/debtsDetailsPage',
                 element:<DebtsDetailsPage />
             },
             {

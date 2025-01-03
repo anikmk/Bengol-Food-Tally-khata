@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 
 const DebtsDetailsPage = () => {
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id')
+    console.log(id);
     const [checkBalance,setCheckBalance] = useState(false);
 
     const handleCheckBalance = () => {

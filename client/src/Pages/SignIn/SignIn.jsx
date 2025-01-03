@@ -7,9 +7,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 const SignIn = () => {
-    // const {createUser,signInGoogle} = useAuth();
+  const navigate = useNavigate();
+    const {signIn,signInGoogle} = useAuth();
     const [theLock,setTheLock] = useState();
     const [showPassword,setShowPassword] = useState(false);
     const [termsAndCondition,setTermsAndCondition] = useState(false);
@@ -27,29 +29,31 @@ const SignIn = () => {
         if(!termsAndCondition) {
           return toast.error('Please check terms & condition')
         }
-        // new user create
-        // try{
-        //   const result = await createUser(email,password)
-        //   if(result?.user){
-        //     toast.success('Sign up successfully!')
-        //   }  
-        // }
-        // catch(err){
-        //   toast.error(err.message)
-        // }
+        // sign in user
+        try{
+          const result = await signIn(email,password)
+          if(result?.user){
+            toast.success('Sign up successfully!')
+            navigate('/')
+          }  
+        }
+        catch(err){
+          toast.error(err.message)
+        }
     }
-    // sign un with google
-    // const handleSignInWithGoogle = async() => {
-    //  try{
-    //   const result = signInGoogle();
-    //   if(result?.user){
-    //   toast.success('Sign up successfully!')
-    //   }
-    //  } 
-    //  catch(err){
-    //   toast.error(err.message)
-    // }
-    // }
+    // sign in with google
+    const handleSignInWithGoogle = async() => {
+     try{
+      const result = signInGoogle();
+      if(result?.user){
+      toast.success('Sign up successfully!')
+      navigate('/')
+      }
+     } 
+     catch(err){
+      toast.error(err.message)
+    }
+    }
     const handleTypePassword = (e) => {
         setTheLock(e.target.value.length)
     }
@@ -74,7 +78,7 @@ const SignIn = () => {
             <div>
             <h1 className="mb-10 text-2xl md:text-4xl font-acme text-primary">আগের ইমেইল পাসওয়ার্ড দিন!</h1>
             <div className="flex items-center justify-center gap-8 mb-8">
-              <div onClick={''} className="text-3xl bg-white p-[6px] rounded-full cursor-pointer"><FcGoogle /></div>
+              <div onClick={handleSignInWithGoogle} className="text-3xl bg-white p-[6px] rounded-full cursor-pointer"><FcGoogle /></div>
               <div className="text-3xl bg-white p-[6px] rounded-full cursor-pointer"><FaFacebook /></div>
             </div>
             </div>

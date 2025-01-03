@@ -1,9 +1,15 @@
-
+import { createAllDebts } from "../../../../Api/debtsRelatedApi/debtsApi";
+import {toast} from "react-hot-toast"
 
 
 const AddDebts = () => {
+  const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}/${month}/${year}`;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -11,8 +17,18 @@ const AddDebts = () => {
     const phone = form.phone.value;
     const ballance = form.ballance.value;
     // todo: add current date,
-    const debtsData = {name,address,phone,ballance}
+    const debtsData = {name,address,phone,ballance,date:formattedDate,status:'create'}
     console.log(debtsData);
+    try{
+      const result = await createAllDebts(debtsData);
+      if(result){
+        console.log(result);
+        toast.success('ধন্যবাদ,পাওনাদারকে যুক্ত করা হয়েছে')
+      }
+    }
+    catch(err){
+      toast.error('দুঃখিত পাওনাদারকে যুক্ত করা যায় নি। দয়া করে আবার চেষ্টা করুন')
+    }
   }
     return (
       <div className="bg-white p-8 rounded shadow-xl relative md:w-3/5 mx-auto my-12">

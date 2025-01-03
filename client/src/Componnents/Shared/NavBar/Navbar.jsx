@@ -3,8 +3,10 @@ import Container from '../Container/Container';
 import { CgMenuGridR } from "react-icons/cg";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from 'react';
+import useAuth from '../../../hooks/useAuth';
 const Navbar = () => {
-  const user = 'admin'
+  const {user} = useAuth();
+  const user2 = 'admin'
   const [isMenuClick,setIsMenuClick] = useState();
   const handleMenu = () => {
     setIsMenuClick(!isMenuClick)
@@ -27,6 +29,7 @@ const Navbar = () => {
     },
   ]
   return (
+
     <>
       <div className='bg-primary font-medium'>
       <Container>
@@ -42,7 +45,7 @@ const Navbar = () => {
             >
               <li className='text-base'><Link to={'/'}>হোম</Link></li>
              {
-             user === 'admin' && navLink.map((item) => 
+             user2 === 'admin' && navLink.map((item) => 
              <li className='text-base' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
              )
              }
@@ -50,21 +53,23 @@ const Navbar = () => {
           </div>
           <div className='relative'>
             <a className='  absolute -top-4 left-0 text-neutral text-sm'>রাজনগর</a>
-          <a className="md:text-xl text-lg text-neutral font-semibold">বেঙ্গল ফুড</a>
+          <a className="md:text-xl text-lg bg-gradient-to-r from-sky-600 to-white inline-block text-transparent bg-clip-text font-semibold">বেঙ্গল ফুড</a>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-neutral">
           <li className='text-base'><Link to={'/'}>হোম</Link></li>
           {
-         user === 'admin' && navLink.map((item) => 
+         user2 === 'admin' && navLink.map((item) => 
              <li className='text-base' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
              )
           }
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link>
+          {
+            user ? <><Link to={'/signIn'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">সাইন ইন করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
+          }
         </div>
       </div>
       </Container>
