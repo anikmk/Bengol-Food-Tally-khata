@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { createAllDebts } from "../../../../Api/debtsRelatedApi/debtsApi";
 import {toast} from "react-hot-toast"
+import Load from "../../../../Componnents/Shared/Loader/load/Load";
 
 
 const AddDebts = () => {
+  const [loading,setLoading] = useState(false);
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, '0');
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
@@ -16,9 +19,9 @@ const AddDebts = () => {
     const address = form.address.value;
     const phone = form.phone.value;
     const balance = form.ballance.value;
-    // todo: add current date,
     const debtsData = {name,address,phone,balance,date:formattedDate,status:'create'}
-    console.log(debtsData);
+    
+    setLoading(true)
     try{
       const result = await createAllDebts(debtsData);
       if(result){
@@ -28,6 +31,9 @@ const AddDebts = () => {
     }
     catch(err){
       toast.error('দুঃখিত পাওনাদারকে যুক্ত করা যায় নি। দয়া করে আবার চেষ্টা করুন')
+    }
+    finally{
+      setLoading(false)
     }
   }
     return (
@@ -72,7 +78,7 @@ const AddDebts = () => {
             <textarea name="Description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px]" type="text" placeholder='পাওনাদেরের সম্পর্কে অতিরিক্ত কিছু কথা লিখুন---'/>
             </div>
             <div className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
-            <button>পাওনাদারকে জমা করুন</button>
+            <button>{loading ? <Load />:"পাওনাদারকে জমা করুন"}</button>
             </div>
           </div>
         </div>         

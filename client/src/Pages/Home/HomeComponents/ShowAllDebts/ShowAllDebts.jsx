@@ -26,6 +26,7 @@ const ShowAllDebts = () => {
         setStatus(form.status.value)
         setSorting(form.sorting.value)
         refetch();
+        form.reset();
     }
 
     //   pagination handler
@@ -35,7 +36,7 @@ const ShowAllDebts = () => {
         window.scrollTo({top:0,behavior:'smooth'});
         
       }
-      if(isLoading) return <Loader />
+     
   return (
     <div>
         <div className="w-[98%] md:w-[75%] mx-auto border border-primary p-2 my-6">
@@ -73,14 +74,16 @@ const ShowAllDebts = () => {
             </form>
         </div>
         <div className="">
-            <div className="grid grid-cols-1 gap-6 place-items-center">
+            {
+                isLoading ? <Loader /> : <div className="grid grid-cols-1 gap-6 place-items-center">
                 {
                     filterData.map((item)=><div className="" key={item._id}>
-                        <Card signleDebts={item}/>
+                        <Card signleDebts={item} loading={isLoading}/>
                     </div>)
                 }
 
             </div>
+            }
 
                  {/* pagination */}
                  <div className='flex items-center justify-center mt-12'>

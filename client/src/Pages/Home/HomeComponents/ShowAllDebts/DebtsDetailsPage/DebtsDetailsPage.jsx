@@ -5,8 +5,11 @@ import { findSingleDebtsById, showMoreTransjectionDetails, updateSingleDebtsBela
 import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 import TransactionHistory from "./TransactionHistory/TransactionHistory";
 import Share from "../ShareTransaction/Share";
+import {toast} from "react-hot-toast"
+import Load from "../../../../../Componnents/Shared/Loader/load/Load";
 
 const DebtsDetailsPage = () => {
+    const [loader,setLoader] = useState(false)
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
@@ -27,16 +30,12 @@ const DebtsDetailsPage = () => {
         queryFn: async () => await showMoreTransjectionDetails(id),
        
     });
-    console.log(historyData);
 
     const totalMoreMoney = historyData?.reduce((acc, transaction) => acc + transaction.moreMoney, 0);
     const totalBackMoney = historyData?.reduce((acc, transaction) => acc + transaction.backMoney, 0);
    const totalMoney = totalMoreMoney + totalBackMoney;
 
-
-
     const [checkBalance,setCheckBalance] = useState(false);
-
     const handleCheckBalance = async() => {
         historyRefatch()
         singleDebtsRefatch()
@@ -57,32 +56,40 @@ const DebtsDetailsPage = () => {
             updateBalanceId: id,
             formattedDate,
         };
-    
+        setLoader(true);
         try {
-            const { updatedDebt, transactionHistory:updateTransactionHistory } = await updateSingleDebtsBelance(calculateData);
-            // todo:pawnadar ke pawa gele tost dekabo imean error handle
-            console.log(updatedDebt);
-            singleDebtsRefatch();
-            historyRefatch()
-            form.reset();
+            const { updatedDebt, result } = await updateSingleDebtsBelance(calculateData);
+            console.log(updatedDebt?.modifiedCount);
+            console.log(result?.insertedId);
+            if(updatedDebt?.modifiedCount && result?.insertedId) {
+                singleDebtsRefatch();
+                historyRefatch()
+                form.reset();
+                setLoader(false)
+                toast('"ধন্যবাদ" পাওনাদারের টাকা আপডেড করা হয়েছে।',{duration:5000})
+            }
         } catch (err) {
-            console.error(err);
+            toast.error("দুঃখিত কোথায় ভূল হয়েছে কিচ্ছুক্ষণ পর আবার চেষ্টা করুন")
         }
+        finally {
+            setLoader(false); // Reset loader state when the operation is done
+          }
     };
 
     
-    if(isLoading || historyLoading) return <Loader />
-    console.log(historyData);
+    
     return <>
     <div className="w-[96%] mx-auto p-6 my-12 shadow-lg bg-neutral">
         {
-            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className="animate-pulse">{singleDebts?.balance} টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
+            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance} টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
         }
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4">
             <div>
-                <h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
-                <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p>
-                <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full">
+                {
+                    isLoading ? <Loader />:<><h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
+                <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p></>
+                }
+                <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
                 <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
                 </div>
             <div className="divider md:hidden"></div>
@@ -98,7 +105,9 @@ const DebtsDetailsPage = () => {
                     <input name="backmoney" className="mt-2 border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium" type="number" placeholder="ফেরত দেওয়া টাকার পরিমান লিখুন---"/>
                 </div>
                 <div className="mt-5">
-                    <button className=" w-full font-medium bg-primary p-[6px] rounded-lg text-neutral text-sm">ক্যালকুলেট করুন</button>
+                    <button disabled={loader} className=" w-full font-medium bg-primary p-[6px] rounded-lg text-neutral text-sm shadow-lg hover:bg-[#ff1c68] transition-all">
+                        {loader ? <Load />:"ক্যালকুলেট করুন"}
+                    </button>
                 </div>
                 </form>
             </div>
@@ -109,8 +118,8 @@ const DebtsDetailsPage = () => {
     {/* more details for paonadar */}
     <div className="w-[98%] mx-auto border p-2 my-12">
         <div className="text-center">
-            <h5 className="text-lg text-primary mb-4">পাওনাদার সম্পর্কে আরো জানুন</h5>
-            <p className="text-xs"><span className="font-semibold text-red-600">মনে রাখুনঃ  </span>পাওনাদার কখন কত টাকা ট্রানজেকশন করেছে তার সম্পুর্ণ তথ্য এখান থেকে দেখুন ।</p>
+            <h5 className="text-lg text-primary mb-4">পাওনাদার সম্পর্কে বিস্তারিত জানুন</h5>
+            <p className="text-xs"><span className="font-semibold text-red-600">জেনে রাখুনঃ  </span>পাওনাদার কখন কত টাকা ট্রানজেকশন করেছে তার সম্পুর্ণ তথ্য এখান থেকে দেখুন ।</p>
         </div>
     <div className="overflow-x-auto ">
     <table className="min-w-[90%] shadow-md  border mx-auto border-gray-100  my-6">
@@ -126,7 +135,8 @@ const DebtsDetailsPage = () => {
         </thead>
         <tbody>
             
-            {historyData.length > 0 ? (
+          {
+            historyLoading ? <Loader />:<>  {historyData.length > 0 ? (
                 historyData.map((transaction, index) => (
                   <TransactionHistory key={transaction?._id} history={transaction} index={index} loading={historyLoading}/>
                 ))
@@ -136,7 +146,8 @@ const DebtsDetailsPage = () => {
                     কোনো ট্রানজেকশন পাওয়া যায়নি।
                   </td>
                 </tr>
-              )}
+              )}</>
+          }
         <tr>
             <td colSpan="5" className="text-center py-2">
                 <div className="flex items-center justify-center text-xs md:text-base">

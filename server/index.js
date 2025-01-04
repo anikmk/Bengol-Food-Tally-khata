@@ -159,10 +159,10 @@ app.get('/findAllDebtsByQuery/search',async(req,res) => {
     let sortCriteria = {};
     switch (sorting) {
         case 'lowToHigh':
-            sortCriteria = { balance: -1 };
+            sortCriteria = { balance: 1 };
             break;
         case 'highToLow':
-            sortCriteria = { balance: 1 };
+            sortCriteria = { balance: -1 };
             break;
         default:
             sortCriteria = {};
@@ -207,7 +207,7 @@ app.put('/updateSingleDebtsBelance/:id', async (req, res) => {
 
     // ডকুমেন্ট আপডেট
     const updateDoc = { $set: { balance: updatedBalance } };
-    await debtsCollection.updateOne(filter, updateDoc);
+   const updatedDebt =  await debtsCollection.updateOne(filter, updateDoc);
 
     // হিস্টোরি ডাটা যোগ করা
     const newTransactionData = {
@@ -217,19 +217,8 @@ app.put('/updateSingleDebtsBelance/:id', async (req, res) => {
       formattedDate,
       updateBalanceId: id,
     };
-    await debtsCollection.insertOne(newTransactionData);
-
-    // সমস্ত হিস্টোরি ডাটা পাওয়া যা আইডির সাথে মিলেছে
-    const transactionHistory = await debtsCollection
-      .find({ updateBalanceId: id })
-      .toArray();
-
-    // নতুন ডাটা পাঠানো
-    const updatedDebt = await debtsCollection.findOne(filter); // আপডেট করা ডকুমেন্ট
-    res.send({
-      updatedDebt,        // আপডেট হওয়া ডাটা
-      transactionHistory, // ট্রানজ্যাকশন হিস্টোরি অ্যারে
-    });
+    const result = await debtsCollection.insertOne(newTransactionData);
+    res.send({updatedDebt,result,});
   } catch (err) {
     res.status(500).send({ message: "Internal server error", error: err.message });
   }

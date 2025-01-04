@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 
-const Card = ({signleDebts}) => {
+const Card = ({signleDebts,loading}) => {
     const {name,address,phone,balance,_id} = signleDebts;
-    console.log(signleDebts);
-
+    if(loading) return <Loader />
     return <Link to={`/debtsDetailsPage?id=${_id}`}>
     <div className="w-[300px] md:w-[600px] shadow-lg relative">
 

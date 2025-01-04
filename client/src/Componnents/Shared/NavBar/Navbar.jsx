@@ -53,7 +53,7 @@ const Navbar = () => {
           </div>
           <div className='relative'>
             <a className='  absolute -top-4 left-0 text-neutral text-sm'>রাজনগর</a>
-          <a className="md:text-xl text-lg bg-gradient-to-r from-sky-600 to-white inline-block text-transparent bg-clip-text font-semibold">বেঙ্গল ফুড</a>
+          <a className="md:text-xl text-lg bg-gradient-to-r from-sky-600 to-white inline-block text-transparent bg-clip-text font-semibold font-bangla">বেঙ্গল ফুড</a>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">

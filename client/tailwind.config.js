@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ['Poppins, sans-serif'], // Adds a new `font-display` class
+        poppins: ['Poppins, sans-serif'],
+        
       },
       colors: {
         neutral: "#EEEEEE",
