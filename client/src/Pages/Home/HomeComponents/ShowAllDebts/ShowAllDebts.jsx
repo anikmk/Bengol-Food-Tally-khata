@@ -36,7 +36,6 @@ const ShowAllDebts = () => {
         
       }
       if(isLoading) return <Loader />
-      console.log(filterData);
   return (
     <div>
         <div className="w-[98%] md:w-[75%] mx-auto border border-primary p-2 my-6">
@@ -74,7 +73,7 @@ const ShowAllDebts = () => {
             </form>
         </div>
         <div className="">
-            <div className="grid grid-cols-1 gap-5 place-items-center">
+            <div className="grid grid-cols-1 gap-6 place-items-center">
                 {
                     filterData.map((item)=><div className="" key={item._id}>
                         <Card signleDebts={item}/>

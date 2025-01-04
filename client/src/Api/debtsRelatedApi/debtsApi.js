@@ -19,13 +19,20 @@ export const findSingleDebtsById = async (id) => {
 }
 
 // admin update single debts balance handler
-export const updateSingleDebtsBelance = async (id,moreMoney,backMoney) => {
-    const {data} = await axiosPublic.get(`updateSingleDebtsBelance/?id=${id}/moreMoney=${moreMoney}/backMoney=${backMoney}`);
+export const updateSingleDebtsBelance = async ({ id, moreMoney, backMoney, name, updateBalanceId, formattedDate }) => {
+    const { data } = await axiosPublic.put(`/updateSingleDebtsBelance/${id}`, {
+        moreMoney,
+        backMoney,
+        updateBalanceId,
+        name,
+        formattedDate,
+    });
     return data;
-}
+};
+
 
 // show more debts transjection belance details:
 export const showMoreTransjectionDetails = async (id) => {
-    const {data} = axiosPublic.get(`/moreTransjection/${id}`);
+    const {data} = await axiosPublic.get(`/moreTransjection/${id}`);
     return data;
 }

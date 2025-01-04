@@ -1,36 +1,90 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
+import { findSingleDebtsById, showMoreTransjectionDetails, updateSingleDebtsBelance } from "../../../../../Api/debtsRelatedApi/debtsApi";
+import Loader from "../../../../../Componnents/Shared/Loader/Loader";
+import TransactionHistory from "./TransactionHistory/TransactionHistory";
+import Share from "../ShareTransaction/Share";
 
 const DebtsDetailsPage = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
-    const id = params.get('id')
-    console.log(id);
+    const id = params.get('id');
+
+    const currentDate = new Date();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const year = currentDate.getFullYear();
+  const formattedDate = `${day}/${month}/${year}`;
+
+    const {data:singleDebts,isLoading,refetch:singleDebtsRefatch} = useQuery({
+        queryKey:[id,'singleDebts'],
+        queryFn: async () => await findSingleDebtsById(id),
+
+    });
+    const { data: historyData, isLoading: historyLoading,refetch:historyRefatch } = useQuery({
+        queryKey: ['historyData', id],
+        queryFn: async () => await showMoreTransjectionDetails(id),
+       
+    });
+    console.log(historyData);
+
+    const totalMoreMoney = historyData?.reduce((acc, transaction) => acc + transaction.moreMoney, 0);
+    const totalBackMoney = historyData?.reduce((acc, transaction) => acc + transaction.backMoney, 0);
+   const totalMoney = totalMoreMoney + totalBackMoney;
+
+
+
     const [checkBalance,setCheckBalance] = useState(false);
 
-    const handleCheckBalance = () => {
+    const handleCheckBalance = async() => {
+        historyRefatch()
+        singleDebtsRefatch()
         setCheckBalance(!checkBalance)
     }
 
-    const handleMoreDebts = (e) => {
+    const handleMoreDebts = async (e) => {
         e.preventDefault();
         const form = e.target;
         const moreMoney = form.moremoney.value;
         const backMoney = form.backmoney.value;
-        const calculateData = {moreMoney,backMoney}
-        console.log(calculateData);
-        
-    }
+    
+        const calculateData = {
+            id,
+            name: singleDebts?.name,
+            moreMoney,
+            backMoney,
+            updateBalanceId: id,
+            formattedDate,
+        };
+    
+        try {
+            const { updatedDebt, transactionHistory:updateTransactionHistory } = await updateSingleDebtsBelance(calculateData);
+            // todo:pawnadar ke pawa gele tost dekabo imean error handle
+            console.log(updatedDebt);
+            singleDebtsRefatch();
+            historyRefatch()
+            form.reset();
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    
+    if(isLoading || historyLoading) return <Loader />
+    console.log(historyData);
     return <>
-    <div className="w-[98%] mx-auto border p-2 my-12">
+    <div className="w-[96%] mx-auto p-6 my-12 shadow-lg bg-neutral">
         {
-            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium">200tk</div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium">ব্যালেন্স চেক করুন</div>
+            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className="animate-pulse">{singleDebts?.balance} টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
         }
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4">
             <div>
-                <h2>পাওনাদারের নামঃ সায়মন</h2>
-                <p>টুটাল পাওনা টাকাঃ ২০০ টাকা</p>
+                <h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
+                <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p>
+                <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full">
+                <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
+                </div>
             <div className="divider md:hidden"></div>
             </div>
             <div>
@@ -66,29 +120,36 @@ const DebtsDetailsPage = () => {
                 <th className="py-3 px-6 text-left border-b">নাম</th>
                 <th className="py-3 px-6 text-left border-b">তারিখ</th>
                 <th className="py-3 px-6 text-left border-b">টাকা</th>
+                <th className="py-3 px-6 text-left border-b">একশন</th>
                 
             </tr>
         </thead>
         <tbody>
-            <tr className="hover:bg-gray-50 transition duration-300">
-                <td className="py-4 px-6 border-b">১</td>
-                <td className="py-4 px-6 border-b">সায়মন আহমেদ</td>
-                <td className="py-4 px-6 border-b">০২/০১/২০২৫</td>
-                <td className="py-4 px-6 border-b">২০০ টাকা</td>
-            </tr>
-            <tr className="hover:bg-gray-50 transition duration-300">
-                <td className="py-4 px-6 border-b">hk</td>
-                <td className="py-4 px-6 border-b">ty</td>
-                <td className="py-4 px-6 border-b">rty</td>
-                <td className="py-4 px-6 border-b">tyr</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>total=200</td>
+            
+            {historyData.length > 0 ? (
+                historyData.map((transaction, index) => (
+                  <TransactionHistory key={transaction?._id} history={transaction} index={index} loading={historyLoading}/>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center py-4">
+                    কোনো ট্রানজেকশন পাওয়া যায়নি।
+                  </td>
                 </tr>
+              )}
+        <tr>
+            <td colSpan="5" className="text-center py-2">
+                <div className="flex items-center justify-center text-xs md:text-base">
+                <span className="bg-green-300 px-[3px] py-2">মোট ফেরত দেওয়া টাকার পরিমানঃ{totalBackMoney}</span>
 
+                <span className="bg-primary px-[3px] py-2">ঋণ নেওয়া টাকার পরিমানঃ {totalMoreMoney}</span>
+
+                <span className="bg-blue-400 px-[3px] py-2">সর্বমোট ট্রানজেকশন টাকার পরিমানঃ {totalMoney}</span>
+                <span className="bg-yellow-400 px-[3px] py-2">আপনার বাকি রয়েছেঃ{singleDebts?.balance}</span>
+                </div>
+            </td> 
+        </tr>
+              <Share />
         </tbody>
     </table>
     </div>

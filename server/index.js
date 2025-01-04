@@ -137,7 +137,6 @@ app.post('/createAllDebts',async(req,res) => {
 app.get('/findAllDebtsByQuery/search',async(req,res) => {
   try {
     const { searchText,sorting,status,page = 1,limit = 1 } = req.query;
-    console.log(page,limit);
     const pageNumber = Number(page);
     const perPageLimit = Number(limit)
     const filter = { status: "create" };
@@ -160,10 +159,10 @@ app.get('/findAllDebtsByQuery/search',async(req,res) => {
     let sortCriteria = {};
     switch (sorting) {
         case 'lowToHigh':
-            sortCriteria = { balance: 1 };
+            sortCriteria = { balance: -1 };
             break;
         case 'highToLow':
-            sortCriteria = { balance: -1 };
+            sortCriteria = { balance: 1 };
             break;
         default:
             sortCriteria = {};
@@ -188,25 +187,68 @@ app.get('/findSingleDebtsById/:id',async(req,res) => {
 })
 
 // update debts balance : todo:
-app.put('/updateSingleDebtsBelance/:id', async(req,res) => {
-  try{
-    const {id,moreMoney,backMoeny} = req.query;
-    const filter = {_id: new ObjectId(id)};
-    const updateDoc = {$set: updateData};
-    const result = await debtsCollection.updateOne(filter,updateDoc);
-    res.send(result)
-    
+app.put('/updateSingleDebtsBelance/:id', async (req, res) => {
+  try {
+    const { id } = req.params; // ডকুমেন্ট আইডি
+    const { moreMoney, backMoney, name, formattedDate } = req.body;
+
+    const filter = { _id: new ObjectId(id) }; // নির্দিষ্ট ডকুমেন্ট ফিল্টার
+    const debtData = await debtsCollection.findOne(filter); // বর্তমান ডাটা খুঁজে আনা
+
+    if (!debtData) {
+      return res.status(404).send({ message: "Debt data not found" });
+    }
+
+    let currentBalance = parseFloat(debtData.balance || 0); // পুরোনো ব্যালেন্স নম্বর হিসাবে
+    const additionalMoney = parseFloat(moreMoney || 0); // নতুন টাকা
+    const deductedMoney = parseFloat(backMoney || 0); // ফেরত টাকা
+
+    const updatedBalance = currentBalance + additionalMoney - deductedMoney; // ব্যালেন্স আপডেট
+
+    // ডকুমেন্ট আপডেট
+    const updateDoc = { $set: { balance: updatedBalance } };
+    await debtsCollection.updateOne(filter, updateDoc);
+
+    // হিস্টোরি ডাটা যোগ করা
+    const newTransactionData = {
+      name,
+      moreMoney: additionalMoney,
+      backMoney: deductedMoney,
+      formattedDate,
+      updateBalanceId: id,
+    };
+    await debtsCollection.insertOne(newTransactionData);
+
+    // সমস্ত হিস্টোরি ডাটা পাওয়া যা আইডির সাথে মিলেছে
+    const transactionHistory = await debtsCollection
+      .find({ updateBalanceId: id })
+      .toArray();
+
+    // নতুন ডাটা পাঠানো
+    const updatedDebt = await debtsCollection.findOne(filter); // আপডেট করা ডকুমেন্ট
+    res.send({
+      updatedDebt,        // আপডেট হওয়া ডাটা
+      transactionHistory, // ট্রানজ্যাকশন হিস্টোরি অ্যারে
+    });
+  } catch (err) {
+    res.status(500).send({ message: "Internal server error", error: err.message });
   }
-  catch(err){res.send({message:"internal server error"})}
-})
+});
+
+
+
+
+
+
 
 // get more signle debts transjection details
 app.get('/moreTransjection/:id', async(req,res) => {
   try{
     const id = req.params.id;
-    const filter = {UpdateBelanceId: new ObjectId(id)};
-    const result = await debtsCollection.find(filter).toArray();
-    res.send(result)
+    console.log(id);
+    const transactionHistory = await debtsCollection.find({ updateBalanceId: id }).toArray();
+    console.log(transactionHistory);
+    res.send(transactionHistory)
   }
   catch(err){res.send({message:"internal server error"})};
 })

@@ -15,9 +15,9 @@ const AddDebts = () => {
     const name = form.name.value;
     const address = form.address.value;
     const phone = form.phone.value;
-    const ballance = form.ballance.value;
+    const balance = form.ballance.value;
     // todo: add current date,
-    const debtsData = {name,address,phone,ballance,date:formattedDate,status:'create'}
+    const debtsData = {name,address,phone,balance,date:formattedDate,status:'create'}
     console.log(debtsData);
     try{
       const result = await createAllDebts(debtsData);
