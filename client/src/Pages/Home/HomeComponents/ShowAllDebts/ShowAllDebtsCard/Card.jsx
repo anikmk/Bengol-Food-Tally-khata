@@ -25,12 +25,13 @@ const Card = ({signleDebts,loading}) => {
           {balance} টাকা
         </p>
         <button className="mt-2 text-red-600 hover:underline">
-          Remove
+          বিস্তারিত
         </button>
     </div>
 </div>
 </div>
-    
     </Link>
+    
+    
 }
 export default Card;

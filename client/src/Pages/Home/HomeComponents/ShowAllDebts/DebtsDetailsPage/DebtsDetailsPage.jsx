@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { findSingleDebtsById, showMoreTransjectionDetails, updateSingleDebtsBelance } from "../../../../../Api/debtsRelatedApi/debtsApi";
+import { deleteSingleDebtsWithMoneyTransactions, findSingleDebtsById, showMoreTransjectionDetails, updateSingleDebtsBelance } from "../../../../../Api/debtsRelatedApi/debtsApi";
 import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 import TransactionHistory from "./TransactionHistory/TransactionHistory";
 import Share from "../ShareTransaction/Share";
@@ -30,7 +30,6 @@ const DebtsDetailsPage = () => {
         queryFn: async () => await showMoreTransjectionDetails(id),
        
     });
-
     const totalMoreMoney = historyData?.reduce((acc, transaction) => acc + transaction.moreMoney, 0);
     const totalBackMoney = historyData?.reduce((acc, transaction) => acc + transaction.backMoney, 0);
    const totalMoney = totalMoreMoney + totalBackMoney;
@@ -72,28 +71,54 @@ const DebtsDetailsPage = () => {
             toast.error("দুঃখিত কোথায় ভূল হয়েছে কিচ্ছুক্ষণ পর আবার চেষ্টা করুন")
         }
         finally {
-            setLoader(false); // Reset loader state when the operation is done
+            setLoader(false); 
           }
     };
 
-    
+    // delete debts with all transaction handler:
+    const handleDeleteDebts = async (id) => {
+        try{
+            const result = await deleteSingleDebtsWithMoneyTransactions(id);
+        if(result.deletedCount > 0){
+            singleDebtsRefatch();
+            historyRefatch();
+            toast("সফল ভাবে পাওনাদারকে মুছে ফেলা হয়েছে।")
+        }
+        }
+        catch(err){
+            toast.error("ত্রুটির কারনে পাওনাদারকে মুছে ফেলা যায় নি । আবার চেষ্টা করুন")
+        }
+
+    }
     
     return <>
     <div className="w-[96%] mx-auto p-6 my-12 shadow-lg bg-neutral">
         {
-            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance} টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
+            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance}টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
         }
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4">
-            <div>
+            {
+                isLoading ? <Loader />: <>
                 {
-                    isLoading ? <Loader />:<><h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
-                <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p></>
+                    singleDebts ? <><div>
+                    <h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
+                    <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p>
+                   
+                    <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
+                    <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
+                    </div>
+                    <div onClick={()=>handleDeleteDebts(id)}  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all md:ml-5 capitalize cursor-pointer">
+                    {singleDebts?.name} কে মুছে ফেলুন
+                    </div>
+                <div className="divider md:hidden"></div>
+                </div></>:<><div className=" text-primary">
+            <h1 className="text-green-700 font-medium text-center text-lg">ধন্যবাদ ডিলেট সম্পুর্ণ হয়েছে</h1>
+            <div className="divider"></div>
+            <h2 className="text-base mb-2">আপনি পাওনাদারকে মুছে ফেলেছেন। <span className="text-green-700">মনে রাখবেন</span> পাওনাদারের সকল প্রকার মানি ট্রানজেকশন সহ সকল হিস্টোরি মুছে ফেলা হয়েছে । আপনি চাইলে নতুন করে পাওনাদারকে যুক্ত করতে পারবেন।</h2> <h3 className="text-base">অনুগ্রহ করে পাওনাদার যুক্ত করুন ।</h3> <p className="text-green-700 mt-3">যুক্ত করার ঠিকানা  <Link className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all md:ml-5 capitalize ml-4" to={'/addDebts'}>চাপ দিন</Link></p></div></>
                 }
-                <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
-                <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
-                </div>
-            <div className="divider md:hidden"></div>
-            </div>
+                </>
+            }
+          
             <div>
                 <form onSubmit={handleMoreDebts}>
                 <div className="mb-2">
@@ -151,12 +176,12 @@ const DebtsDetailsPage = () => {
         <tr>
             <td colSpan="5" className="text-center py-2">
                 <div className="flex items-center justify-center text-xs md:text-base">
-                <span className="bg-green-300 px-[3px] py-2">মোট ফেরত দেওয়া টাকার পরিমানঃ{totalBackMoney}</span>
+                <span className="bg-green-200 bg-opacity-80 px-[3px] py-2">মোট ফেরত দেওয়া টাকার পরিমানঃ{totalBackMoney}</span>
 
-                <span className="bg-primary px-[3px] py-2">ঋণ নেওয়া টাকার পরিমানঃ {totalMoreMoney}</span>
+                <span className="bg-pink-200 bg-opacity-80 px-[3px] py-2">ঋণ নেওয়া টাকার পরিমানঃ {totalMoreMoney}</span>
 
-                <span className="bg-blue-400 px-[3px] py-2">সর্বমোট ট্রানজেকশন টাকার পরিমানঃ {totalMoney}</span>
-                <span className="bg-yellow-400 px-[3px] py-2">আপনার বাকি রয়েছেঃ{singleDebts?.balance}</span>
+                <span className="bg-blue-200 bg-opacity-80 px-[3px] py-2">সর্বমোট ট্রানজেকশন টাকার পরিমানঃ {totalMoney}</span>
+                <span className="bg-yellow-200 bg-opacity-80 px-[3px] py-2">আপনার বাকি রয়েছেঃ{singleDebts?.balance}</span>
                 </div>
             </td> 
         </tr>

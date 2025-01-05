@@ -36,3 +36,9 @@ export const showMoreTransjectionDetails = async (id) => {
     const {data} = await axiosPublic.get(`/moreTransjection/${id}`);
     return data;
 }
+
+// delete singel debbts with all money transactions:
+export const deleteSingleDebtsWithMoneyTransactions = async (id) => {
+    const {data} = await axiosPublic.delete(`/deleteSingleDebtsWithMoneyTransactions/${id}`);
+    return data;
+}

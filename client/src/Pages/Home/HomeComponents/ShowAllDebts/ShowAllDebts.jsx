@@ -9,7 +9,6 @@ import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
 const ShowAllDebts = () => {
     const [currentPage,setCurrentPage] = useState(1);
-    const [totalPage,setTotalPage] = useState(3);
     const [status, setStatus] = useState('');
     const [searchText, setSearchText] = useState('');
     const [sorting, setSorting] = useState('');
@@ -18,7 +17,7 @@ const ShowAllDebts = () => {
         queryKey: ['filterData',searchText,sorting,status,currentPage],
         queryFn: async () => await findAllDebtsByQuery(searchText,sorting,status,currentPage),
       });
-
+      const [totalPage,setTotalPage] = useState(filterData?.length);
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -39,7 +38,7 @@ const ShowAllDebts = () => {
      
   return (
     <div>
-        <div className="w-[98%] md:w-[75%] mx-auto border border-primary p-2 my-6">
+        <div className="w-[98%] md:w-[75%] mx-auto border border-primary shadow-lg p-2 my-8">
             <form onSubmit={handleSubmit}>
             <div className="py-8">
             <div className="grid grid-cols-2 items-center gap-2">
@@ -86,7 +85,7 @@ const ShowAllDebts = () => {
             }
 
                  {/* pagination */}
-                 <div className='flex items-center justify-center mt-12'>
+                 <div className='flex items-center justify-center my-12'>
                 <div className="join">
                 <button onClick={()=>handlePageChange(currentPage - 1)} className="join-item btn bg-primary text-neutral"><FaAngleDoubleLeft /></button>
                 <button className="join-item btn">{currentPage} of {totalPage}</button>

@@ -31,7 +31,7 @@ const Navbar = () => {
   return (
 
     <>
-      <div className='bg-primary font-medium'>
+      <div className='bg-primary font-medium shadow-xl'>
       <Container>
       <div className="navbar">
         <div className="navbar-start">
@@ -68,7 +68,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {
-            user ? <><Link to={'/signIn'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">সাইন ইন করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
+            user ? <><Link to={'/signIn'} className="bg-gradient-to-r from-primary to-green-600 text-neutral rounded-lg text-sm p-2">সাইন ইন করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
           }
         </div>
       </div>

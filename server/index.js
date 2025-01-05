@@ -234,15 +234,30 @@ app.put('/updateSingleDebtsBelance/:id', async (req, res) => {
 app.get('/moreTransjection/:id', async(req,res) => {
   try{
     const id = req.params.id;
-    console.log(id);
     const transactionHistory = await debtsCollection.find({ updateBalanceId: id }).toArray();
-    console.log(transactionHistory);
     res.send(transactionHistory)
   }
   catch(err){res.send({message:"internal server error"})};
 })
 
 
+// delete single debts with money transactionHistory:
+app.delete('/deleteSingleDebtsWithMoneyTransactions/:id',async(req,res) => {
+  try{
+    const {id} = req.params;
+    console.log(id);
+    const filter = {
+      $or: [
+          { _id: new ObjectId(id) },     // যদি _id মিলে
+          { updateBalanceId: id }       // যদি updateBalanceId মিলে
+      ]
+  };
+    console.log(filter);
+    const result = await debtsCollection.deleteMany(filter);
+    res.send(result)
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
