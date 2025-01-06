@@ -65,7 +65,7 @@ const DebtsDetailsPage = () => {
                 historyRefatch()
                 form.reset();
                 setLoader(false)
-                toast('"ধন্যবাদ" পাওনাদারের টাকা আপডেড করা হয়েছে।',{duration:5000})
+                toast.success('"ধন্যবাদ" পাওনাদারের টাকা আপডেড করা হয়েছে।',{duration:5000})
             }
         } catch (err) {
             toast.error("দুঃখিত কোথায় ভূল হয়েছে কিচ্ছুক্ষণ পর আবার চেষ্টা করুন")
@@ -82,7 +82,7 @@ const DebtsDetailsPage = () => {
         if(result.deletedCount > 0){
             singleDebtsRefatch();
             historyRefatch();
-            toast("সফল ভাবে পাওনাদারকে মুছে ফেলা হয়েছে।")
+            toast.success("সফল ভাবে পাওনাদারকে মুছে ফেলা হয়েছে।")
         }
         }
         catch(err){

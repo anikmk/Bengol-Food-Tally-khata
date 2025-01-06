@@ -83,6 +83,16 @@ app.get('/allUsers',async(req,res) => {
   }
 })
 
+// get single user
+app.get('/singleUser/:email',async(req,res) => {
+  try{
+    const email = req.params.email;
+    const query = {email: email};
+    const result = await userCollection.findOne(query);
+    res.send(result)
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 // delete user by admin
 app.delete('/deleteUser/:id',async(req,res) => {
   try{
@@ -98,29 +108,17 @@ app.delete('/deleteUser/:id',async(req,res) => {
 })
 
 // update user role route:todo
-app.put('/updateUser/:role', async(req,res) => {
+app.put('/updateUser', async(req,res) => {
   try{
-    const role = req.params.role;
-    let newRole;
-    if(role === 'buyer'){
-      newRole = 'seller';
-    }
-    else if(role === 'seller'){
-      newRole = 'admin'
-    }
-    else{
-      return res.send({message:"invalid role provided"})
-    }
-    const filter = {role: role};
+    const {id,role} = req.query;
+    const filter = {_id: new ObjectId(id)};
+    const options = { upsert: true };
     const updateDoc = {
       $set: {
-        role: newRole
-      },
+        status: role
+      }
     };
-    const result = await userCollection.updateOne(filter,updateDoc)
-    if(result.matchedCount === 0){
-      res.send({message:"no role matched"})
-    }
+    const result = await userCollection.updateOne(filter,updateDoc,options)
     res.send(result)
   }
   catch(err){res.send({message:"internal server error"})}
@@ -198,27 +196,26 @@ app.get('/findSingleDebtsById/:id',async(req,res) => {
 // update debts balance : todo:
 app.put('/updateSingleDebtsBelance/:id', async (req, res) => {
   try {
-    const { id } = req.params; // ডকুমেন্ট আইডি
+    const { id } = req.params; 
     const { moreMoney, backMoney, name, formattedDate } = req.body;
 
-    const filter = { _id: new ObjectId(id) }; // নির্দিষ্ট ডকুমেন্ট ফিল্টার
-    const debtData = await debtsCollection.findOne(filter); // বর্তমান ডাটা খুঁজে আনা
+    const filter = { _id: new ObjectId(id) }; 
+    const debtData = await debtsCollection.findOne(filter); 
 
     if (!debtData) {
       return res.status(404).send({ message: "Debt data not found" });
     }
 
-    let currentBalance = parseFloat(debtData.balance || 0); // পুরোনো ব্যালেন্স নম্বর হিসাবে
-    const additionalMoney = parseFloat(moreMoney || 0); // নতুন টাকা
-    const deductedMoney = parseFloat(backMoney || 0); // ফেরত টাকা
+    let currentBalance = parseFloat(debtData.balance || 0); 
+    const additionalMoney = parseFloat(moreMoney || 0); 
+    const deductedMoney = parseFloat(backMoney || 0); 
 
-    const updatedBalance = currentBalance + additionalMoney - deductedMoney; // ব্যালেন্স আপডেট
+    const updatedBalance = currentBalance + additionalMoney - deductedMoney; 
 
-    // ডকুমেন্ট আপডেট
-    const updateDoc = { $set: { balance: updatedBalance } };
+   const updateDoc = { $set: { balance: updatedBalance } };
    const updatedDebt =  await debtsCollection.updateOne(filter, updateDoc);
 
-    // হিস্টোরি ডাটা যোগ করা
+    
     const newTransactionData = {
       name,
       moreMoney: additionalMoney,
@@ -254,14 +251,12 @@ app.get('/moreTransjection/:id', async(req,res) => {
 app.delete('/deleteSingleDebtsWithMoneyTransactions/:id',async(req,res) => {
   try{
     const {id} = req.params;
-    console.log(id);
     const filter = {
       $or: [
-          { _id: new ObjectId(id) },     // যদি _id মিলে
-          { updateBalanceId: id }       // যদি updateBalanceId মিলে
+          { _id: new ObjectId(id) },     
+          { updateBalanceId: id }       
       ]
   };
-    console.log(filter);
     const result = await debtsCollection.deleteMany(filter);
     res.send(result)
   }

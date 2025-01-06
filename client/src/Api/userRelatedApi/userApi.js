@@ -1,7 +1,12 @@
+
 import axiosPublic from "../../hooks/useAxiosPublic"
 
 export const postUser = async(userData) => {
     const {data} = await axiosPublic.post('/users',userData);
+    return data;
+}
+export const getSingleUser = async (email) => {
+    const {data} = await axiosPublic.get(`/singleUser/${email}`);
     return data;
 }
 
@@ -16,6 +21,6 @@ export const deleteUser = async (id) => {
 }
 
 export const UpdateUserStatus = async(id,role) => {
-    const {data} = await axiosPublic.update(`/updateUser/?id=${id}/role=${role}`);
+    const {data} = await axiosPublic.put(`/updateUser/?id=${id}&role=${role}`);
     return data;
 }

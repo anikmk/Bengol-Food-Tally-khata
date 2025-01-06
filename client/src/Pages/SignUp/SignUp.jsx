@@ -55,11 +55,11 @@ const SignUp = () => {
           status:'user'
         }
         const dbResult = await postUser(userData);
-        console.log(result);
         if(dbResult?.insertedId){
           toast.success('ধন্যবাদ গুগল আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।')
           navigate('/')
         }
+        else{navigate('/')}
       }
      } 
      catch(err){

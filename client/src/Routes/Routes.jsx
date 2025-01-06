@@ -8,6 +8,7 @@ import AllUsers from "../Pages/Home/HomeComponents/AllUsers/AllUsers";
 import SignUp from "../Pages/SignUp/SignUp";
 import SignIn from "../Pages/SignIn/SignIn";
 import DebtsDetailsPage from "../Pages/Home/HomeComponents/ShowAllDebts/DebtsDetailsPage/DebtsDetailsPage";
+import PrivetRoute from "./PrivetRoutes/PrivetRoute";
 
 export const router = createBrowserRouter([
     {
@@ -21,19 +22,19 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/addDebts',
-                element:<AddDebts />
+                element:<PrivetRoute><AddDebts /></PrivetRoute>
             },
             {
                 path:'/showAlldebts',
-                element:<ShowAlldebts />
+                element:<PrivetRoute><ShowAlldebts /></PrivetRoute>
             },
             {
                 path:'/debtsDetailsPage',
-                element:<DebtsDetailsPage />
+                element:<PrivetRoute><DebtsDetailsPage /></PrivetRoute>
             },
             {
                 path:'/allUsers',
-                element:<AllUsers />
+                element:<PrivetRoute><AllUsers /></PrivetRoute>
             },
             {
                 path:'/signUp',
