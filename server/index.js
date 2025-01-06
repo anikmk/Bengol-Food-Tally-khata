@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;;
 // middleware start
 app.use(cors(
   {
-    origin:["http://localhost:5173"],
+    origin:["http://localhost:5173","https://bengol-food.web.app"],
     credentials:true,
     
   }
