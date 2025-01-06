@@ -1,18 +1,29 @@
-const UsersCard = () => {
-    return <div className="w-[300px] md:w-[600px]">
-    <div className="flex border justify-between p-4 gap-14">
-        <div>
-            <h3 className="text-lg font-bold">user name</h3>
-            <p className="text-sm text-gray-600">email</p>
-            <p className="text-sm text-gray-600">status</p>
+import Loader from "../../../../../Componnents/Shared/Loader/Loader";
+
+const UsersCard = ({user,loading,reFetch}) => {
+  const {name,email,status,_id} = user;
+  const makeAdminHandler = async (id) => {
+    console.log(id);
+  }
+
+  const userDeleteHandler = async (id) => {
+    console.log(id);
+  }
+  if(loading) return <Loader />
+    return <div className="w-[95%] md:w-[600px] shadow-lg">
+    <div className="flex border border-primary items-center justify-between p-3 ">
+        <div className="font-poppins">
+            <h3 className="text-lg font-semibold">{name}</h3>
+            <p className="text-sm text-gray-600">{email}</p>
+            <p className=" capitalize text-primary text-base">{status}</p>
         </div>
 
-        <div>
-            <p className="text-lg font-semibold text-gray-800">
-              Make Admin
-            </p>
-            <button className="mt-2 text-red-600 hover:underline">
-              Remove
+        <div className="grid grid-cols-1">
+            <button onClick={()=>makeAdminHandler(_id)} className="bg-primary py-[2px] text-sm text-neutral shadow-lg px-2 hover:bg-[#ff1c68] transition-all capitalize rounded">
+              এডমিন করুন
+            </button>
+            <button onClick={()=>userDeleteHandler(_id)} className="bg-primary py-[2px] text-sm text-neutral shadow-lg px-2 mt-4 hover:bg-[#ff1c68] transition-all capitalize rounded">
+              মুছে ফেলুন
             </button>
         </div>
     </div>

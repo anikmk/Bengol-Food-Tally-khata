@@ -48,10 +48,17 @@ app.get('/', (req, res) => {
   res.send('BENGOL SHOP SERVER IS READY')
 })
 
+
+
+// ----------users related api handler--------------
+
+
+
 // post request for single users
 app.post('/users',async(req,res) => {
   try{
     const usersData = req.body;
+    console.log(usersData);
     const query = {email:usersData.email};
     const existingUser = await userCollection.findOne(query);
     if(existingUser){
@@ -120,6 +127,8 @@ app.put('/updateUser/:role', async(req,res) => {
 }) 
 
 
+
+// ---------debts api handler------------
 
 
 

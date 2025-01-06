@@ -9,6 +9,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { postUser } from "../../Api/userRelatedApi/userApi";
 const SignUp = () => {
     const {createUser,signInGoogle} = useAuth();
     const [theLock,setTheLock] = useState();
@@ -21,37 +22,48 @@ const SignUp = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
-        const userData = {name,email,status:'maneger'}
+        const userData = {name,email,status:'user'}
         if(password.length < 6 ){
-          return toast.error('Password must be at least six char')
+          return toast.error('ছয়টি সংখ্যার পাসওয়ার্ড দিতে হবে')
         }
         if(!termsAndCondition) {
-          return toast.error('Please check terms & condition')
+          return toast.error('চেক বক্সে ক্লিক করেন নাই')
         }
         // new user create
         try{
           const result = await createUser(email,password)
           if(result?.user){
-            console.log(userData);
-            toast.success('Sign up successfully!')
-            navigate('/')
+            const result = await postUser(userData);
+            if(result?.insertedId){
+              toast.success("ধন্যবাদ আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।")
+              navigate('/')
+            }
           }  
         }
         catch(err){
-          toast.error(err.message)
+          toast.error('নেটওয়ার্ক সমস্যা কিচ্ছুক্ষণ পর চেষ্টা করুন।')
         }
     }
     // sign un with google
     const handleSignInWithGoogle = async() => {
      try{
-      const result = signInGoogle();
+      const result = await signInGoogle();
       if(result?.user){
-      toast.success('Sign up successfully!')
-      navigate('/')
+        const userData = {
+          name:result?.user?.displayName,
+          email:result?.user?.email,
+          status:'user'
+        }
+        const dbResult = await postUser(userData);
+        console.log(result);
+        if(dbResult?.insertedId){
+          toast.success('ধন্যবাদ গুগল আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।')
+          navigate('/')
+        }
       }
      } 
      catch(err){
-      toast.error(err.message)
+      toast.error('নেটওয়ার্ক সমস্যা কিচ্ছুক্ষণ পর চেষ্টা করুন।')
     }
     }
     const handleTypePassword = (e) => {
@@ -110,7 +122,7 @@ const SignUp = () => {
                   <p className="text-neutral font-poppins md:text-xs">Have an Account! <Link to='/signIn' className="text-primary hover:underline font-bold">Login</Link></p>
                 </div>
                 </div>
-                <button>সাইন আপ করুন</button> 
+                <button className="bg-primary py-[8px] text-base text-neutral shadow-lg mt-4 w-full rounded-full hover:bg-[#ff1c68] transition-all">সাইন আপ করুন</button> 
               </div>
             </form>
           </div>

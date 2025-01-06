@@ -5,9 +5,13 @@ import { RxCross2 } from "react-icons/rx";
 import { useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 const Navbar = () => {
-  const {user} = useAuth();
+  const {user,logOut} = useAuth();
   const user2 = 'admin'
   const [isMenuClick,setIsMenuClick] = useState();
+  
+  const handleLogOut = async() => {
+    await logOut();
+  }
   const handleMenu = () => {
     setIsMenuClick(!isMenuClick)
   }
@@ -68,7 +72,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {
-            user ? <><Link to={'/signIn'} className="bg-gradient-to-r from-primary to-green-600 text-neutral rounded-lg text-sm p-2">সাইন ইন করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
+            user ? <><Link onClick={handleLogOut} className="bg-gradient-to-r from-primary to-green-600 text-neutral rounded-lg text-sm p-2">লগ আউট করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
           }
         </div>
       </div>

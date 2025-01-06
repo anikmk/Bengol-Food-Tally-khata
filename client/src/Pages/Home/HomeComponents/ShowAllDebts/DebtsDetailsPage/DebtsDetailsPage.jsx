@@ -96,7 +96,7 @@ const DebtsDetailsPage = () => {
         {
             checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance}টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
         }
-        <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-0 md:gap-4">
             {
                 isLoading ? <Loader />: <>
                 {
@@ -104,10 +104,10 @@ const DebtsDetailsPage = () => {
                     <h2 className="text-lg mb-2">পাওনাদারের নামঃ <span className="text-primary uppercase font-semibold ">{singleDebts?.name}</span></h2>
                     <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p>
                    
-                    <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
+                    <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-4 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
                     <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
                     </div>
-                    <div onClick={()=>handleDeleteDebts(id)}  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-2 inline-block rounded-full hover:bg-[#ff1c68] transition-all md:ml-5 capitalize cursor-pointer">
+                    <div onClick={()=>handleDeleteDebts(id)}  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-4 inline-block rounded-full hover:bg-[#ff1c68] transition-all ml-3 md:ml-5 capitalize cursor-pointer">
                     {singleDebts?.name} কে মুছে ফেলুন
                     </div>
                 <div className="divider md:hidden"></div>
