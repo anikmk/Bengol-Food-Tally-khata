@@ -3,12 +3,12 @@
 const Footer = () => {
     return (
         <>
-        <footer className="footer bg-primary text-neutral-content items-center p-4">
-  <aside className="grid-flow-col items-center">
-      <img width={40} height={40} src="./samosa.png" alt="" />
-    <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
+        <footer className="footer bg-primary text-neutral grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 p-3 font-poppins">
+  <aside className="flex gap-3 items-center justify-center">
+      <img width={100} height={100} src="./logo.png" alt="" />
+    <p className="text-sm">Copyright © {new Date().getFullYear()} - All right reserved - <span className="text-black font-medium">Anik Mk</span></p>
   </aside>
-  <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+  <nav className="flex items-center justify-center gap-5">
     <a>
       <svg
         xmlns="http://www.w3.org/2000/svg"

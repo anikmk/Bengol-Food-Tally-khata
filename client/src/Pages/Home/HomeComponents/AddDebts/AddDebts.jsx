@@ -25,7 +25,7 @@ const AddDebts = () => {
     try{
       const result = await createAllDebts(debtsData);
       if(result){
-        console.log(result);
+        form.reset();
         toast.success('ধন্যবাদ,পাওনাদারকে যুক্ত করা হয়েছে')
       }
     }
@@ -37,7 +37,7 @@ const AddDebts = () => {
     }
   }
     return (
-      <div className="bg-white p-8 rounded shadow-xl relative md:w-3/5 mx-auto my-12">
+      <div className="bg-white p-5 md:p-8 rounded shadow-xl relative w-[95%] md:w-3/5 mx-auto my-12">
       <div className='absolute top-0 left-0 bg-primary w-8 h-[4px]'></div>
       <div className='absolute top-0 left-0 bg-primary w-2 h-[24px]'></div>
       <div className='right-0 bottom-0 bg-primary absolute w-8 h-[4px]'></div>

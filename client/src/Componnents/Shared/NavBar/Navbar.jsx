@@ -9,7 +9,7 @@ import { getSingleUser } from '../../../Api/userRelatedApi/userApi';
 import Loader from '../Loader/Loader';
 const Navbar = () => {
   const {user,logOut,loading} = useAuth();
-
+  
   const [isMenuClick,setIsMenuClick] = useState();
   
   const handleLogOut = async() => {
@@ -46,29 +46,29 @@ const Navbar = () => {
   return (
 
     <>
-      <div className='bg-primary font-medium shadow-xl'>
+      <div className='bg-primary font-medium shadow-xl p-0'>
       <Container>
       <div className="navbar">
         <div className="navbar-start">
           <div className="dropdown">
-            <div onClick={handleMenu} tabIndex={0} role="button" className="md:btn md:btn-ghost lg:hidden text-neutral text-xl mr-6 md:mr-0">
+            <div onClick={handleMenu} tabIndex={0} role="button" className="md:btn md:btn-ghost lg:hidden text-neutral text-3xl">
               {isMenuClick === true ? <div><RxCross2 /></div>:<div><CgMenuGridR /></div>}
             </div>
             <ul
               tabIndex={0}
-              className={` menu menu-sm dropdown-content bg-primary text-neutral rounded-box z-[1] mt-3 w-52 p-2 shadow ${isMenuClick === false && "hidden"}`}
+              className={` shadow-lg menu menu-sm dropdown-content bg-primary text-primary rounded-box z-[1] mt-3 w-52 p-2 ${isMenuClick === false && "hidden"}`}
             >
-              <li className='text-base mt-2'><Link to={'/'}>হোম</Link></li>
+              <li className='text-base mt-2 rounded p-[4px] shadow-lg bg-neutral font-semibold'><Link to={'/'}>হোম</Link></li>
              {
              isAdmin && navLink.map((item) => 
-             <li className='text-base mt-2' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
+             <li className='text-base mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
              )
              }
             </ul>
           </div>
-          <div className=''>
+          <div className='h-[73px]'>
             
-          <a className="bg-gradient-to-r from-green-600 to-primary text-neutral rounded-lg text-base font-semibold p-2"> বেঙ্গল ফুড</a>
+          <img className='h-full' src="./logo.png" alt="" />
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -83,7 +83,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           {
-            user ? <><Link onClick={handleLogOut} className="bg-gradient-to-r from-primary to-green-600 text-neutral rounded-lg text-sm p-2">লগ আউট করুন</Link></>:<><Link to={'/signUp'} className="bg-[#c914507c] p-2 text-neutral rounded-lg text-sm">একাউন্ড তৈরি করুন</Link></>
+            user ? <><Link onClick={handleLogOut} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2">লগ আউট করুন</Link></>:<><Link to={'/signUp'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2">একাউন্ড তৈরি করুন</Link></>
           }
         </div>
       </div>

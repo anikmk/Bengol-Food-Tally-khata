@@ -9,6 +9,7 @@ import SignUp from "../Pages/SignUp/SignUp";
 import SignIn from "../Pages/SignIn/SignIn";
 import DebtsDetailsPage from "../Pages/Home/HomeComponents/ShowAllDebts/DebtsDetailsPage/DebtsDetailsPage";
 import PrivetRoute from "./PrivetRoutes/PrivetRoute";
+import OpenYourShop from "../Pages/Home/HomeComponents/OpenYourShop/OpenYourShop";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path:'/allUsers',
                 element:<PrivetRoute><AllUsers /></PrivetRoute>
+            },
+            {
+                path:'/openYourShop',
+                element:<OpenYourShop />
             },
             {
                 path:'/signUp',

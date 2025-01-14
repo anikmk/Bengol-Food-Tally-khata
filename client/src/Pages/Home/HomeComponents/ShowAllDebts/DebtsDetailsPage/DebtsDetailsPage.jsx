@@ -9,6 +9,7 @@ import {toast} from "react-hot-toast"
 import Load from "../../../../../Componnents/Shared/Loader/load/Load";
 
 const DebtsDetailsPage = () => {
+    
     const [loader,setLoader] = useState(false)
     const location = useLocation();
     const params = new URLSearchParams(location.search);
@@ -58,14 +59,13 @@ const DebtsDetailsPage = () => {
         setLoader(true);
         try {
             const { updatedDebt, result } = await updateSingleDebtsBelance(calculateData);
-            console.log(updatedDebt?.modifiedCount);
-            console.log(result?.insertedId);
             if(updatedDebt?.modifiedCount && result?.insertedId) {
                 singleDebtsRefatch();
-                historyRefatch()
+                historyRefatch();
+                setLoader(false);
                 form.reset();
-                setLoader(false)
-                toast.success('"ধন্যবাদ" পাওনাদারের টাকা আপডেড করা হয়েছে।',{duration:5000})
+                toast.success('"ধন্যবাদ" পাওনাদারের টাকা আপডেড করা হয়েছে।',{duration:5000});
+                
             }
         } catch (err) {
             toast.error("দুঃখিত কোথায় ভূল হয়েছে কিচ্ছুক্ষণ পর আবার চেষ্টা করুন")
@@ -77,6 +77,14 @@ const DebtsDetailsPage = () => {
 
     // delete debts with all transaction handler:
     const handleDeleteDebts = async (id) => {
+        const isConfirmed = window.confirm(
+            `আপনি কি নিশ্চিত যে ${singleDebts?.name} নামের পাওনাদারকে মুছে ফেলতে চান?`
+        );
+        if (!isConfirmed) {
+            toast("পাওনাদার মুছে ফেলার কাজ বাতিল করা হয়েছে।", { icon: "⚠️" });
+            return;
+        }
+
         try{
             const result = await deleteSingleDebtsWithMoneyTransactions(id);
         if(result.deletedCount > 0){
@@ -94,7 +102,7 @@ const DebtsDetailsPage = () => {
     return <>
     <div className="w-[96%] mx-auto p-6 my-12 shadow-lg bg-neutral">
         {
-            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance}টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
+            checkBalance  ? <><div onClick={handleCheckBalance} className="text-center cursor-pointer bg-primary mb-5 p-2 rounded text-neutral font-medium"><div className=" animate-pulse">{singleDebts?.balance} টাকা</div></div></>:<div onClick={handleCheckBalance} className="text-center bg-primary mb-5 p-2 rounded text-neutral font-medium cursor-pointer">ব্যালেন্স চেক করুন</div>
         }
         <div className="grid grid-cols-1 md:grid-cols-2 place-items-center gap-0 md:gap-4">
             {
@@ -122,15 +130,15 @@ const DebtsDetailsPage = () => {
             <div>
                 <form onSubmit={handleMoreDebts}>
                 <div className="mb-2">
-                    <label className="text-xs">আরো টাকা বাকি নিলেন</label>
-                    <input name="moremoney" className="mt-2 border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium" type="number" placeholder="আরো বাকি নেওয়া টাকার পরিমান যোগ করুন---"/>
+                    <label className="text-base">আরো টাকা বাকি নিলেন</label>
+                    <input name="moremoney" className="mt-2 border-slate-300 border text-sm focus:outline-none bg-transparent p-[10px] rounded-lg w-full font-medium" type="number" placeholder="আরো বাকি নেওয়া টাকার পরিমান যোগ করুন---"/>
                 </div>
                 <div>
-                    <label className="text-xs">কিছু টাকা ফেরত দিলেন</label>
-                    <input name="backmoney" className="mt-2 border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium" type="number" placeholder="ফেরত দেওয়া টাকার পরিমান লিখুন---"/>
+                    <label className="text-base">কিছু টাকা ফেরত দিলেন</label>
+                    <input name="backmoney" className="mt-2 border-slate-300 border text-sm focus:outline-none bg-transparent p-[10px] rounded-lg w-full font-medium" type="number" placeholder="ফেরত দেওয়া টাকার পরিমান লিখুন---"/>
                 </div>
                 <div className="mt-5">
-                    <button disabled={loader} className=" w-full font-medium bg-primary p-[6px] rounded-lg text-neutral text-sm shadow-lg hover:bg-[#ff1c68] transition-all">
+                    <button disabled={loader} className=" w-full font-medium bg-primary p-[10px] rounded-lg text-neutral text-sm shadow-lg hover:bg-[#ff1c68] transition-all">
                         {loader ? <Load />:"ক্যালকুলেট করুন"}
                     </button>
                 </div>
@@ -147,7 +155,7 @@ const DebtsDetailsPage = () => {
             <p className="text-xs"><span className="font-semibold text-red-600">জেনে রাখুনঃ  </span>পাওনাদার কখন কত টাকা ট্রানজেকশন করেছে তার সম্পুর্ণ তথ্য এখান থেকে দেখুন ।</p>
         </div>
     <div className="overflow-x-auto ">
-    <table className="min-w-[90%] shadow-md  border mx-auto border-gray-100  my-6">
+    <table className="min-w-[95%] shadow-lg  border mx-auto border-gray-100  my-6">
         <thead>
             <tr className="bg-primary text-white ">
                 <th className="py-3 px-6 text-left border-b">সংখ্যা</th>
@@ -178,17 +186,17 @@ const DebtsDetailsPage = () => {
                 <div className="flex items-center justify-center text-xs md:text-base">
                 <span className="bg-green-200 bg-opacity-80 px-[3px] py-2">মোট ফেরত দেওয়া টাকার পরিমানঃ{totalBackMoney}</span>
 
-                <span className="bg-pink-200 bg-opacity-80 px-[3px] py-2">ঋণ নেওয়া টাকার পরিমানঃ {totalMoreMoney}</span>
+                <span className="bg-pink-200 bg-opacity-80 px-[3px] py-2">আরো বাকি নেওয়া টাকার পরিমানঃ {totalMoreMoney}</span>
 
                 <span className="bg-blue-200 bg-opacity-80 px-[3px] py-2">সর্বমোট ট্রানজেকশন টাকার পরিমানঃ {totalMoney}</span>
-                <span className="bg-yellow-200 bg-opacity-80 px-[3px] py-2">আপনার বাকি রয়েছেঃ{singleDebts?.balance}</span>
+                <span className="bg-yellow-200 bg-opacity-80 px-[3px] py-2">আপনার বর্তমান বাকি রয়েছেঃ <span className="font-semibold">{singleDebts?.balance}</span></span>
                 </div>
             </td> 
         </tr>
-              <Share />
         </tbody>
     </table>
     </div>
+              <Share/>
     </div>
     </>
 }

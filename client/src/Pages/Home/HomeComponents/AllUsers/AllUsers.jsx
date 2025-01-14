@@ -14,7 +14,7 @@ const AllUsers = () => {
     })
 
     return <div>
-         <div className="h-screen mt-10">
+         <div className="my-10">
             <div className="text-center w-[95%] md:w-[600px] mx-auto mb-5">
 
                 <p className="text-lg mb-2 text-primary font-medium">ইউজার কে এখান থেকে ম্যানেজ করুন </p>
@@ -30,7 +30,7 @@ const AllUsers = () => {
                 }
                
             </div>
-            <div className="grid grid-cols-1 gap-5 place-items-center">
+            <div className="grid grid-cols-1 gap-7 place-items-center">
                 {
                     allUsersData?.map((item)=>
                         <UsersCard key={item?._id} user={item} loading={isLoading} reFetch={refetch}/>

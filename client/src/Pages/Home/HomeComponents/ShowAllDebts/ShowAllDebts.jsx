@@ -17,7 +17,7 @@ const ShowAllDebts = () => {
         queryKey: ['filterData',searchText,sorting,status,currentPage],
         queryFn: async () => await findAllDebtsByQuery(searchText,sorting,status,currentPage),
       });
-      const [totalPage,setTotalPage] = useState(filterData?.length);
+      const [totalPage,setTotalPage] = useState(2);
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -38,17 +38,17 @@ const ShowAllDebts = () => {
      
   return (
     <div>
-        <div className="w-[98%] md:w-[75%] mx-auto border border-primary shadow-lg p-2 my-8">
+        <div className="w-[95%] md:w-[75%] mx-auto border border-primary shadow-lg p-2 my-8">
             <form onSubmit={handleSubmit}>
             <div className="py-8">
             <div className="grid grid-cols-2 items-center gap-2">
                 <div>
-                    <label className="text-xs"> নাম দিয়ে খুঁজুন</label>
-                    <input name="searchtext" className="border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium" type="text" placeholder="পাওনা দারের নাম দিন"/>
+                    <label className="text-base"> নাম দিয়ে খুঁজুন</label>
+                    <input name="searchtext" className="border-slate-300 border text-sm focus:outline-none bg-transparent p-[7px] rounded-lg w-full font-medium mt-[4px]" type="text" placeholder="পাওনা দারের নাম দিন"/>
                 </div>
                 <div>
-                    <label className="text-xs">পাওনাদার ফিল্টার করুন</label>
-                    <select name="status" id="" className=' border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium'>
+                    <label className="text-base">পাওনাদার ফিল্টার করুন</label>
+                    <select name="status" id="" className=' border-slate-300 border text-sm focus:outline-none bg-transparent p-[7px] rounded-lg w-full font-medium mt-[4px]'>
                     <option className='' value="">অপশন বেছে নিন</option>
                     <option className='' value="clear">পাওনা টাকা দিয়ে দিয়েছেন</option>
                     <option className='' value="partial">অর্ধেক পাওনা টাকা দিয়েছেন</option>
@@ -56,8 +56,8 @@ const ShowAllDebts = () => {
                     </select>
                 </div>
                 <div>
-                    <label className="text-xs">পাওনাদার তুলনা করুন</label>
-                    <select name="sorting" id="" className='border-slate-300 border text-sm focus:outline-none bg-transparent p-[4px] rounded-lg w-full font-medium'>
+                    <label className="text-base">পাওনাদার তুলনা করুন</label>
+                    <select name="sorting" id="" className='border-slate-300 border text-sm focus:outline-none bg-transparent p-[7px] rounded-lg w-full font-medium mt-[4px]'>
                     <option className='' value="">অপশন বেছে নিন</option>
                     <option className='' value="highToLow">বেশি থেকে কম টাকার পাওনাদার</option>
                     <option className='' value="lowToHigh">কম থেকে বেশি টাকার পাওনাদার</option>
@@ -65,7 +65,7 @@ const ShowAllDebts = () => {
 
                 </div>
                 <div className="mt-5">
-                    <button className=" w-full font-medium bg-primary p-[4px] rounded-lg text-neutral text-sm">পাওনাদার খুঁজুন</button>
+                    <button className=" w-full font-medium bg-primary p-[7px] rounded-lg text-neutral text-base mt-[4px]">পাওনাদার খুঁজুন</button>
                 </div>
 
             </div>
@@ -74,7 +74,7 @@ const ShowAllDebts = () => {
         </div>
         <div className="">
             {
-                isLoading ? <Loader /> : <div className="grid grid-cols-1 gap-6 place-items-center">
+                isLoading ? <Loader /> : <div className="grid grid-cols-1 gap-7 place-items-center">
                 {
                     filterData.map((item)=><div className="" key={item._id}>
                         <Card signleDebts={item} loading={isLoading}/>
