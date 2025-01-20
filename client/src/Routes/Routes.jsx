@@ -9,7 +9,12 @@ import SignUp from "../Pages/SignUp/SignUp";
 import SignIn from "../Pages/SignIn/SignIn";
 import DebtsDetailsPage from "../Pages/Home/HomeComponents/ShowAllDebts/DebtsDetailsPage/DebtsDetailsPage";
 import PrivetRoute from "./PrivetRoutes/PrivetRoute";
+import Dashboard from "../Layouts/Dashboard";
 import OpenYourShop from "../Pages/Home/HomeComponents/OpenYourShop/OpenYourShop";
+import OrderFastFood from "../Pages/OrderFastFood/OrderFastFood";
+import AllProduct from "../Pages/AllProduct/AllProduct";
+import AddFastFood from "../Pages/Dashboard/AddFastFood/AddFastFood";
+import AddAllProduct from "../Pages/Dashboard/AddAllProduct/AddAllProduct";
 
 export const router = createBrowserRouter([
     {
@@ -22,24 +27,16 @@ export const router = createBrowserRouter([
                 element:<Home></Home>
             },
             {
-                path:'/addDebts',
-                element:<PrivetRoute><AddDebts /></PrivetRoute>
-            },
-            {
-                path:'/showAlldebts',
-                element:<PrivetRoute><ShowAlldebts /></PrivetRoute>
-            },
-            {
-                path:'/debtsDetailsPage',
-                element:<PrivetRoute><DebtsDetailsPage /></PrivetRoute>
-            },
-            {
-                path:'/allUsers',
-                element:<PrivetRoute><AllUsers /></PrivetRoute>
-            },
-            {
                 path:'/openYourShop',
                 element:<OpenYourShop />
+            },
+            {
+                path:'/OrderFastFood',
+                element:<OrderFastFood />
+            },
+            {
+                path:'/allProduct',
+                element:<AllProduct />
             },
             {
                 path:'/signUp',
@@ -50,5 +47,42 @@ export const router = createBrowserRouter([
                 element:<SignIn />
             }
         ]
+    },
+
+
+
+
+    // dashboard
+
+    {
+        path:'/dashboard',
+        element:<Dashboard />,
+        errorElement:<ErrorPage />,
+        children:[
+                {
+                    path:'addDebts',
+                    element:<PrivetRoute><AddDebts /></PrivetRoute>
+                },
+                {
+                    path:'showAlldebts',
+                    element:<PrivetRoute><ShowAlldebts /></PrivetRoute>
+                },
+                {
+                    path:'debtsDetailsPage',
+                    element:<PrivetRoute><DebtsDetailsPage /></PrivetRoute>
+                },
+                {
+                    path:'addFastFood',
+                    element:<AddFastFood />
+                },
+                {
+                    path:'addAllProduct',
+                    element:<AddAllProduct />
+                },
+                {
+                    path:'allUsers',
+                    element:<PrivetRoute><AllUsers /></PrivetRoute>
+                },
+        ]  
     }
 ])

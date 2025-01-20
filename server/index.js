@@ -143,10 +143,12 @@ app.post('/createAllDebts',async(req,res) => {
 // get all debts by filtering,searching,sorting: 
 app.get('/findAllDebtsByQuery/search',async(req,res) => {
   try {
-    const { searchText,sorting,status,page = 1,limit = 1 } = req.query;
+    const { searchText,sorting,status,email,page = 1,limit = 1 } = req.query;
+    console.log(email);
+    console.log(req.query);
     const pageNumber = Number(page);
     const perPageLimit = Number(limit)
-    const filter = { status: "create" };
+    const filter = { status: email };
 
     if (searchText) {
         filter.name = { $regex: searchText, $options: "i" };

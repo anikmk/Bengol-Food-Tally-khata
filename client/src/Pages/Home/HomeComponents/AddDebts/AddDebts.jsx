@@ -2,9 +2,11 @@ import { useState } from "react";
 import { createAllDebts } from "../../../../Api/debtsRelatedApi/debtsApi";
 import {toast} from "react-hot-toast"
 import Load from "../../../../Componnents/Shared/Loader/load/Load";
+import useAuth from "../../../../hooks/useAuth";
 
 
 const AddDebts = () => {
+  const {user} = useAuth();
   const [loading,setLoading] = useState(false);
   const currentDate = new Date();
   const day = String(currentDate.getDate()).padStart(2, '0');
@@ -19,7 +21,7 @@ const AddDebts = () => {
     const address = form.address.value;
     const phone = form.phone.value;
     const balance = form.ballance.value;
-    const debtsData = {name,address,phone,balance,date:formattedDate,status:'create'}
+    const debtsData = {name,address,phone,balance,date:formattedDate,status:user?.email}
     
     setLoading(true)
     try{
@@ -37,7 +39,7 @@ const AddDebts = () => {
     }
   }
     return (
-      <div className="bg-white p-5 md:p-8 rounded shadow-xl relative w-[95%] md:w-3/5 mx-auto my-12">
+      <div className="bg-white p-5 md:p-8 rounded shadow-xl relative w-[95%]  mx-auto my-12">
       <div className='absolute top-0 left-0 bg-primary w-8 h-[4px]'></div>
       <div className='absolute top-0 left-0 bg-primary w-2 h-[24px]'></div>
       <div className='right-0 bottom-0 bg-primary absolute w-8 h-[4px]'></div>

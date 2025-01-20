@@ -6,17 +6,21 @@ import { FaAngleDoubleLeft } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { findAllDebtsByQuery } from "../../../../Api/debtsRelatedApi/debtsApi";
 import Loader from "../../../../Componnents/Shared/Loader/Loader";
+import useAuth from "../../../../hooks/useAuth";
 
 const ShowAllDebts = () => {
+    const {user} = useAuth();
+    const email = user?.email;
     const [currentPage,setCurrentPage] = useState(1);
     const [status, setStatus] = useState('');
     const [searchText, setSearchText] = useState('');
     const [sorting, setSorting] = useState('');
-    console.log(status);
+
     const { data: filterData = [],isLoading,refetch } = useQuery({
-        queryKey: ['filterData',searchText,sorting,status,currentPage],
-        queryFn: async () => await findAllDebtsByQuery(searchText,sorting,status,currentPage),
+        queryKey: ['filterData',searchText, sorting, status, email, currentPage],
+        queryFn: async () => await findAllDebtsByQuery(searchText, sorting, status, email, currentPage),
       });
+      console.log(filterData);
       const [totalPage,setTotalPage] = useState(2);
     const handleSubmit = (e) => {
         e.preventDefault();

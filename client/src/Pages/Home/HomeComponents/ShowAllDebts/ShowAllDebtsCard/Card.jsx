@@ -4,7 +4,7 @@ import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 const Card = ({signleDebts,loading}) => {
     const {name,address,phone,balance,_id} = signleDebts;
     if(loading) return <Loader />
-    return <Link to={`/debtsDetailsPage?id=${_id}`}>
+    return <Link to={`/dashboard/debtsDetailsPage?id=${_id}`}>
     <div className="w-[320px] md:w-[600px] shadow-lg relative">
 
 <div className='absolute top-0 left-0 bg-primary w-8 h-[3px]'></div>

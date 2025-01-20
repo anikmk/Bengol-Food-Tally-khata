@@ -6,10 +6,12 @@ import { RxCross2 } from "react-icons/rx";
 import { useState } from 'react';
 import useAuth from '../../../hooks/useAuth';
 import { getSingleUser } from '../../../Api/userRelatedApi/userApi';
-import Loader from '../Loader/Loader';
+// import Loader from '../Loader/Loader';
+import { FiSettings } from "react-icons/fi";
+import Load from '../Loader/load/Load';
 const Navbar = () => {
-  const {user,logOut,loading} = useAuth();
-  
+  const {user,logOut,} = useAuth();
+  console.log(user);
   const [isMenuClick,setIsMenuClick] = useState();
   
   const handleLogOut = async() => {
@@ -20,19 +22,14 @@ const Navbar = () => {
   }
    const navLink = [
     {
-      id:2,
-      text:'পাওনাদার যুক্ত করুন',
-      link:'/addDebts'
+      id:1,
+      text:'OrderFastFood',
+      link:'/OrderFastFood'
     },
     {
-      id:3,
-      text:'সব পাওনাদার দেখুন',
-      link:'/showAlldebts'
-    },
-    {
-      id:4,
-      text:'সব ব্যবহারকারি দেখুন',
-      link:'/allUsers'
+      id:1,
+      text:'all product',
+      link:'/allProduct'
     },
   ]
 
@@ -40,9 +37,10 @@ const Navbar = () => {
     queryKey:[user?.email,"singleUser"],
     queryFn:async()=>await getSingleUser(user?.email),
   })
-  if(isLoading || loading) return <Loader />
+ console.log(singleUser);
 
   const isAdmin = singleUser?.status === "admin";
+  console.log(isAdmin);
   return (
 
     <>
@@ -60,7 +58,7 @@ const Navbar = () => {
             >
               <li className='text-base mt-2 rounded p-[4px] shadow-lg bg-neutral font-semibold'><Link to={'/'}>হোম</Link></li>
              {
-             isAdmin && navLink.map((item) => 
+              navLink.map((item) => 
              <li className='text-base mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
              )
              }
@@ -75,15 +73,40 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-5 text-neutral">
           <li className='text-base mr-2'><Link to={'/'}>হোম</Link></li>
           {
-         isAdmin && navLink.map((item) => 
+          navLink.map((item) => 
              <li className='text-base mr-2' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
              )
           }
           </ul>
         </div>
-        <div className="navbar-end">
+       
+
+
+          <div className='navbar-end'>
+
           {
-            user ? <><Link onClick={handleLogOut} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2">লগ আউট করুন</Link></>:<><Link to={'/signUp'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2">একাউন্ড তৈরি করুন</Link></>
+            user ? <>
+                <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn btn-ghost">
+                  <FiSettings />
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 space-y-3">
+
+                  {
+                    isAdmin && <li><Link to={'/dashboard'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">{isLoading ? <><Load /></>:"Dashboard"}</Link></li>
+                  }
+
+                  <li><Link onClick={handleLogOut} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">logout</Link></li>
+
+                </ul>
+              </div>
+            </>
+            
+            :
+            
+            <><Link to={'/signUp'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2">একাউন্ড তৈরি করুন</Link></>
           }
         </div>
       </div>

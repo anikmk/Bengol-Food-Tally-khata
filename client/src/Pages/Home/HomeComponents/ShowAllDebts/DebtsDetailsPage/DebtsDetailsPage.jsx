@@ -113,7 +113,7 @@ const DebtsDetailsPage = () => {
                     <p className="text-lg">সর্বমোট পাওনা টাকাঃ <span className="text-primary uppercase font-semibold">{singleDebts?.balance} টাকা</span></p>
                    
                     <div  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-4 inline-block rounded-full hover:bg-[#ff1c68] transition-all">
-                    <Link  to={'/showAlldebts'}>ব্যাক করুন</Link>
+                    <Link  to={'/dashboard/showAlldebts'}>ব্যাক করুন</Link>
                     </div>
                     <div onClick={()=>handleDeleteDebts(id)}  className="bg-primary py-[5px] text-base text-neutral shadow-lg px-4 mt-4 inline-block rounded-full hover:bg-[#ff1c68] transition-all ml-3 md:ml-5 capitalize cursor-pointer">
                     {singleDebts?.name} কে মুছে ফেলুন

@@ -6,7 +6,7 @@ const Heading = ({heading,subHeading,center}) => {
         <>
          <div className={`py-8 ${center ? 'text-center':''}`}>
             <div>
-            <h4 className="text-xl">{subHeading}</h4>
+            <h4 className="md:text-xl text-sm mb-2">{subHeading}</h4>
             <h2 className="lg:text-5xl md:text-4xl text-2xl">{heading}</h2>
             </div>
          </div>
