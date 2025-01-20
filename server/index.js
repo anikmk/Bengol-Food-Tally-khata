@@ -28,6 +28,7 @@ const client = new MongoClient(uri, {
 
 const userCollection = client.db("BengolShop").collection("users");
 const debtsCollection = client.db("BengolShop").collection("debts");
+const fastFoodCollection = client.db("BengolShop").collection("fastFoods");
 
 async function run() {
   try {
@@ -144,8 +145,6 @@ app.post('/createAllDebts',async(req,res) => {
 app.get('/findAllDebtsByQuery/search',async(req,res) => {
   try {
     const { searchText,sorting,status,email,page = 1,limit = 1 } = req.query;
-    console.log(email);
-    console.log(req.query);
     const pageNumber = Number(page);
     const perPageLimit = Number(limit)
     const filter = { status: email };
@@ -264,6 +263,45 @@ app.delete('/deleteSingleDebtsWithMoneyTransactions/:id',async(req,res) => {
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
+
+
+
+// fast food related handler:
+app.post('/fastFoods',async(req,res) => {
+  try{
+    const fastFoodsData = req.body;
+    const result = await fastFoodCollection.insertOne(fastFoodsData);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+});
+
+app.get('/getFastFood', async(req,res) => {
+  try{
+    const {email,searchText,category} = req.query;
+    const query = {foodEmail:email};
+    if(searchText){
+      query.foodName = { $regex: searchText, $options: 'i' };
+    }
+    if (category) {
+      query.foodName = {$regex: category,$options: 'i'};
+  }
+  const result = await fastFoodCollection.find(query).toArray();
+  res.send(result); 
+
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
+
+
+
+
+
+
+
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

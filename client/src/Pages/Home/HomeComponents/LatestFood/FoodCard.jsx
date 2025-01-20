@@ -1,7 +1,11 @@
 import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
-const FoodCard = () => {
+const FoodCard = ({food,loading}) => {
+
+  if(loading) return <Loader />
+  console.log(food);
     return <>
     <div className=" shadow-xl">
                 <div className="group relative flex flex-col h-full overflow-hidden">

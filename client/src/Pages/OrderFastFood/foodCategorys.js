@@ -1,34 +1,34 @@
 export const foodCategorys = [
     {
-        id:1,
-        item:"বার্গার",
+        id: 1,
+        item: "Burger",
     },
     {
-        id:2,
-        item:"পিজ্জা",
+        id: 2,
+        item: "Pizza",
     },
     {
-        id:3,
-        item:"সবজি রুল",
+        id: 3,
+        item: "Vegetable Roll",
     },
     {
-        id:4,
-        item:"আইসক্রিম",
+        id: 4,
+        item: "Ice Cream",
     },
     {
-        id:5,
-        item:"চিকেন রুল",
+        id: 5,
+        item: "Chicken Roll",
     },
     {
-        id:6,
-        item:"চমোচা",
+        id: 6,
+        item: "Chomoca",
     },
     {
-        id:7,
-        item:"সিঙ্গারা",
+        id: 7,
+        item: "Singara",
     },
     {
-        id:8,
-        item:"অন্যান্য",
+        id: 8,
+        item: "Others",
     },
-]
+];

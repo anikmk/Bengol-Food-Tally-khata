@@ -14,32 +14,32 @@ const Dashboard = () => {
         }
     };
     const navLink = [
-        {item:"home",
+        {item:"হোম",
         link:"/",
         icon:<CiHome />,
         id:1
         },
-        {item:"add debts",
+        {item:"পাওনাদার যুক্ত করুন",
         link:"/dashboard/addDebts",
         icon:<GrGallery />,
         id:2
         },
-        {item:"showAlldebts",
+        {item:"সব পাওনাদার দেখুন",
         link:"/dashboard/showAlldebts",
         icon:<CiShop />,
         id:3
         },
-        {item:"addFastFood",
+        {item:"ফাস্ট ফোড যুক্ত করুন",
         link:"/dashboard/addFastFood",
         icon:<CiShop />,
         id:3
         },
-        {item:"addAllProduct",
+        {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
         id:3
         },
-        {item:"allUsers",
+        {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
         id:4
