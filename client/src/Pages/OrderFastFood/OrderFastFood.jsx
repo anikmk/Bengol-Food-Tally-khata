@@ -7,6 +7,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import { getFastFoodByEmail } from "../../Api/fastFoodRelatedApi/foodApi";
+import Loader from "../../Componnents/Shared/Loader/Loader";
 const OrderFastFood = () => {
     const carouselRef = useRef(null);
     const {user} = useAuth();
@@ -44,7 +45,7 @@ const OrderFastFood = () => {
             <Container>
                 {/* Search Section */}
                 <div>
-                    <div className="grid grid-cols-2 gap-3 place-items-center">
+                    <div className="md:grid grid-cols-2 gap-3 place-items-center">
                         <div className="w-full">
                             <h3 className="mb-2 text-[15px] text-slate-700">খাবার খুঁজুন</h3>
                             <input
@@ -57,7 +58,7 @@ const OrderFastFood = () => {
                             />
                         </div>
 
-                        <div className="w-40">
+                        <div className="w-40 hidden md:block">
                             <img className="text-black" src="./orderlogo.png" alt="Order Logo" />
                         </div>
                     </div>
@@ -105,11 +106,17 @@ const OrderFastFood = () => {
                 </div>
 
                 {/* Food Cards Section */}
-                <div className="grid md:grid-cols-4 grid-cols-1 gap-5">
+                {
+                    isLoading ? <> <Loader /> </>:<>
+                    
+                    <div className="grid md:grid-cols-4 grid-cols-1 gap-5">
                     {foods?.map((food) => (
                         <FoodCard key={food?._id} food={food} loading={isLoading}/>
                     ))}
                 </div>
+                    
+                    </>
+                }
             </Container>
         </div>
     );
