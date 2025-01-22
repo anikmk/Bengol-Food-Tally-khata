@@ -1,14 +1,14 @@
 
+import OrderDetailsPage from "../OrderFastFood/OrderDetailsPage/OrderDetailsPage";
 import Hero from "./HomeComponents/Hero/Hero";
 import LatestFood from "./HomeComponents/LatestFood/LatestFood";
-import OpenYourShop from "./HomeComponents/OpenYourShop/OpenYourShop";
 
 const Home = () => {
     return (
 
         <>
         <Hero />
-        <OpenYourShop />
+        <OrderDetailsPage />
         <LatestFood />
         </>
     );

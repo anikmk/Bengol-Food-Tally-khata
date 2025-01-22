@@ -279,8 +279,8 @@ app.post('/fastFoods',async(req,res) => {
 
 app.get('/getFastFood', async(req,res) => {
   try{
-    const {email,searchText,category} = req.query;
-    const query = {foodEmail:email};
+    const {searchText,category} = req.query;
+    const query = {};
     if(searchText){
       query.foodName = { $regex: searchText, $options: 'i' };
     }
@@ -294,7 +294,15 @@ app.get('/getFastFood', async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
-
+app.get('/getSingleFastFood/:id', async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await fastFoodCollection.findOne(query);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 
 

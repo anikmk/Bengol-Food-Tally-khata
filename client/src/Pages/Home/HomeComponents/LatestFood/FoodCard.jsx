@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
 const FoodCard = ({food,loading}) => {
-  const {foodName,foodImg,foodPrice,foodDescription,available} = food;
   if(loading) return <Loader />
-  console.log(food);
+  
     return <>
     <div className=" shadow-xl">
                 <div className="group relative flex flex-col h-full overflow-hidden">
@@ -13,7 +12,7 @@ const FoodCard = ({food,loading}) => {
                     <div className="relative">
                       <img
                         className="md:h-40 h-28 w-full bg-cover bg-center rounded-t"
-                        src={foodImg}
+                        src={food?.foodImg}
                         alt=""
                       />
     
@@ -24,20 +23,20 @@ const FoodCard = ({food,loading}) => {
                       </div>
                       <div className="p-3 rounded">
                         <div className="capitalize font-medium mb-2">
-                          {foodName}
+                          {food?.foodName}
                         </div>
                         <div className="text-sm">
-                          {foodDescription}
+                          {food?.foodDescription}
                         </div>
                         <div className="flex items-center my-2 text-sm justify-between">
                           <p>star</p>
-                          <p className="text-red-500">{available}</p>
+                          <p className="text-red-500">{food?.available}</p>
                         </div>
                         <div className="relative">
                           <h3 className="text-center border border-slate-300 font-medium py-2 group-hover:opacity-0 transition duration-300">
-                            {foodPrice}
+                            {food?.foodPrice}
                           </h3>
-                          <Link>
+                          <Link to={`/foodDetails/?id=${food?._id}`}>
                             <button className=" mx-auto w-full px-4 py-2 absolute -bottom-20 group-hover:bottom-0 font-medium group-hover:text-black hover:bg-primary rounded  text-white hoverEffect">
                               Buy Now
                             </button>

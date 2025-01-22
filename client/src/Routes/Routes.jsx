@@ -15,6 +15,7 @@ import OrderFastFood from "../Pages/OrderFastFood/OrderFastFood";
 import AllProduct from "../Pages/AllProduct/AllProduct";
 import AddFastFood from "../Pages/Dashboard/AddFastFood/AddFastFood";
 import AddAllProduct from "../Pages/Dashboard/AddAllProduct/AddAllProduct";
+import OrderDetailsPage from "../Pages/OrderFastFood/OrderDetailsPage/OrderDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             {
                 path:'/OrderFastFood',
                 element:<OrderFastFood />
+            },
+            {
+                path:'/foodDetails',
+                element:<OrderDetailsPage />
             },
             {
                 path:'/allProduct',

@@ -5,19 +5,16 @@ import FoodCard from "../Home/HomeComponents/LatestFood/FoodCard";
 import { foodCategorys } from "./foodCategorys";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../hooks/useAuth";
 import { getFastFoodByEmail } from "../../Api/fastFoodRelatedApi/foodApi";
 import Loader from "../../Componnents/Shared/Loader/Loader";
 const OrderFastFood = () => {
     const carouselRef = useRef(null);
-    const {user} = useAuth();
-    const email = user?.email;
     const [category,setCategory] = useState("");
     const [searchFood,setSearchFood] = useState("");
     console.log(category,searchFood);
     const {data:foods,isLoading,refetch} = useQuery({
-        queryKey:[user?.email,category,searchFood,"foods"],
-        queryFn:async()=> await getFastFoodByEmail(email,searchFood,category)
+        queryKey:[category,searchFood,"foods"],
+        queryFn:async()=> await getFastFoodByEmail(searchFood,category)
     })
     const handleCategorySearch = (category) => {
         setSearchFood("");
@@ -40,6 +37,7 @@ const OrderFastFood = () => {
         }
     };
 
+   
     return (
         <div className="my-14">
             <Container>
@@ -110,7 +108,7 @@ const OrderFastFood = () => {
                     isLoading ? <> <Loader /> </>:<>
                     
                     <div className="grid md:grid-cols-4 grid-cols-1 gap-5">
-                    {foods?.map((food) => (
+                    {foods && foods?.map((food) => (
                         <FoodCard key={food?._id} food={food} loading={isLoading}/>
                     ))}
                 </div>

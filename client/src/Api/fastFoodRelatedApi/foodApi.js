@@ -5,7 +5,12 @@ export const createFastFood = async(fastFoodData) => {
     return data;
 }
 
-export const getFastFoodByEmail = async(email,searchText = '',category = '') => {
-    const {data} = await axiosPublic.get(`/getFastFood/?email=${email}&searchText=${searchText}&category=${category}`);
+export const getFastFoodByEmail = async(searchText = '',category = '') => {
+    const {data} = await axiosPublic.get(`/getFastFood/?searchText=${searchText}&category=${category}`);
+    return data;
+}
+
+export const getSingleFoodById = async(id) => {
+    const {data} = await axiosPublic.get(`/getSingleFastFood/${id}`);
     return data;
 }
