@@ -5,6 +5,11 @@ export const createFastFood = async(fastFoodData) => {
     return data;
 }
 
+export const getAllFastFood = async() => {
+    const {data} = await axiosPublic.get('/allfastFood');
+    return data;
+}
+
 export const getFastFoodByEmail = async(searchText = '',category = '') => {
     const {data} = await axiosPublic.get(`/getFastFood/?searchText=${searchText}&category=${category}`);
     return data;
@@ -12,5 +17,10 @@ export const getFastFoodByEmail = async(searchText = '',category = '') => {
 
 export const getSingleFoodById = async(id) => {
     const {data} = await axiosPublic.get(`/getSingleFastFood/${id}`);
+    return data;
+}
+
+export const submitFastFoodOrder = async(customerOrderData) => {
+    const {data} = await axiosPublic.post("/customerOrder",customerOrderData);
     return data;
 }

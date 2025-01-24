@@ -107,7 +107,7 @@ const OrderFastFood = () => {
                 {
                     isLoading ? <> <Loader /> </>:<>
                     
-                    <div className="grid md:grid-cols-4 grid-cols-1 gap-5">
+                    <div className="grid md:grid-cols-4 grid-cols-2 gap-3">
                     {foods && foods?.map((food) => (
                         <FoodCard key={food?._id} food={food} loading={isLoading}/>
                     ))}

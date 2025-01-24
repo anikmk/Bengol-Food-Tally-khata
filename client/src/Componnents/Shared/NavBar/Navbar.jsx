@@ -23,12 +23,17 @@ const Navbar = () => {
    const navLink = [
     {
       id:1,
-      text:'OrderFastFood',
+      text:'ফাস্ট ফোড',
       link:'/OrderFastFood'
     },
     {
-      id:1,
-      text:'all product',
+      id:2,
+      text:'কম্ব প্যাকেজ',
+      link:'/comboPackage'
+    },
+    {
+      id:3,
+      text:'সব পণ্য',
       link:'/allProduct'
     },
   ]
@@ -87,7 +92,7 @@ const Navbar = () => {
           {
             user ? <>
                 <div className="dropdown">
-                <div tabIndex={0} role="button" className="btn btn-ghost">
+                <div tabIndex={0} role="button" className="btn btn-ghost text-neutral font-semibold text-2xl">
                   <FiSettings />
                 </div>
                 <ul

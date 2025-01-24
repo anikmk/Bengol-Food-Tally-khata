@@ -16,6 +16,9 @@ import AllProduct from "../Pages/AllProduct/AllProduct";
 import AddFastFood from "../Pages/Dashboard/AddFastFood/AddFastFood";
 import AddAllProduct from "../Pages/Dashboard/AddAllProduct/AddAllProduct";
 import OrderDetailsPage from "../Pages/OrderFastFood/OrderDetailsPage/OrderDetailsPage";
+import ComboPackage from "../Pages/CamboPackage/ComboPackage";
+import AboutPage from "../Pages/Home/HomeComponents/AboutPage/AboutPage";
+import ContactPage from "../Pages/Home/HomeComponents/ContactSection/ContactPage";
 
 export const router = createBrowserRouter([
     {
@@ -40,8 +43,20 @@ export const router = createBrowserRouter([
                 element:<OrderDetailsPage />
             },
             {
+                path:"/comboPackage",
+                element:<ComboPackage />
+            },
+            {
                 path:'/allProduct',
                 element:<AllProduct />
+            },
+            {
+                path:"/about",
+                element:<AboutPage />
+            },
+            {
+                path:'/contact',
+                element:<ContactPage />
             },
             {
                 path:'/signUp',

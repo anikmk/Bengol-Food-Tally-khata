@@ -29,6 +29,7 @@ const client = new MongoClient(uri, {
 const userCollection = client.db("BengolShop").collection("users");
 const debtsCollection = client.db("BengolShop").collection("debts");
 const fastFoodCollection = client.db("BengolShop").collection("fastFoods");
+const fastFoodOrderCollection = client.db("BengolShop").collection("fastFoodOrder");
 
 async function run() {
   try {
@@ -277,6 +278,14 @@ app.post('/fastFoods',async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 });
 
+app.get('/allfastFood', async(req,res) => {
+  try{
+    const result = await fastFoodCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
 app.get('/getFastFood', async(req,res) => {
   try{
     const {searchText,category} = req.query;
@@ -304,7 +313,14 @@ app.get('/getSingleFastFood/:id', async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
-
+app.post("/customerOrder", async(req,res) => {
+  try{
+    const customerOrderData = req.body;
+    const result = await fastFoodOrderCollection.insertOne(customerOrderData);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 
 

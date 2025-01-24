@@ -16,8 +16,8 @@ const FoodCard = ({food,loading}) => {
                         alt=""
                       />
     
-                      <div className=" hoverEffect absolute bg-white text-white top-0 -right-14 group-hover:right-0 group-hover:text-black group-hover:bg-neutral">
-                        <div className="hover:bg-primary hover:text-neutral md:px-4 px-2 md:py-4 py-2 hover:cursor-pointer ">
+                      <div className=" hoverEffect absolute top-0 -right-14 group-hover:right-0">
+                        <div className="hover:bg-neutral bg-primary hover:text-primary md:px-4 px-2 md:py-4 py-2 hover:cursor-pointer ">
                           <CiHeart />
                         </div>
                       </div>
@@ -29,16 +29,16 @@ const FoodCard = ({food,loading}) => {
                           {food?.foodDescription}
                         </div>
                         <div className="flex items-center my-2 text-sm justify-between">
-                          <p>star</p>
-                          <p className="text-red-500">{food?.available}</p>
+                          <p className="text-primary text-[16px]">start</p>
+                          <p className={`${food?.available === true ? "text-green-700":"text-primary"} text-[16px]`}>{food?.available === true ? "In Stock":"Stock Out"}</p>
                         </div>
                         <div className="relative">
-                          <h3 className="text-center border border-slate-300 font-medium py-2 group-hover:opacity-0 transition duration-300">
-                            {food?.foodPrice}
+                          <h3 className="text-center border border-primary font-medium py-2 group-hover:opacity-0 transition duration-300">
+                            {food?.foodPrice} টাকা
                           </h3>
                           <Link to={`/foodDetails/?id=${food?._id}`}>
-                            <button className=" mx-auto w-full px-4 py-2 absolute -bottom-20 group-hover:bottom-0 font-medium group-hover:text-black hover:bg-primary rounded  text-white hoverEffect">
-                              Buy Now
+                            <button className=" mx-auto w-full px-4 py-2 absolute -bottom-20 group-hover:bottom-0 font-medium group-hover:text-neutral bg-primary rounded  text-white hoverEffect">
+                            এখনই কিনুন
                             </button>
                           </Link>
                         </div>
