@@ -1,4 +1,4 @@
-
+import { FaPhoneVolume } from "react-icons/fa6";
 
 const ContactPage = () => {
   return (
@@ -12,7 +12,7 @@ const ContactPage = () => {
         </p>
 
         {/* Contact Form */}
-        <form className="bg-white shadow-md rounded-lg p-8">
+        <form className="bg-white shadow-xl rounded-lg p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-700 font-bold mb-2">
@@ -20,7 +20,7 @@ const ContactPage = () => {
               </label>
               <input
                 type="text"
-                className="w-full border-gray-300 rounded-lg shadow-sm p-3"
+                className="w-full border border-pink-300 hover:shadow-md rounded-lg  p-3"
                 placeholder="আপনার নাম লিখুন"
                 required
               />
@@ -31,7 +31,7 @@ const ContactPage = () => {
               </label>
               <input
                 type="email"
-                className="w-full border-gray-300 rounded-lg shadow-sm p-3"
+                className="w-full border border-pink-300 hover:shadow-md rounded-lg  p-3"
                 placeholder="আপনার ইমেইল লিখুন"
                 required
               />
@@ -43,17 +43,31 @@ const ContactPage = () => {
             </label>
             <textarea
               rows="5"
-              className="w-full border-gray-300 rounded-lg shadow-sm p-3"
+              className="w-full rounded-lg p-3 border border-pink-300 hover:shadow-md"
               placeholder="আপনার বার্তা লিখুন"
               required
             ></textarea>
           </div>
+          <div className="md:flex items-center justify-between">
           <button
             type="submit"
-            className="mt-6 bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-secondary transition"
+            className="mt-6 bg-primary text-white px-6 py-3 rounded-md shadow-md hover:bg-secondary transition"
           >
             বার্তা পাঠান
           </button>
+          <div className="mt-6">
+            <label className=" flex items-center justify-center gap-5 text-gray-700 font-bold mb-2">
+             <div className="flex items-center gap-2">
+              <FaPhoneVolume />
+             <h3> হেল্পলাইন টেলিফোন :</h3>
+             </div>
+              <div><p>০১৭৮৫৮২-৫২০২</p>
+              <p>+8801785825202</p></div>
+            </label>
+            
+          </div>
+          </div>
+          
         </form>
       </div>
     </div>

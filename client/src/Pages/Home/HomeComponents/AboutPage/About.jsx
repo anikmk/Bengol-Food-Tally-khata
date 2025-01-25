@@ -31,9 +31,9 @@ const About = () => {
           {/* Image Section */}
           <div>
             <img
-              src="https://via.placeholder.com/600x400"
+              src="./about.png"
               alt="About Us"
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
           </div>
         </div>

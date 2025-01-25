@@ -17,7 +17,7 @@ const ContactSection = () => {
             </p>
             <Link 
               to="/contact" 
-              className="bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-neutral transition"
+              className="bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-slate-500 transition"
             >
               বিস্তারিত জানতে ক্লিক করুন
             </Link>
@@ -26,9 +26,9 @@ const ContactSection = () => {
           {/* Image Section */}
           <div>
             <img
-              src="https://via.placeholder.com/600x400"
+              src="./contact.png"
               alt="Contact Us"
-              className="rounded-lg shadow-lg"
+              className="rounded-lg"
             />
           </div>
         </div>
