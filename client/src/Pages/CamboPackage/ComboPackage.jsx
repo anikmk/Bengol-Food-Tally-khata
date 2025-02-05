@@ -4,27 +4,97 @@ import { FaCartPlus } from "react-icons/fa";
 const ComboPackage = () => {
   const packages = [
     {
-      id: 1,
-      name: "জন্মদিন প্যাকেজ",
-      description: "জন্মদিনের জন্য সেরা মিষ্টি এবং খাবারের প্যাকেজ।",
-      price: "৳ ৩৫০০",
-      img: "https://via.placeholder.com/300x200",
+      "id": 1,
+      "name": "জন্মদিন প্যাকেজ",
+      "description": "জন্মদিনের জন্য সেরা মিষ্টি এবং খাবারের প্যাকেজ।",
+      "price": "3500",
+      "img": "https://via.placeholder.com/300x200",
+      "items": [
+        {
+          "itemName": "চকলেট কেক",
+          "quantity": 1
+        },
+        {
+          "itemName": "সন্দেশ",
+          "quantity": 10
+        },
+        {
+          "itemName": "চিপস",
+          "quantity": 5
+        },
+        {
+          "itemName": "কোল্ড ড্রিংকস",
+          "quantity": 3
+        },
+        {
+          "itemName": "সমুচা",
+          "quantity": 10
+        }
+      ],
+      "totalItems": 5
     },
     {
-      id: 2,
-      name: "বিবাহ প্যাকেজ",
-      description: "বিবাহের জন্য আকর্ষণীয় খাবার এবং মিষ্টি প্যাক।",
-      price: "৳ ৭৫০০",
-      img: "https://via.placeholder.com/300x200",
+      "id": 2,
+      "name": "বিবাহ প্যাকেজ",
+      "description": "বিবাহের জন্য আকর্ষণীয় খাবার এবং মিষ্টি প্যাক।",
+      "price": "7500",
+      "img": "https://via.placeholder.com/300x200",
+      "items": [
+        {
+          "itemName": "রসগোল্লা",
+          "quantity": 20
+        },
+        {
+          "itemName": "চমচম",
+          "quantity": 15
+        },
+        {
+          "itemName": "নিমকি",
+          "quantity": 12
+        },
+        {
+          "itemName": "কাচ্চি বিরিয়ানি",
+          "quantity": 5
+        },
+        {
+          "itemName": "বোরহানি",
+          "quantity": 5
+        }
+      ],
+      "totalItems": 5
     },
     {
-      id: 3,
-      name: "বিশেষ দিন প্যাকেজ",
-      description: "যেকোনো বিশেষ দিনের জন্য প্রস্তুত করা খাবার প্যাক।",
-      price: "৳ ৫৫০০",
-      img: "https://via.placeholder.com/300x200",
-    },
-  ];
+      "id": 3,
+      "name": "বিশেষ দিন প্যাকেজ",
+      "description": "যেকোনো বিশেষ দিনের জন্য প্রস্তুত করা খাবার প্যাক।",
+      "price": "5500",
+      "img": "https://via.placeholder.com/300x200",
+      "items": [
+        {
+          "itemName": "পেস্ট্রি কেক",
+          "quantity": 3
+        },
+        {
+          "itemName": "ফ্রাইড চিকেন",
+          "quantity": 6
+        },
+        {
+          "itemName": "সিংগারা",
+          "quantity": 15
+        },
+        {
+          "itemName": "চটপটি",
+          "quantity": 2
+        },
+        {
+          "itemName": "ফালুদা",
+          "quantity": 2
+        }
+      ],
+      "totalItems": 5
+    }
+  ]
+  
 
   return (
     <div className="bg-gray-100 py-10">

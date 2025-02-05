@@ -5,6 +5,7 @@ import LatestFood from "./HomeComponents/LatestFood/LatestFood";
 import About from "./HomeComponents/AboutPage/About";
 import ContactSection from "./HomeComponents/ContactSection/ContactSection";
 import ServicesSection from "./HomeComponents/OurServices/Services";
+import CustomOrder from "./HomeComponents/CustomOrder/CustomOrder";
 
 const Home = () => {
     return (
@@ -16,6 +17,7 @@ const Home = () => {
         </marquee> </div>
         <LatestFood />
         <ServicesSection />
+        <CustomOrder />
         <About />
         <ContactSection />
         </>

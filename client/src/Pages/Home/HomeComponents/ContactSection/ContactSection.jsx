@@ -6,6 +6,14 @@ const ContactSection = () => {
     <div className="bg-secondary py-10 text-white">
       <div className="container mx-auto px-4 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
+           {/* Image Section */}
+           <div>
+            <img
+              src="./contact.png"
+              alt="Contact Us"
+              className="rounded-lg"
+            />
+          </div>
           {/* Text Section */}
           <div>
             <h2 className="text-3xl font-bold mb-4">
@@ -21,15 +29,6 @@ const ContactSection = () => {
             >
               বিস্তারিত জানতে ক্লিক করুন
             </Link>
-          </div>
-
-          {/* Image Section */}
-          <div>
-            <img
-              src="./contact.png"
-              alt="Contact Us"
-              className="rounded-lg"
-            />
           </div>
         </div>
       </div>
