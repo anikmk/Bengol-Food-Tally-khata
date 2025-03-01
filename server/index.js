@@ -322,8 +322,27 @@ app.post("/customerOrder", async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
+// order product 
+app.get("/customer/allOrders",async(req,res) => {
+  try{
+    const result = await fastFoodOrderCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
-
+app.delete('/deleteCustomerOrder/:id',async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await fastFoodOrderCollection.deleteOne(query);
+    if(result.deletedCount === 0){
+      return res.status(400).send({message:"user not found"})
+    }
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 
 app.listen(port, () => {

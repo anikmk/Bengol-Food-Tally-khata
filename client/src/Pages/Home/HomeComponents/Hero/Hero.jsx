@@ -20,7 +20,7 @@ const Hero = () => {
           >
             <div className="hero-overlay bg-slate-900 bg-opacity-80"></div>
             <div className="hero-content text-center">
-              <div className="md:w-[500px]">
+              <div className="md:w-[550px]">
                 {/* sociol sign up */}
                 <div>
                 <h1 className="mb-5 text-2xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">রাজনগর বেঙ্গল ফুড আপনার বিশ্বস্ত দোকান</h1>
@@ -33,6 +33,12 @@ const Hero = () => {
                     }
                     </>
                   }
+                </div>
+                <div className="flex items-center justify-center text-purple-50 gap-4 mt-5 text-[18px]">
+                  <div>অনিক কনফেকশনারী</div>
+                  <div>প্রোঃ অর্জুন মল্লিক</div>
+                  <div>ফোনঃ ০১৭৮৫-৮২৫২০২</div>
+
                 </div>
                 </div>
               </div>

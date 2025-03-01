@@ -4,7 +4,7 @@ import { CiHome } from "react-icons/ci";
 import { GrGallery } from "react-icons/gr";
 import { CiShop } from "react-icons/ci";
 import { IoCreateOutline } from "react-icons/io5";
-
+import { AiOutlineProduct } from "react-icons/ai";
 const Dashboard = () => {
 
     const closeDrawer = () => {
@@ -19,30 +19,36 @@ const Dashboard = () => {
         icon:<CiHome />,
         id:1
         },
+        {
+        item:"সব অর্ডার দেখুন",
+        link:"/dashboard/allOrders",
+        icon: <AiOutlineProduct />,
+        id:2
+        },
         {item:"পাওনাদার যুক্ত করুন",
         link:"/dashboard/addDebts",
         icon:<GrGallery />,
-        id:2
+        id:3
         },
         {item:"সব পাওনাদার দেখুন",
         link:"/dashboard/showAlldebts",
         icon:<CiShop />,
-        id:3
+        id:4
         },
         {item:"ফাস্ট ফোড যুক্ত করুন",
         link:"/dashboard/addFastFood",
         icon:<CiShop />,
-        id:3
+        id:5
         },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
-        id:3
+        id:6
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:4
+        id:7
         },
         
     ]

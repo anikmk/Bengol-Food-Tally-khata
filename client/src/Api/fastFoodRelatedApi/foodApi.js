@@ -24,3 +24,13 @@ export const submitFastFoodOrder = async(customerOrderData) => {
     const {data} = await axiosPublic.post("/customerOrder",customerOrderData);
     return data;
 }
+
+export const getCustomersAllOrders = async() => {
+    const {data} = await axiosPublic.get('/customer/allOrders');
+    return data;
+}
+
+export const deleteCustomerOrder = async (id) => {
+    const {data} = await axiosPublic.delete(`/deleteCustomerOrder/${id}`);
+    return data;
+}

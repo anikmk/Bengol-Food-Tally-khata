@@ -19,6 +19,7 @@ import OrderDetailsPage from "../Pages/OrderFastFood/OrderDetailsPage/OrderDetai
 import ComboPackage from "../Pages/CamboPackage/ComboPackage";
 import AboutPage from "../Pages/Home/HomeComponents/AboutPage/AboutPage";
 import ContactPage from "../Pages/Home/HomeComponents/ContactSection/ContactPage";
+import AllOrders from "../Pages/Dashboard/AllOrders/AllOrders";
 
 export const router = createBrowserRouter([
     {
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
         element:<Dashboard />,
         errorElement:<ErrorPage />,
         children:[
+                {
+                    path:'allOrders',
+                    element:<PrivetRoute><AllOrders /></PrivetRoute>
+                },
                 {
                     path:'addDebts',
                     element:<PrivetRoute><AddDebts /></PrivetRoute>
