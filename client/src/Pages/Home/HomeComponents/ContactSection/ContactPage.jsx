@@ -59,10 +59,10 @@ const ContactPage = () => {
             <label className=" flex items-center justify-center gap-5 text-gray-700 font-bold mb-2">
              <div className="flex items-center gap-2">
               <FaPhoneVolume />
-             <h3> হেল্পলাইন টেলিফোন :</h3>
+             <h3> টেলিফোন :</h3>
              </div>
-              <div><p>০১৭৮৫৮২-৫২০২</p>
-              <p>+8801785825202</p></div>
+              <div><p>+8801785-825202</p>
+              <p>+8801626-728671</p></div>
             </label>
             
           </div>

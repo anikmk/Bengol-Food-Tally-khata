@@ -49,7 +49,7 @@ const LatestFood = () => {
             ref={carouselRef}
             className="carousel rounded-box mx-auto overflow-x-auto flex gap-4 scrollbar-hide"
           >
-            {fastFoods.map((food, inx) => (
+            {fastFoods?.map((food, inx) => (
               <div
                 key={inx}
                 className="flex-shrink-0 w-1/2 md:w-1/5 h-full"

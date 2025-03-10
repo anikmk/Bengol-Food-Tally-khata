@@ -20,6 +20,7 @@ import ComboPackage from "../Pages/CamboPackage/ComboPackage";
 import AboutPage from "../Pages/Home/HomeComponents/AboutPage/AboutPage";
 import ContactPage from "../Pages/Home/HomeComponents/ContactSection/ContactPage";
 import AllOrders from "../Pages/Dashboard/AllOrders/AllOrders";
+import ShopingCart from "../Componnents/Shared/NavBar/ShopingCart/ShopingCart";
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 path:'/foodDetails',
                 element:<OrderDetailsPage />
+            },
+            {
+                path:'/shopingCart',
+                element: <ShopingCart />
             },
             {
                 path:"/comboPackage",

@@ -34,3 +34,7 @@ export const deleteCustomerOrder = async (id) => {
     const {data} = await axiosPublic.delete(`/deleteCustomerOrder/${id}`);
     return data;
 }
+export const getShopingCartProduct = async (email) => {
+    const {data} = await axiosPublic.get(`/singleShopingCartProduct/${email}`);
+    return data;
+}

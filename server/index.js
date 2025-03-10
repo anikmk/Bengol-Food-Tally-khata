@@ -344,6 +344,15 @@ app.delete('/deleteCustomerOrder/:id',async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
+app.get('/singleShopingCartProduct/:email', async(req,res) => {
+  try{
+    const email = req.params.email;
+    const query = {customerEmail:email}
+    const result = await fastFoodOrderCollection.find(query).toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

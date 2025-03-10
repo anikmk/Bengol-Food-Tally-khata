@@ -8,10 +8,10 @@ import useAuth from '../../../hooks/useAuth';
 import { getSingleUser } from '../../../Api/userRelatedApi/userApi';
 // import Loader from '../Loader/Loader';
 import { FiSettings } from "react-icons/fi";
+import { BsCart2 } from "react-icons/bs";
 import Load from '../Loader/load/Load';
 const Navbar = () => {
   const {user,logOut,} = useAuth();
-  console.log(user);
   const [isMenuClick,setIsMenuClick] = useState();
   
   const handleLogOut = async() => {
@@ -36,13 +36,17 @@ const Navbar = () => {
       text:'সব পণ্য',
       link:'/allProduct'
     },
+    {
+      id:4,
+      text:<BsCart2 />,
+      link:'/shopingCart'
+    },
   ]
 
   const {data:singleUser = {}, isLoading} = useQuery({
     queryKey:[user?.email,"singleUser"],
     queryFn:async()=>await getSingleUser(user?.email),
   })
- console.log(singleUser);
 
   const isAdmin = singleUser?.status === "admin";
   console.log(isAdmin);
@@ -64,7 +68,11 @@ const Navbar = () => {
               <li className='text-base mt-2 rounded p-[4px] shadow-lg bg-neutral font-semibold'><Link to={'/'}>হোম</Link></li>
              {
               navLink.map((item) => 
-             <li className='text-base mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
+             <li className='text-base mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>
+              {
+                item?.id === 4 ? <>{item?.text} <span>1</span> </>:<>{item?.text}</>
+              }
+              </Link></li>
              )
              }
             </ul>
@@ -79,9 +87,15 @@ const Navbar = () => {
           <li className='text-base mr-2'><Link to={'/'}>হোম</Link></li>
           {
           navLink.map((item) => 
-             <li className='text-base mr-2' key={item?.id}><Link to={item?.link}>{item?.text}</Link></li>
+             <li className='text-base mr-2' key={item?.id}><Link to={item?.link}>
+              {
+                item?.id === 4 ? <>{item?.text} <span>1</span> </>:<>{item?.text}</>
+              }
+            
+             </Link></li>
              )
           }
+          
           </ul>
         </div>
        

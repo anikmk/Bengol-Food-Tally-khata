@@ -110,35 +110,35 @@ const handleOrderSubmit = async(e) => {
             <div className='space-y-3'>
             <div className="">
             <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">✔ চাহিদা অনুযাই আপনার তথ্য দিন </h3>
-            <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">চাহিদা অনুযাই নির্দিষ্ট তথ্য দিয়ে ফরম টি পূরণ করুন ।।</span></p>
+            <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">শুধুমাত্র রাজনগর বাজার এর জন্য ডেলিভারি চার্জ ১০ টাকা। রাজনগর থেকে এরাউন্ড দুই কিলোঃ চার্জ ২০ টাকা ।।</span></p>
             </div>
             <div className="divider"></div>
             <div className='md:flex items-center  gap-5'>
             <div className='w-full mb-2'>
-              <h3 className="mb-2 text-[15px] text-slate-700"> দয়া করে আপনার সম্পূর্ণ নাম দিন</h3>
-            <input name="fullName" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="text" placeholder=' সম্পুর্ণ নাম লিখুন---' required/>
+              <h3 className="mb-2 text-[15px] text-slate-700">আপনার সম্পূর্ণ নাম দিন</h3>
+            <input name="fullName" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="text" placeholder=' সম্পুর্ণ নাম লিখুন---' required/>
             </div>
 
             <div className='w-full'>
-              <h3 className="mb-2 text-[15px] text-slate-700"> দয়া করে পাওনাদারের ঠিকানা দিন</h3>
-            <input name="address" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="text" placeholder='যেমন গ্রাম এর নাম দিন---' required/>
+              <h3 className="mb-2 text-[15px] text-slate-700">ঠিকানা দিন</h3>
+            <input name="address" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="text" placeholder='যেমন গ্রাম এর নাম দিন---' required/>
             </div>
             </div>
             <div className='md:flex items-center  gap-5'>
             <div className='w-full mb-2'>
               <h3 className="mb-2 text-[15px] text-slate-700">সচল মোবাইল নম্বর দিন</h3>
-            <input name="phone" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="number" placeholder='+৮৮..' required/>
+            <input name="phone" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="number" placeholder='+৮৮..' required/>
             </div>
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">আপনার ই-মেইন দিন</h3>
-            <input name="email" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="email" defaultValue={user?.email}  required/>
+            <input name="email" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="email" defaultValue={user?.email}  required/>
             </div>
             </div>
             <div>
               <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
               <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
-            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px]" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
+            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
             </div>
             <div onClick={handleConfirmOrder} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
             <button>{load === true ? <Load />:"অর্ডার করুন"}</button>
