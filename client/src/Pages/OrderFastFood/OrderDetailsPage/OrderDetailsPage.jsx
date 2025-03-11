@@ -21,7 +21,7 @@ const OrderDetailsPage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
-  const {data:detailsFood,isLoading} = useQuery({
+  const {data:detailsFood,isLoading,refetch} = useQuery({
     queryKey:[id,"detailsFood"],
     queryFn:async()=> await getSingleFoodById(id)
   })
@@ -66,6 +66,7 @@ const handleOrderSubmit = async(e) => {
     const result = await submitFastFoodOrder(customerOrderData);
     if(result.insertedId){
       toast.success("অভিনন্দন ! আপনার অর্ডার সম্পুর্ণ হয়েছে। দয়া করে অপেক্ষা করুন, আমাদের প্রতিনিধি কিচ্ছুক্ষনের মধ্যে আপনার সাথে যোগাযোগ করবে।",{duration:8000});
+      refetch();
       form.reset();
     }
   }
@@ -110,7 +111,7 @@ const handleOrderSubmit = async(e) => {
             <div className='space-y-3'>
             <div className="">
             <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">✔ চাহিদা অনুযাই আপনার তথ্য দিন </h3>
-            <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">শুধুমাত্র রাজনগর বাজার এর জন্য ডেলিভারি চার্জ ১০ টাকা। রাজনগর থেকে এরাউন্ড দুই কিলোঃ চার্জ ২০ টাকা ।।</span></p>
+            <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">শুধুমাত্র রাজনগর, খারপাড়া, বাজুয়া, পারশিপাড়া,  কণিগ্রাম, মজিদপুর এই গ্রাম গুলোতে হোম সার্ভিস চলিত। </span></p>
             </div>
             <div className="divider"></div>
             <div className='md:flex items-center  gap-5'>
@@ -138,7 +139,7 @@ const handleOrderSubmit = async(e) => {
             <div>
               <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
               <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
-            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
+            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
             </div>
             <div onClick={handleConfirmOrder} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
             <button>{load === true ? <Load />:"অর্ডার করুন"}</button>

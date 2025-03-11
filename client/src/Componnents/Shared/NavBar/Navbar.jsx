@@ -10,6 +10,7 @@ import { getSingleUser } from '../../../Api/userRelatedApi/userApi';
 import { FiSettings } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
 import Load from '../Loader/load/Load';
+import { getShopingCartProduct } from '../../../Api/fastFoodRelatedApi/foodApi';
 const Navbar = () => {
   const {user,logOut,} = useAuth();
   const [isMenuClick,setIsMenuClick] = useState();
@@ -49,7 +50,12 @@ const Navbar = () => {
   })
 
   const isAdmin = singleUser?.status === "admin";
-  console.log(isAdmin);
+  
+  const {data:orderQuantity} = useQuery({
+          queryKey:"orderQuantity",
+          queryFn:async () => await getShopingCartProduct(user?.email) 
+      })
+      
   return (
 
     <>
@@ -68,9 +74,9 @@ const Navbar = () => {
               <li className='text-base mt-2 rounded p-[4px] shadow-lg bg-neutral font-semibold'><Link to={'/'}>হোম</Link></li>
              {
               navLink.map((item) => 
-             <li className='text-base mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>
+             <li className='text-lg mt-3 rounded p-[4px] shadow-lg bg-neutral font-semibold' key={item?.id}><Link to={item?.link}>
               {
-                item?.id === 4 ? <>{item?.text} <span>1</span> </>:<>{item?.text}</>
+                item?.id === 4 ? <>{item?.text} <span className='-mt-2 font-semibold'>{orderQuantity?.length}</span> </>:<>{item?.text}</>
               }
               </Link></li>
              )
@@ -87,9 +93,9 @@ const Navbar = () => {
           <li className='text-base mr-2'><Link to={'/'}>হোম</Link></li>
           {
           navLink.map((item) => 
-             <li className='text-base mr-2' key={item?.id}><Link to={item?.link}>
+             <li className='text-lg mr-2' key={item?.id}><Link to={item?.link}>
               {
-                item?.id === 4 ? <>{item?.text} <span>1</span> </>:<>{item?.text}</>
+                item?.id === 4 ? <>{item?.text} <span className='-mt-2 font-semibold'>{orderQuantity?.length}</span> </>:<>{item?.text}</>
               }
             
              </Link></li>
