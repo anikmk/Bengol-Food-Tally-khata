@@ -30,6 +30,7 @@ const userCollection = client.db("BengolShop").collection("users");
 const debtsCollection = client.db("BengolShop").collection("debts");
 const fastFoodCollection = client.db("BengolShop").collection("fastFoods");
 const fastFoodOrderCollection = client.db("BengolShop").collection("fastFoodOrder");
+const PackageCollection = client.db("BengolShop").collection("packages");
 
 async function run() {
   try {
@@ -353,6 +354,31 @@ app.get('/singleShopingCartProduct/:email', async(req,res) => {
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
+
+
+
+
+
+// package handlers:
+app.post('/createPackages',async(req,res) => {
+  try{
+    const packages = req.body;
+    const result = await PackageCollection.insertOne(packages);
+    res.send(result)
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
+app.get("/packages",async(req,res)=> {
+  try{
+    const result = await PackageCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
+
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

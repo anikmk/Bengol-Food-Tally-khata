@@ -21,6 +21,9 @@ import AboutPage from "../Pages/Home/HomeComponents/AboutPage/AboutPage";
 import ContactPage from "../Pages/Home/HomeComponents/ContactSection/ContactPage";
 import AllOrders from "../Pages/Dashboard/AllOrders/AllOrders";
 import ShopingCart from "../Componnents/Shared/NavBar/ShopingCart/ShopingCart";
+import UserRoute from "./PrivetRoutes/UserRoute/UserRoute";
+import AddPackages from "../Pages/Dashboard/AddPackages/AddPackages";
+import MorePackages from "../Pages/Home/HomeComponents/Package/MorePackages/MorePackages";
 
 export const router = createBrowserRouter([
     {
@@ -42,7 +45,11 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/foodDetails',
-                element:<OrderDetailsPage />
+                element:<UserRoute><OrderDetailsPage /></UserRoute>
+            },
+            {
+                path:'/morePackagesForWedding',
+                element:<MorePackages />
             },
             {
                 path:'/shopingCart',
@@ -104,6 +111,10 @@ export const router = createBrowserRouter([
                 {
                     path:'addFastFood',
                     element:<AddFastFood />
+                },
+                {
+                    path:'addPackages',
+                    element:<AddPackages />
                 },
                 {
                     path:'addAllProduct',

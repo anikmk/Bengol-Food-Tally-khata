@@ -36,7 +36,7 @@ const SignUp = () => {
             const result = await postUser(userData);
             if(result?.insertedId){
               toast.success("ধন্যবাদ আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।")
-              navigate('/openYourShop')
+              navigate('/')
             }
           }  
         }
@@ -57,7 +57,7 @@ const SignUp = () => {
         const dbResult = await postUser(userData);
         if(dbResult?.insertedId){
           toast.success('ধন্যবাদ গুগল আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।')
-          navigate('/openYourShop')
+          navigate('/')
         }
         else{navigate('/')}
       }

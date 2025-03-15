@@ -40,15 +40,20 @@ const Dashboard = () => {
         icon:<CiShop />,
         id:5
         },
+        {item:"প্যাকেজ যুক্ত করুন",
+        link:"/dashboard/addPackages",
+        icon:<CiShop />,
+        id:6
+        },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
-        id:6
+        id:7
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:7
+        id:8
         },
         
     ]
