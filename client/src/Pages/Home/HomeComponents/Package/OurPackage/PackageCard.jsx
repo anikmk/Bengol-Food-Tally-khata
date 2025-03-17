@@ -24,7 +24,7 @@ const PackageCard = ({item,loading}) => {
                     <span className="text-lg font-bold text-secondary">
                       {"pkg.price"}
                     </span>
-                    <Link to={`/morePackagesForWedding/?id=${_id}`}>
+                    <Link to={`/morePackagesForWedding?id=${_id}&name=${encodeURIComponent(packageName)}`}>
                     <button className="bg-primary text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-secondary transition">
                       <FaCartPlus /> বিস্তারিত
                     </button>

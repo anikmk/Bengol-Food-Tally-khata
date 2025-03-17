@@ -378,6 +378,15 @@ app.get("/packages",async(req,res)=> {
   catch(err){res.send({message:"internal server error"})}
 })
 
+app.get("/morePackages/:id", async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await PackageCollection.find(query).toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 
 app.listen(port, () => {

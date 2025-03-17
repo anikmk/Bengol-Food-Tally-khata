@@ -24,6 +24,7 @@ import ShopingCart from "../Componnents/Shared/NavBar/ShopingCart/ShopingCart";
 import UserRoute from "./PrivetRoutes/UserRoute/UserRoute";
 import AddPackages from "../Pages/Dashboard/AddPackages/AddPackages";
 import MorePackages from "../Pages/Home/HomeComponents/Package/MorePackages/MorePackages";
+import CustomOrderForm from "../Pages/Home/HomeComponents/Package/MorePackages/CustomOrderForm/CustomOrderForm";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
             {
                 path:'/morePackagesForWedding',
                 element:<MorePackages />
+            },
+            {
+                path:'/customPackageOrderForm',
+                element:<CustomOrderForm />
             },
             {
                 path:'/shopingCart',

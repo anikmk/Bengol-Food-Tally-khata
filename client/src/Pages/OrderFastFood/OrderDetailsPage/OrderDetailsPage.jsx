@@ -21,6 +21,16 @@ const OrderDetailsPage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get("id");
+  // packages related data get from url
+  const packageName = searchParams.get("packageName");
+  const numberOfPeople = searchParams.get("numberOfPeople");
+  const packagePrice = searchParams.get("packagePrice");
+  const packageDescription = searchParams.get("description");
+  console.log(packageName,numberOfPeople,packagePrice,packageDescription);
+
+  // todo: porer kaj hobe form ta update kora jokon kew package order korbe tokon 
+  // jeno eta sotik moto kaj kore 
+
   const {data:detailsFood,isLoading,refetch} = useQuery({
     queryKey:[id,"detailsFood"],
     queryFn:async()=> await getSingleFoodById(id)
@@ -29,7 +39,7 @@ const OrderDetailsPage = () => {
   if (loading || isLoading) return <Loader />;
   if (!detailsFood) return <div>Data not found!</div>;
 
-  let price = detailsFood?.foodPrice;
+  let price = detailsFood?.foodPrice || packagePrice;
   const handleIncreseFood = () => {
     setQuantity(quantity + 1)
   }
@@ -92,7 +102,7 @@ const handleOrderSubmit = async(e) => {
              <span>2.4 (3)</span>
            <div>SKU:25415</div>
            </div>
-           <p className="text-black font-medium text-2xl ">{detailsFood?.foodPrice} টাকা</p>
+           <p className="text-black font-medium text-2xl ">{detailsFood?.foodPrice || packagePrice} টাকা</p>
            <p className="text-sm">{detailsFood?.foodDescription}</p>
            <div className="flex items-center justify-between md:gap-3">
                <div className="flex text-base items-center gap-9 py-3 px-4 font-semibold shadow-lg">
