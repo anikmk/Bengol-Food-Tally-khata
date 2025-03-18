@@ -3,6 +3,7 @@ import { IoReload } from "react-icons/io5";
 import { MdDownloadDone } from "react-icons/md";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { CiDiscount1 } from "react-icons/ci";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 import Container from "../../../../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -20,6 +21,24 @@ const CustomOrderForm = () => {
     const [load,setLoad] = useState(false);
     const [packageRequired, setPackageRequired] = useState(true);
     const [totalPackagePrice,setTotalPackagePrice] = useState(0);
+
+    // multiple state start
+    const [p_howMuchPackage, setHowMuchPackage] = useState(0);
+    const [p_customerFullName, setCustomerFullName] = useState();
+    const [p_customerPhone, setCustomerPhone] = useState();
+    const [p_pocketCondition, setPocketCondition] = useState();
+    const [p_typeOfPackage, setTypeOfPackage] = useState();
+    const [p_religion, setReligion] = useState();
+    const [p_chomoca, setChomoca] = useState(false);
+    const [p_singkara, setSingkara] = useState(false);
+    const [p_jilabi, setJilabi] = useState(false);
+    const [p_nimky, setNimky] = useState(false);
+    const [p_misty, setMisty] = useState(false);
+    console.log(p_misty);
+    const [p_drinks, setDrinks] = useState();
+    const [p_water, setWater] = useState();
+
+    // multiple state end
     const price = totalPackagePrice;
 
      // Handle Package Change
@@ -80,10 +99,22 @@ const CustomOrderForm = () => {
       }
       const handleCalculateTotalPackagePrice = (e) => {
         e.preventDefault();
-        // এখানে form থেকে "howMuchPackage" এর মান পাওয়া যাবে
-        const form = e.target.form; // ফর্মটি গেট করি
+        const form = e.target.form; 
         const howMuchPackage = form.howMuchPackage.value;
         const customerFullName = form.fullName.value;
+        setHowMuchPackage(howMuchPackage);
+        setCustomerFullName(customerFullName);
+        setCustomerPhone(form.phone.value);
+        setPocketCondition(form.pocketCondition.value);
+        setTypeOfPackage(form.typeOfPackage.value);
+        setReligion(form.religion.value);
+        setChomoca(form.chomoca.checked);
+        setSingkara(form.singkara.checked);
+        setJilabi(form.jilabi.checked);
+        setNimky(form.nimky.checked);
+        setMisty(form.misty.checked);
+        setDrinks(form.drinks.value);
+        setWater(form.water.value);
         const totalWater500Price = howMuchPackage * awater500;
         const totalWater1000Price = howMuchPackage * awater1000;
         const totalWater2000Price = howMuchPackage * awater2000;
@@ -112,13 +143,18 @@ const CustomOrderForm = () => {
         setTotalPackagePrice(totalPackagePriceIs);
         console.log(totalPackagePriceIs); // এর সাথে `totalPackagePrice` গেট হবে।
         toast.success(`মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalPackagePriceIs} টাকা`,{duration:7000});
+
       };
-    
+      
+      const handleTrustBengalFood = (e) => {
+        if (e.target.checked) {
+          toast.success("ধন্যবাদ! অনিক বেঙ্গল ফুড", { duration: 4000 });
+        }
+      }
     return <>
          <div>
    <Container>
    <div className="my-14">
-    
      <div className="flex flex-col items-center justify-center ">
        <div className="shadow-lg p-4 w-full md:w-[70%]">
          <div className=" space-y-4">
@@ -310,6 +346,80 @@ const CustomOrderForm = () => {
                 <div className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
                 <button>{load === true ? <Load />:"অর্ডার করুন"}</button>
                 </div>                
+                </div>
+                
+                {/* after calculate then show this content for batter user ex: */}
+                <div className="space-y-3">
+                    
+                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                 <p>আপনার নাম <span className="underline">{p_customerFullName}</span></p>  
+                </div>
+                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                 <p>আপনার মোবাইলঃ <span className="underline">{p_customerPhone}</span></p>  
+                </div>
+                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                {
+                  p_pocketCondition == "true" ? <> <p>আপনার খাবার প্যাকেজ করা থাকবে</p></>:<> <p>আপনার খাবার প্যাকেজ করা থাকবে না</p></>
+                }
+                  
+                </div>
+                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                 <p>আপনি <span className="underline">{p_religion === "islam" ? "ইসলাম":"সনাতন"}</span> ধর্মের মানুষ</p>  
+                </div>
+                <div className="flex items-center gap-2">
+                <FaArrowAltCircleRight />
+                <p>
+                  আপনি{" "}
+                  <span className="underline">{p_typeOfPackage === "wedding" && "বিবাহ "}
+                  {p_typeOfPackage === "birthday" && "জন্মদিন "}
+                  {p_typeOfPackage === "importendDay" && "বিশেষদিন "}
+                  {p_typeOfPackage === "othersDay" && "অন্যান্য "}</span>
+                  অনুষ্টানের জন্য খাবার ক্রয় করতে চাচ্ছেন।
+                </p>
+              </div>
+                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                 <p>আপনি <span className="text-primary font-semibold text-lg underline">{p_howMuchPackage}</span> জন মেহমানের জন্য প্যাকেজ সেলেক্ট করেছেন।</p>  
+                </div>
+                <div className="flex items-center gap-2">
+                <FaArrowAltCircleRight />
+                <p>
+                  প্রত্যেক পকেটের মধ্যে 
+                  <span className="underline">{p_misty && " মিষ্টি "}
+                  {p_nimky && ` ${p_misty ? "ও " : ""}নিমকি `}
+                  {p_jilabi && ` ${p_misty || p_nimky ? "ও " : ""}জিলাপী `}
+                  {p_chomoca && ` ${p_misty || p_nimky || p_jilabi ? "ও " : ""}চমচা `}
+                  {p_singkara && ` ${p_misty || p_nimky || p_jilabi || p_chomoca ? "ও " : ""}সিংকারা `}  </span>
+                  রাখার জন্য বলছেন।
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+              <FaArrowAltCircleRight />
+              <p>
+                ড্রিঙ্ক হিসাবে আপনি{" "}
+                <span className="underline">{p_drinks === "speed" && "স্প্রিড"}
+                {p_drinks === "tiger" && "টাইগার"}
+                {p_drinks === "cocacula" && "কুকাকুলা"}
+                {p_drinks === "7up" && "সেভেন আপ"}</span> সিলেক্ট করেছেন।
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+            <FaArrowAltCircleRight />
+            <p>
+              খাবার পানি হিসাবে আপনি{" "}
+              <span className="underline">{p_water === "half letter" && "আধা লিটার "}
+              {p_water === "1 letter" && "এক লিটার "}
+              {p_water === "2 letter" && "দুই লিটার "}</span> 
+              সিলেক্ট করেছেন।
+            </p>
+          </div>
+
+                <div className="mt-8">
+                    <div className="flex items-center gap-3">
+                    <input onClick={(e)=>handleTrustBengalFood(e)}  type="checkbox"  className="checkbox-sm checkbox-secondary" />
+                    <label>আপনার দেওয়া তথ্য অনুযাই আমরা এই ডাটা সেইভ করে রাখব। যদি ভূল না হয় তাহলে ঠিক চিহ্নতে চাপ দিন। ধন্যবাদ</label>
+                    </div>
+                </div>
+                <div className="divider"></div>
                 </div>
                 </div>
                 </div> 
@@ -518,11 +628,6 @@ const CustomOrderForm = () => {
            
     </form>
            </div>
-           {/* <div onClick={handleConfirmOrder} className="w-full bg-primary text-center p-2 text-neutral"><button>অর্ডার করুন</button></div> */}
-           {/* <div className="flex items-center gap-3 font-medium cursor-pointer hover:text-primary">
-           <IoHeartOutline />
-            সেইব করে রাখুন
-           </div> */}
            <div className="space-y-3">
            <div className="flex items-center gap-3">
             <MdDownloadDone />
@@ -540,10 +645,6 @@ const CustomOrderForm = () => {
             <CiDiscount1 />
             <span>বিশেষ উৎসবের জন্য বিশেষ ডিসকাউন্ট</span>
           </div>
-          {/* <div className="flex items-center gap-3">
-            <SiFoodpanda />
-            <span>মিনিমাম ১০০ টাকার খাবার অর্ডার করুন</span>
-          </div> */}
           <div className="flex items-center gap-3">
             <IoReload />
             <span>অর্ডার করা খাবার রিটার্ন নেওয়া হবে না</span>
@@ -554,8 +655,6 @@ const CustomOrderForm = () => {
      </div>
    </div>
    <div>
-       
-       {/* review */}
    </div>
  </Container>
 </div>
