@@ -1,14 +1,10 @@
 import { FaMinus, FaPlus } from "react-icons/fa";
-import { IoReload } from "react-icons/io5";
-import { MdDownloadDone } from "react-icons/md";
-import { MdOutlineDeliveryDining } from "react-icons/md";
-import { CiDiscount1 } from "react-icons/ci";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import Container from "../../../../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Load from "../../../../../../Componnents/Shared/Loader/load/Load";
-import { misty } from "./FormData/formData";
+import { misty, waters } from "./FormData/formData";
 import { peopleOptions } from "./FormData/formData";
 import { nimky } from "./FormData/formData";
 import { jilabi } from "./FormData/formData";
@@ -16,11 +12,13 @@ import { doi } from "./FormData/formData";
 import { chomoca } from "./FormData/formData";
 import { singkara } from "./FormData/formData";
 import { drinks } from "./FormData/formData";
+import CustomerOrderFacilites from "./CustomerOrderFacilities/CustomerOrderFacilites";
 const CustomOrderForm = () => {
     const [quantity,setQuantity] = useState(1);
     const [load,setLoad] = useState(false);
     const [packageRequired, setPackageRequired] = useState(true);
     const [totalPackagePrice,setTotalPackagePrice] = useState(0);
+    const [showFacilities,setShowFacilites] = useState(false);
 
     // multiple state start
     const [p_howMuchPackage, setHowMuchPackage] = useState(0);
@@ -58,6 +56,7 @@ const CustomOrderForm = () => {
       }
       let totalFoodPrice = price * quantity;
 
+      // for single items price
       let awater500 = 15;
       let awater1000 = 20;
       let awater2000 = 40;
@@ -70,7 +69,19 @@ const CustomOrderForm = () => {
       let animky = 3;
       let amisty = 8;
 
-      const handleOrderSubmit = async(e) => {
+      // for one kg items price
+      // let perPichwater = 15;
+      // let perPichspeed = 30;
+      // let perPichcocacula = 25;
+      // let perPichsevenUp = 25;
+      // let perPichchomoca = 20;
+      // let perPichsingkara = 20;
+      // let perKgjilabi = 5;
+      // let perKgnimky = 3;
+      // let perKgmisty = 8;
+
+      // for package handler submit function
+      const handleIsPackageOrder = async(e) => {
         e.preventDefault();
         const form = e.target;
         const howMuchPackage = form.howMuchPackage.value;
@@ -91,12 +102,37 @@ const CustomOrderForm = () => {
         const customerEmail = form.email.value;
         const customerDescription = form.description.value;
         const customerOrderData = {howMuchPackage,typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
+        console.log(customerOrderData);   
+      }
+      // for without package handle function
+      const handleWithOutPackageOrder = async(e) => {
+        e.preventDefault();
+        const form = e.target;
+        const typeOfPackage = form.typeOfPackage.value;
+        const religion = form.religion.value;
+        const water = form.water.value;
+        const drinks = form.drinks.value;
+        const chomoca = form.chomoca.value;
+        const singkara = form.singkara.value;
+        const jilabi = form.jilabi.value;
+        const nimky = form.nimky.value;
+        const misty = form.misty.value;
+        const pocketCondition = form.pocketCondition.value;
+        const totalPackagePrice = price * quantity;
+        const customerFullName = form.fullName.value;
+        const customerAddress = form.address.value;
+        const customerPhone = form.phone.value;
+        const customerEmail = form.email.value;
+        const customerDescription = form.description.value;
+        const customerOrderData = {typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
         console.log(customerOrderData);
 
 
        
        
       }
+      
+      // handle calculate total price with package
       const handleCalculateTotalPackagePrice = (e) => {
         e.preventDefault();
         const form = e.target.form; 
@@ -141,14 +177,30 @@ const CustomOrderForm = () => {
           totalMistyPrice;
       
         setTotalPackagePrice(totalPackagePriceIs);
+        setShowFacilites(true)
         console.log(totalPackagePriceIs); // এর সাথে `totalPackagePrice` গেট হবে।
         toast.success(`মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalPackagePriceIs} টাকা`,{duration:7000});
 
       };
       
+      // handle calculate total price without package
+      const handleCalculateWithOutPackage = () => {
+
+
+
+
+
+
+
+
+
+
+
+
+      }
       const handleTrustBengalFood = (e) => {
         if (e.target.checked) {
-          toast.success("ধন্যবাদ! অনিক বেঙ্গল ফুড", { duration: 4000 });
+          toast.success(" অনিক বেঙ্গল ফুড আপনার তথ্য সংরক্ষণ করে রাখবে!", { duration: 4000 });
         }
       }
     return <>
@@ -170,10 +222,11 @@ const CustomOrderForm = () => {
            </div>
            {/* belling adress */}
            <div className="">
-           <form onSubmit={handleOrderSubmit}>
+           
             {
                 packageRequired ?
                  <>
+                 <form onSubmit={handleIsPackageOrder}>
                 <div className="my-8">
                 <div className='space-y-3'>
                 <div className="">
@@ -288,7 +341,7 @@ const CustomOrderForm = () => {
                 <select
                     name="drinks"
                     className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                    required>
+                    >
                     <option value="" disabled selected>নির্বাচন করুন</option>
                     <option value="speed">স্পিড-৩০ টাকা</option>
                     <option value="tiger">টাইগার- ৩০ টাকা</option>
@@ -302,7 +355,7 @@ const CustomOrderForm = () => {
                   <select
                     name="water"
                     className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                    required>
+                    >
                     <option value="" disabled selected>নির্বাচন করুন</option>
                     <option value="half letter">৫০০ গ্রাম- ১৫ টাকা</option>
                     <option value="1 letter">১০০০ গ্রাম- ৩০ টাকা</option>
@@ -349,85 +402,90 @@ const CustomOrderForm = () => {
                 </div>
                 
                 {/* after calculate then show this content for batter user ex: */}
-                <div className="space-y-3">
-                    
-                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
-                 <p>আপনার নাম <span className="underline">{p_customerFullName}</span></p>  
-                </div>
-                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
-                 <p>আপনার মোবাইলঃ <span className="underline">{p_customerPhone}</span></p>  
-                </div>
-                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
                 {
-                  p_pocketCondition == "true" ? <> <p>আপনার খাবার প্যাকেজ করা থাকবে</p></>:<> <p>আপনার খাবার প্যাকেজ করা থাকবে না</p></>
-                }
-                  
+                  showFacilities && <div className="space-y-3">
+                    
+                  <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                   <p>আপনার নাম <span className="underline">{p_customerFullName}</span></p>  
+                  </div>
+                  <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                   <p>আপনার মোবাইলঃ <span className="underline">{p_customerPhone}</span></p>  
+                  </div>
+                  <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                  {
+                    p_pocketCondition == "true" ? <> <p>আপনার খাবার প্যাকেজ করা থাকবে</p></>:<> <p>আপনার খাবার প্যাকেজ করা থাকবে না</p></>
+                  }
+                    
+                  </div>
+                  <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                   <p>আপনি <span className="underline">{p_religion === "islam" ? "ইসলাম":"সনাতন"}</span> ধর্মের মানুষ</p>  
+                  </div>
+                  <div className="flex items-center gap-2">
+                  <FaArrowAltCircleRight />
+                  <p>
+                    আপনি{" "}
+                    <span className="underline">{p_typeOfPackage === "wedding" && "বিবাহ "}
+                    {p_typeOfPackage === "birthday" && "জন্মদিন "}
+                    {p_typeOfPackage === "importendDay" && "বিশেষদিন "}
+                    {p_typeOfPackage === "othersDay" && "অন্যান্য "}</span>
+                    অনুষ্টানের জন্য খাবার ক্রয় করতে চাচ্ছেন।
+                  </p>
                 </div>
-                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
-                 <p>আপনি <span className="underline">{p_religion === "islam" ? "ইসলাম":"সনাতন"}</span> ধর্মের মানুষ</p>  
+                  <div className="flex items-center gap-2"><FaArrowAltCircleRight />
+                   <p>আপনি <span className="text-primary font-semibold text-lg underline">{p_howMuchPackage}</span> জন মেহমানের জন্য প্যাকেজ সেলেক্ট করেছেন।</p>  
+                  </div>
+                  <div className="flex items-center gap-2">
+                  <FaArrowAltCircleRight />
+                  <p>
+                    প্রত্যেক পকেটের মধ্যে 
+                    <span className="underline">{p_misty && " মিষ্টি "}
+                    {p_nimky && ` ${p_misty ? "ও " : ""}নিমকি `}
+                    {p_jilabi && ` ${p_misty || p_nimky ? "ও " : ""}জিলাপী `}
+                    {p_chomoca && ` ${p_misty || p_nimky || p_jilabi ? "ও " : ""}চমচা `}
+                    {p_singkara && ` ${p_misty || p_nimky || p_jilabi || p_chomoca ? "ও " : ""}সিংকারা `}  </span>
+                    রাখার জন্য বলছেন।
+                  </p>
                 </div>
                 <div className="flex items-center gap-2">
                 <FaArrowAltCircleRight />
                 <p>
-                  আপনি{" "}
-                  <span className="underline">{p_typeOfPackage === "wedding" && "বিবাহ "}
-                  {p_typeOfPackage === "birthday" && "জন্মদিন "}
-                  {p_typeOfPackage === "importendDay" && "বিশেষদিন "}
-                  {p_typeOfPackage === "othersDay" && "অন্যান্য "}</span>
-                  অনুষ্টানের জন্য খাবার ক্রয় করতে চাচ্ছেন।
-                </p>
-              </div>
-                <div className="flex items-center gap-2"><FaArrowAltCircleRight />
-                 <p>আপনি <span className="text-primary font-semibold text-lg underline">{p_howMuchPackage}</span> জন মেহমানের জন্য প্যাকেজ সেলেক্ট করেছেন।</p>  
-                </div>
-                <div className="flex items-center gap-2">
-                <FaArrowAltCircleRight />
-                <p>
-                  প্রত্যেক পকেটের মধ্যে 
-                  <span className="underline">{p_misty && " মিষ্টি "}
-                  {p_nimky && ` ${p_misty ? "ও " : ""}নিমকি `}
-                  {p_jilabi && ` ${p_misty || p_nimky ? "ও " : ""}জিলাপী `}
-                  {p_chomoca && ` ${p_misty || p_nimky || p_jilabi ? "ও " : ""}চমচা `}
-                  {p_singkara && ` ${p_misty || p_nimky || p_jilabi || p_chomoca ? "ও " : ""}সিংকারা `}  </span>
-                  রাখার জন্য বলছেন।
+                  ড্রিঙ্ক হিসাবে আপনি{" "}
+                  <span className="underline">{p_drinks === "speed" && "স্প্রিড"}
+                  {p_drinks === "tiger" && "টাইগার"}
+                  {p_drinks === "cocacula" && "কুকাকুলা"}
+                  {p_drinks === "7up" && "সেভেন আপ"}</span> সিলেক্ট করেছেন।
                 </p>
               </div>
               <div className="flex items-center gap-2">
               <FaArrowAltCircleRight />
               <p>
-                ড্রিঙ্ক হিসাবে আপনি{" "}
-                <span className="underline">{p_drinks === "speed" && "স্প্রিড"}
-                {p_drinks === "tiger" && "টাইগার"}
-                {p_drinks === "cocacula" && "কুকাকুলা"}
-                {p_drinks === "7up" && "সেভেন আপ"}</span> সিলেক্ট করেছেন।
+                খাবার পানি হিসাবে আপনি{" "}
+                <span className="underline">{p_water === "half letter" && "আধা লিটার "}
+                {p_water === "1 letter" && "এক লিটার "}
+                {p_water === "2 letter" && "দুই লিটার "}</span> 
+                সিলেক্ট করেছেন।
               </p>
             </div>
-            <div className="flex items-center gap-2">
-            <FaArrowAltCircleRight />
-            <p>
-              খাবার পানি হিসাবে আপনি{" "}
-              <span className="underline">{p_water === "half letter" && "আধা লিটার "}
-              {p_water === "1 letter" && "এক লিটার "}
-              {p_water === "2 letter" && "দুই লিটার "}</span> 
-              সিলেক্ট করেছেন।
-            </p>
-          </div>
-
-                <div className="mt-8">
-                    <div className="flex items-center gap-3">
-                    <input onClick={(e)=>handleTrustBengalFood(e)}  type="checkbox"  className="checkbox-sm checkbox-secondary" />
-                    <label>আপনার দেওয়া তথ্য অনুযাই আমরা এই ডাটা সেইভ করে রাখব। যদি ভূল না হয় তাহলে ঠিক চিহ্নতে চাপ দিন। ধন্যবাদ</label>
-                    </div>
-                </div>
-                <div className="divider"></div>
-                </div>
+  
+                  <div className="mt-8">
+                      <div className="flex items-center gap-3">
+                      <input onClick={(e)=>handleTrustBengalFood(e)}  type="checkbox"  className="checkbox-sm checkbox-secondary" />
+                      <label>আপনার দেওয়া তথ্য অনুযাই আমরা এই ডাটা সেইভ করে রাখব। যদি ভূল না হয় তাহলে ঠিক চিহ্নতে চাপ দিন। ধন্যবাদ</label>
+                      </div>
+                  </div>
+                  <div className="divider"></div>
+                  </div>
+                }
                 </div>
                 </div> 
-            </>
+                </form>
+                </>
 
-            :
+                :
 
-            <> <div className="my-8">
+                <> 
+                <form onSubmit={handleWithOutPackageOrder}>
+                <div className="my-8">
             <div className='space-y-3'>
             <div className="">
             <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">✔ চাহিদা অনুযাই আপনার তথ্য দিন </h3>
@@ -438,7 +496,7 @@ const CustomOrderForm = () => {
             <div className="w-full">
             <h3 className="mb-2 text-[15px] text-slate-700">সর্ত নির্বাচন করুন</h3>
             <select onChange={handlePackageChange}
-                name="foodStatus"
+                name="pocketCondition"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
                 required>
                 <option value="" disabled selected>নির্বাচন করুন</option>
@@ -450,12 +508,12 @@ const CustomOrderForm = () => {
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">ধর্ম নির্বাচন করুন </h3>
               <select
-                name="foodStatus"
+                name="religion"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
                 required>
                 <option value="" disabled selected>নির্বাচন করুন</option>
-                <option value="true">ইসলাম</option>
-                <option value="false">সনাতন</option>
+                <option value="ইসলাম">ইসলাম</option>
+                <option value="সনাতন">সনাতন</option>
             </select>
             </div>
             </div>
@@ -463,23 +521,23 @@ const CustomOrderForm = () => {
             <div className="w-full">
             <h3 className="mb-2 text-[15px] text-slate-700">অনুষ্টানের ধরন নির্বাচন করুন</h3>
             <select
-                name="foodStatus"
+                name="typeOfPackage"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
                 required>
                 <option value="" disabled selected>নির্বাচন করুন</option>
-                <option value="true">বিবাহ</option>
-                <option value="false">জন্মদিন</option>
-                <option value="false">বিশেষদিন</option>
-                <option value="false">অন্যান্য</option>
+                <option value="বিবাহ">বিবাহ</option>
+                <option value="জন্মদিন">জন্মদিন</option>
+                <option value="বিশেষদিন">বিশেষদিন</option>
+                <option value="অন্যান্য">অন্যান্য</option>
             </select>
              </div>
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">মিষ্টি </h3>
               <select
-                name="foodStatus"
+                name="misty"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     misty.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -494,9 +552,9 @@ const CustomOrderForm = () => {
             <div className="w-full">
             <h3 className="mb-2 text-[15px] text-slate-700">নিমকি নির্বাচন করুন</h3>
             <select
-                name="foodStatus"
+                name="nimky"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     nimky?.map(option => <option value={option?.value} key={option?.id}>{option?.text}</option>)
@@ -508,9 +566,9 @@ const CustomOrderForm = () => {
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">জিলাপী </h3>
               <select
-                name="foodStatus"
+                name="jilabi"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     jilabi?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -525,9 +583,9 @@ const CustomOrderForm = () => {
             <div className="w-full">
             <h3 className="mb-2 text-[15px] text-slate-700">ধই নির্বাচন করুন</h3>
             <select
-                name="foodStatus"
+                name="doi"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                {
                 doi?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -539,9 +597,9 @@ const CustomOrderForm = () => {
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">চমচা নির্বাচন করুন</h3>
               <select
-                name="foodStatus"
+                name="chomoca"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     chomoca?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -551,9 +609,9 @@ const CustomOrderForm = () => {
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">সিংকারা নির্বাচন করুন</h3>
               <select
-                name="foodStatus"
+                name="singkara"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     singkara?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -567,9 +625,9 @@ const CustomOrderForm = () => {
             <div className="w-full">
             <h3 className="mb-2 text-[15px] text-slate-700">ড্রিঙ্ক নির্বাচন করুন</h3>
             <select
-                name="foodStatus"
+                name="drinks"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
                 {
                     drinks?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
@@ -580,13 +638,13 @@ const CustomOrderForm = () => {
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">পানিও নির্বাচন করুন</h3>
               <select
-                name="foodStatus"
+                name="water"
                 className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                required>
+                >
                 <option value="" disabled selected>নির্বাচন করুন</option>
-                <option value="true">৫০০ গ্রাম- ১৫ টাকা</option>
-                <option value="false">১০০০ গ্রাম- ৩০ টাকা</option>
-                <option value="true">২০০০ গ্রাম- ৫৫ টাকা</option>
+                {
+                  waters.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
+                }
             </select>
             </div>
             </div>
@@ -619,37 +677,23 @@ const CustomOrderForm = () => {
               <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
             <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
             </div>
+            <div className="flex items-center gap-4">
+            <div onClick={handleCalculateWithOutPackage} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
+            <button>হিসাব করুন</button>
+            </div>
             <div className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
-            <button>{load === true ? <Load />:"অর্ডার করুন"}</button>
+            <button>অর্ডার করুন</button>
             </div>
             </div>
-            </div>   </>
+            </div>
+                </div> 
+                </form>  
+                </>
             }
            
-    </form>
+    
            </div>
-           <div className="space-y-3">
-           <div className="flex items-center gap-3">
-            <MdDownloadDone />
-            <span>মিনিমাম দুই দিন পূর্বে অর্ডার কনফার্ম করে বুঝে নিবেন।</span>
-          </div>
-           <div className="flex items-center gap-3">
-            <MdDownloadDone />
-            <span>সেরা মানের খাবারের নিশ্চয়তা</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <MdOutlineDeliveryDining />
-            <span>আপনার পছন্দমতো খাবার দ্রুত ডেলিভারি</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <CiDiscount1 />
-            <span>বিশেষ উৎসবের জন্য বিশেষ ডিসকাউন্ট</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <IoReload />
-            <span>অর্ডার করা খাবার রিটার্ন নেওয়া হবে না</span>
-          </div>
-           </div>
+          <CustomerOrderFacilites />
          </div>
        </div>
      </div>
