@@ -31,6 +31,7 @@ const debtsCollection = client.db("BengolShop").collection("debts");
 const fastFoodCollection = client.db("BengolShop").collection("fastFoods");
 const fastFoodOrderCollection = client.db("BengolShop").collection("fastFoodOrder");
 const PackageCollection = client.db("BengolShop").collection("packages");
+const CustomPriceCollection = client.db("BengolShop").collection("customPrices");
 
 async function run() {
   try {
@@ -386,6 +387,16 @@ app.get("/morePackages/:id", async(req,res) => {
     res.send(result);
   }
   catch(err){res.send({message:"internal server error"})}
+})
+
+// custom handler
+app.post('/customPrice', async(req,res) => {
+  try{
+    const pricingData = req.body;
+    const result = await CustomPriceCollection.insertOne(pricingData);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})};
 })
 
 

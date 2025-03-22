@@ -13,13 +13,14 @@ import { chomoca } from "./FormData/formData";
 import { singkara } from "./FormData/formData";
 import { drinks } from "./FormData/formData";
 import CustomerOrderFacilites from "./CustomerOrderFacilities/CustomerOrderFacilites";
+import FormHeading from "./FormHeading/FormHeading";
 const CustomOrderForm = () => {
     const [quantity,setQuantity] = useState(1);
     const [load,setLoad] = useState(false);
     const [packageRequired, setPackageRequired] = useState(true);
     const [totalPackagePrice,setTotalPackagePrice] = useState(0);
     const [showFacilities,setShowFacilites] = useState(false);
-
+  console.log(showFacilities);
     // multiple state start
     const [p_howMuchPackage, setHowMuchPackage] = useState(0);
     const [p_customerFullName, setCustomerFullName] = useState();
@@ -32,7 +33,6 @@ const CustomOrderForm = () => {
     const [p_jilabi, setJilabi] = useState(false);
     const [p_nimky, setNimky] = useState(false);
     const [p_misty, setMisty] = useState(false);
-    console.log(p_misty);
     const [p_drinks, setDrinks] = useState();
     const [p_water, setWater] = useState();
 
@@ -57,30 +57,12 @@ const CustomOrderForm = () => {
       let totalFoodPrice = price * quantity;
 
       // for single items price
-      let awater500 = 15;
-      let awater1000 = 20;
-      let awater2000 = 40;
-      let aspeed = 30;
-      let acocacula = 25;
-      let asevenUp = 25;
-      let achomoca = 20;
-      let asingkara = 20;
-      let ajilabi = 5;
-      let animky = 3;
-      let amisty = 8;
+      let awater500 = 15; let awater1000 = 20;  let awater2000 = 40;
+      let aspeed = 30; let acocacula = 25; let asevenUp = 25; 
+      let achomoca = 20; let asingkara = 20; let ajilabi = 5;
+      let animky = 3; let amisty = 8;
 
-      // for one kg items price
-      // let perPichwater = 15;
-      // let perPichspeed = 30;
-      // let perPichcocacula = 25;
-      // let perPichsevenUp = 25;
-      // let perPichchomoca = 20;
-      // let perPichsingkara = 20;
-      // let perKgjilabi = 5;
-      // let perKgnimky = 3;
-      // let perKgmisty = 8;
-
-      // for package handler submit function
+      // for with package handler submit function
       const handleIsPackageOrder = async(e) => {
         e.preventDefault();
         const form = e.target;
@@ -102,7 +84,7 @@ const CustomOrderForm = () => {
         const customerEmail = form.email.value;
         const customerDescription = form.description.value;
         const customerOrderData = {howMuchPackage,typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
-        console.log(customerOrderData);   
+        console.log("with package",customerOrderData);   
       }
       // for without package handle function
       const handleWithOutPackageOrder = async(e) => {
@@ -125,10 +107,7 @@ const CustomOrderForm = () => {
         const customerEmail = form.email.value;
         const customerDescription = form.description.value;
         const customerOrderData = {typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
-        console.log(customerOrderData);
-
-
-       
+        console.log("with out package",customerOrderData);
        
       }
       
@@ -163,18 +142,10 @@ const CustomOrderForm = () => {
         const totalNimkyPrice = howMuchPackage * animky;
         const totalMistyPrice = howMuchPackage * amisty;
       
-        const totalPackagePriceIs =
-          totalWater500Price +
-          totalWater1000Price +
-          totalWater2000Price +
-          totalSpeedPrice +
-          totalCocaculaPrice +
-          totalSevenUpPrice +
-          totalChomocaPrice +
-          totalSingkaraPrice +
-          totalJilabiPrice +
-          totalNimkyPrice +
-          totalMistyPrice;
+        const totalPackagePriceIs = totalWater500Price+totalWater1000Price +
+          totalWater2000Price +totalSpeedPrice +totalCocaculaPrice +
+          totalSevenUpPrice +totalChomocaPrice +totalSingkaraPrice +
+          totalJilabiPrice +totalNimkyPrice +totalMistyPrice;
       
         setTotalPackagePrice(totalPackagePriceIs);
         setShowFacilites(true)
@@ -184,20 +155,39 @@ const CustomOrderForm = () => {
       };
       
       // handle calculate total price without package
-      const handleCalculateWithOutPackage = () => {
-
-
-
-
-
-
-
-
-
-
-
-
+      const handleCalculateWithOutPackage = (e) => {
+        e.preventDefault()
+         // for one kg items price
+      let perPichwater = 15;let perPichDrink = 25;let perPichchomoca = 20;
+      let perPichsingkara = 20;let perKgjilabi = 5;let perKgnimky = 3;
+      let perKgmisty = 300;
+        const form = e.target.form; 
+        const customerFullName = form.fullName.value;
+        const misty = form.misty.value;
+        const nimky = form.nimky.value;
+        const jilabi = form.jilabi.value;
+        const chomoca = form.chomoca.value;
+        const singkara = form.singkara.value;
+        const water = form.water.value;
+        const drinks = form.drinks.value;
+        const totalMistyPrice = misty * perKgmisty;
+        const totalNimkyPrice = nimky * perKgnimky;
+        const totalJilabiPrice = jilabi * perKgjilabi;
+        const totalChomocaPrice = chomoca * perPichchomoca;
+        const totalSingkaraPrice = singkara * perPichsingkara;
+        const totalWaterPrice = water * perPichwater;
+        const totalDrinksPrice = drinks * perPichDrink;
+        const totalItemsPrices = totalMistyPrice + totalNimkyPrice+totalJilabiPrice+totalChomocaPrice+totalSingkaraPrice+totalWaterPrice+totalDrinksPrice
+          console.log(totalItemsPrices);
+          setTotalPackagePrice(totalItemsPrices)
+          setChomoca(chomoca);  setSingkara(singkara); setJilabi(jilabi);
+          setNimky(nimky); setMisty(misty); setDrinks(drinks);
+          setWater(water);
+          setShowFacilites(true)
+          toast.success(`মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalItemsPrices} টাকা`,{duration:7000});
       }
+
+
       const handleTrustBengalFood = (e) => {
         if (e.target.checked) {
           toast.success(" অনিক বেঙ্গল ফুড আপনার তথ্য সংরক্ষণ করে রাখবে!", { duration: 4000 });
@@ -229,10 +219,7 @@ const CustomOrderForm = () => {
                  <form onSubmit={handleIsPackageOrder}>
                 <div className="my-8">
                 <div className='space-y-3'>
-                <div className="">
-                <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">✔ চাহিদা অনুযাই আপনার তথ্য দিন </h3>
-                <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">শুধুমাত্র রাজনগর, খারপাড়া, বাজুয়া, পারশিপাড়া,  কণিগ্রাম, মজিদপুর এই গ্রাম গুলোতে হোম সার্ভিস চলিত। </span></p>
-                </div>
+                <FormHeading />
                 <div className="divider"></div>
                 <div className='md:flex items-center  gap-5'>
                 <div className="w-full">
@@ -487,10 +474,7 @@ const CustomOrderForm = () => {
                 <form onSubmit={handleWithOutPackageOrder}>
                 <div className="my-8">
             <div className='space-y-3'>
-            <div className="">
-            <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">✔ চাহিদা অনুযাই আপনার তথ্য দিন </h3>
-            <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">শুধুমাত্র রাজনগর, খারপাড়া, বাজুয়া, পারশিপাড়া,  কণিগ্রাম, মজিদপুর এই গ্রাম গুলোতে হোম সার্ভিস চলিত। </span></p>
-            </div>
+            <FormHeading />
             <div className="divider"></div>
             <div className='md:flex items-center  gap-5'>
             <div className="w-full">
@@ -688,7 +672,24 @@ const CustomOrderForm = () => {
             </div>
                 </div> 
                 </form>  
-                </>
+                <div>
+                  <ul>
+                   {
+                    showFacilities && <>
+                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_misty} কেজি মিষ্টি</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_nimky} কেজি নিমকি</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_jilabi} কেজি জিলাপী</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_singkara} টি সিংকারা</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_chomoca} টি চমচা</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_drinks} লিটার ড্রিঙ্কস</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_water} লিটার পানি</p></div>
+                  <div className="divider"></div>
+                  <div className="text-primary text-lg font-semibold">আপনার সর্বমোট হিসাব = {totalPackagePrice} টাকা মাত্র।</div>
+                   </>
+                   }
+                  </ul>
+                </div>
+                </> 
             }
            
     

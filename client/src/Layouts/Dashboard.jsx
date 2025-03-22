@@ -1,10 +1,11 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { RiMenu5Line } from "react-icons/ri";
 import { CiHome } from "react-icons/ci";
 import { GrGallery } from "react-icons/gr";
 import { CiShop } from "react-icons/ci";
 import { IoCreateOutline } from "react-icons/io5";
 import { AiOutlineProduct } from "react-icons/ai";
+import { BsArrow90DegDown } from "react-icons/bs";
 const Dashboard = () => {
 
     const closeDrawer = () => {
@@ -40,20 +41,36 @@ const Dashboard = () => {
         icon:<CiShop />,
         id:5
         },
+        {item:"ফাস্ট ফোড আপডেট করুন",
+        link:"/dashboard/updateFastFood",
+        icon:<CiShop />,
+        id:6
+        },
         {item:"প্যাকেজ যুক্ত করুন",
         link:"/dashboard/addPackages",
         icon:<CiShop />,
-        id:6
+        id:7
+        },
+        {item:"প্যাকেজ আপডেট করুন",
+        link:"/dashboard/updatePackage",
+        icon:<CiShop />,
+        id:8
+        },
+        {item0:"কাস্টম প্রাইজ আপডেট করুন",
+        link1:"/dashboard/updateCustomPrice",
+        link2:"/dashboard/updateCustomPrice2",
+        icon:<CiShop />,
+        id:9
         },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
-        id:7
+        id:10
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:8
+        id:11
         },
         
     ]
@@ -95,13 +112,25 @@ const Dashboard = () => {
                 <div className="w-1/4 shadow-xl p-5 z-10">
                     <ul>          
                         {navLink.map(items => 
+                           <>
                             <NavLink to={items?.link} key={items.id}>
-                            <div className="flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4">
+                            <div className={`flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4 ${items?.item0 === "কাস্টম প্রাইজ আপডেট করুন" && "hidden"}`}>
                             <div className="text-xl">{items?.icon}</div>
                             <li className={``}>
                             {items?.item}</li>
                             </div>
                             </NavLink>
+
+
+                            {items?.item0 === "কাস্টম প্রাইজ আপডেট করুন" && <details className="dropdown dropdown-top">
+                            <summary className="flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4 cursor-pointer"><BsArrow90DegDown /> <span>{items?.item0}</span></summary>
+                            <ul className="menu dropdown-content bg-primary rounded z-1  p-2 shadow-sm text-center">
+                                <Link to={items?.link1}><button className="text-sm font-medium bg-neutral text-lightText p-[5px] rounded hover:text-primary">পার কেজি আপডেট</button></Link>
+                                <div className="text-neutral">____OR____</div>
+                                <Link to={items?.link2}><button className="text-sm font-medium bg-neutral text-lightText p-[5px] rounded hover:text-primary">পার আইটেম আপডেট</button></Link>
+                            </ul>
+                            </details>}
+                           </>
                         )}                     
                     </ul>
                 </div>

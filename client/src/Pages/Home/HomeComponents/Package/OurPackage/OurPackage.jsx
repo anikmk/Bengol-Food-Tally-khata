@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const OurPackage = () => {
     const {data:packages,isLoading,} = useQuery({
-        queryKey:"allUsersData",
+        queryKey:"packages",
         queryFn:async () => await getAllPackages() 
     })
   

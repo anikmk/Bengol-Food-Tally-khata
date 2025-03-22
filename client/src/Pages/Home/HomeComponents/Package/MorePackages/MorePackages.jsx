@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getMorePackages } from "../../../../../Api/PackageRelatedApi/packageApi";
 import MorePackagesCard from "./MorePackagesCard";
 
@@ -47,12 +47,13 @@ const MorePackages = () => {
             <p className="text-sm text-gray-600 mt-2 text-center">
               আপনার ইচ্ছামতো খাবারের অর্ডার করুন।
             </p>
+            <Link to={'/customPackageOrderForm'}>
             <button
-              onClick={() => alert("Custom Order Page এ যাবেন")}
-              className="mt-4 w-full bg-[#3B82F6] text-white py-2 rounded-xl hover:bg-[#2563EB] transition"
+              className="mt-4 w-full bg-[#3B82F6] text-white p-2 rounded-xl hover:bg-[#2563EB] transition"
             >
               কাস্টম অর্ডার করুন
             </button>
+            </Link>
           </div>
         </div>
       </div>
