@@ -14,4 +14,4 @@ export const getAllPackages = async() => {
 export const getMorePackages = async(id) => {
     const {data} = await axiosPublic.get(`/morePackages/${id}`);
     return data;
-}
+};
