@@ -6,7 +6,7 @@ export const createFastFood = async(fastFoodData) => {
 }
 
 export const getAllFastFood = async() => {
-    const {data} = await axiosPublic.get('/allfastFood');
+    const {data} = await axiosPublic.get('/all/fast/foods');
     return data;
 }
 

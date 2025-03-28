@@ -21,11 +21,7 @@ const AllOrders = () => {
            <button onClick={handleMoreText} className="bg-primary py-[2px] text-sm text-neutral shadow-lg px-2 hover:bg-[#ff1c68] transition-all capitalize rounded mb-5">{moreText ? "বন্ধ করুন":"আরো জানুন"}</button> 
            {
                moreText && <div>
-               <p className="text-base mb-3 text-slate-800">আপনি চাইলে ইউজার কে এডমিন বাটন এ ক্লিক করে  এডমিন করতে পারবেন। </p>
-
-                <p className="text-sm text-slate-800"> <span className="text-green-700 font-semibold text-base">✔ মনে রাখুন:</span> ইউজার কে এডমিন করলে আপনার সকল দায়িত তার কাছে চলে যাবে । এবং সে চাইলে আপনার সফটওয়ার টি ম্যানেজ করেতে পারবে।</p>
-
-                <p className="text-sm my-3 text-slate-800"><span className="text-green-700 text-base font-semibold">✔ অথবা:</span> মুছে ফেলুন বাটনে ক্লিক করার মধ্যে দিয়ে ইউজার কে সম্পুর্ণ ভাবে রিমুভ করে ফেলতে পারবেন </p>
+                <p className="text-sm my-3 text-slate-800"><span className="text-green-700 text-base font-semibold">✔ বিশ্লেষণ:</span> মুছে ফেলুন বাটনে ক্লিক করার মধ্যে দিয়ে ইউজার কে সম্পুর্ণ ভাবে রিমুভ করে ফেলতে পারবেন </p>
                </div>
            }
           

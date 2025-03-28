@@ -3,6 +3,7 @@ require('dotenv').config();
 const { ObjectId } = require('mongodb');
 const cors = require("cors");
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { runInNewContext } = require('vm');
 const app = express();
 const port = process.env.PORT || 5000;;
 // middleware start
@@ -30,8 +31,9 @@ const userCollection = client.db("BengolShop").collection("users");
 const debtsCollection = client.db("BengolShop").collection("debts");
 const fastFoodCollection = client.db("BengolShop").collection("fastFoods");
 const fastFoodOrderCollection = client.db("BengolShop").collection("fastFoodOrder");
-const PackageCollection = client.db("BengolShop").collection("packages");
+const packageCollection = client.db("BengolShop").collection("packages");
 const CustomPriceCollection = client.db("BengolShop").collection("customPrices");
+const packageOrderCollection = client.db("BengolShop").collection("packageOrders");
 
 async function run() {
   try {
@@ -280,13 +282,14 @@ app.post('/fastFoods',async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 });
 
-app.get('/allfastFood', async(req,res) => {
+app.get('/all/fast/foods', async(req,res) => {
   try{
     const result = await fastFoodCollection.find().toArray();
     res.send(result);
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
 
 app.get('/getFastFood', async(req,res) => {
   try{
@@ -365,7 +368,7 @@ app.get('/singleShopingCartProduct/:email', async(req,res) => {
 app.post('/createPackages',async(req,res) => {
   try{
     const packages = req.body;
-    const result = await PackageCollection.insertOne(packages);
+    const result = await packageCollection.insertOne(packages);
     res.send(result)
   }
   catch(err){res.send({message:"internal server error"})}
@@ -373,7 +376,7 @@ app.post('/createPackages',async(req,res) => {
 
 app.get("/packages",async(req,res)=> {
   try{
-    const result = await PackageCollection.find().toArray();
+    const result = await packageCollection.find().toArray();
     res.send(result);
   }
   catch(err){res.send({message:"internal server error"})}
@@ -383,20 +386,118 @@ app.get("/morePackages/:id", async(req,res) => {
   try{
     const id = req.params.id;
     const query = {_id: new ObjectId(id)};
-    const result = await PackageCollection.find(query).toArray();
-    res.send(result);
-  }
-  catch(err){res.send({message:"internal server error"})}
-})
-
-// custom handler
-app.post('/customPrice', async(req,res) => {
-  try{
-    const pricingData = req.body;
-    const result = await CustomPriceCollection.insertOne(pricingData);
+    const result = await packageCollection.find(query).toArray();
     res.send(result);
   }
   catch(err){res.send({message:"internal server error"})};
+})
+
+// custom handler
+// app.post('/customPrice', async(req,res) => {
+//   try{
+//     const pricingData = req.body;
+//     const result = await CustomPriceCollection.insertOne(pricingData);
+//     res.send(result);
+//   }
+//   catch(err){res.send({message:"internal server error"})};
+// })
+
+// get per kg price
+app.get('/customPerKgPrice', async (req, res) => {
+  try {
+    const result = await CustomPriceCollection.findOne({ status: "perkg" });
+    console.log("PerKg Data:", result);
+    
+    if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send({ message: "No data found for status 'perkg'" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+// update per kg
+app.patch('/updateCustomPerKgPrice', async (req, res) => {
+  try {
+    const updateFields = req.body;
+
+    const result = await CustomPriceCollection.updateOne(
+      { status: "perkg" },
+      { $set: updateFields }
+    );
+
+    if (result.modifiedCount > 0) {
+      res.send({ message: "প্রত্যেক কেজির মূল্য আপডেড হয়েছে" });
+    } else {
+      res.status(404).send({ message: "No matching document found or nothing to update" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+// get per pich price
+app.get('/customPerPichPrice', async (req, res) => {
+  try {
+    const result = await CustomPriceCollection.findOne({ status: "perPich" });
+    console.log("PerPich Data:", result);
+    
+    if (result) {
+      res.send(result);
+    } else {
+      res.status(404).send({ message: "No data found for status 'perPich'" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+// update per pich 
+app.patch('/updateCustomPerPichPrice', async (req, res) => {
+  try {
+    const updateFields = req.body;
+
+    const result = await CustomPriceCollection.updateOne(
+      { status: "perPich" },
+      { $set: updateFields }
+    );
+
+    if (result.modifiedCount > 0) {
+      res.send({ message: "প্রত্যেক পিচের মূল্য আপডেড হয়েছে" });
+    } else {
+      res.status(404).send({ message: "No matching document found or nothing to update" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+// package order handler:
+// with package handler
+app.post('/user/create/order/withPackage',async(req,res) => {
+  try{
+    const data = req.body;
+    console.log(data);
+    const result = await packageOrderCollection.insertOne(data);
+    res.send(result);
+  }
+  catch(err) {
+  res.status(500).send({ message: "Internal server error" });
+  }
+})
+// with out package handler:
+app.post('/user/create/order/withOutPackage',async(req,res) => {
+  try{
+    const data = req.body;
+    const result = await packageOrderCollection.insertOne(data);
+    res.send(result);
+  }
+  catch(err) {
+  res.status(500).send({ message: "Internal server error" });
+  }
 })
 
 

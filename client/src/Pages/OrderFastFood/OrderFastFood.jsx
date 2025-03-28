@@ -11,7 +11,6 @@ const OrderFastFood = () => {
     const carouselRef = useRef(null);
     const [category,setCategory] = useState("");
     const [searchFood,setSearchFood] = useState("");
-    console.log(category,searchFood);
     const {data:foods,isLoading,refetch} = useQuery({
         queryKey:[category,searchFood,"foods"],
         queryFn:async()=> await getFastFoodByEmail(searchFood,category)
@@ -27,7 +26,6 @@ const OrderFastFood = () => {
         setSearchFood(searchFood);
         refetch();
     };
-    console.log(foods);
     const scrollCarousel = (direction) => {
         const scrollAmount = carouselRef.current.offsetWidth; // Scroll by the container's width
         if (direction === "prev") {

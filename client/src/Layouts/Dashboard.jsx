@@ -21,56 +21,62 @@ const Dashboard = () => {
         id:1
         },
         {
-        item:"সব অর্ডার দেখুন",
+        item:"ফাস্ট ফুডের অর্ডার দেখুন",
         link:"/dashboard/allOrders",
         icon: <AiOutlineProduct />,
         id:2
         },
+        {
+        item:"প্যাকেজের অর্ডার দেখুন",
+        link:"/dashboard/packageOrders",
+        icon: <AiOutlineProduct />,
+        id:3
+        },
         {item:"পাওনাদার যুক্ত করুন",
         link:"/dashboard/addDebts",
         icon:<GrGallery />,
-        id:3
+        id:4
         },
         {item:"সব পাওনাদার দেখুন",
         link:"/dashboard/showAlldebts",
         icon:<CiShop />,
-        id:4
+        id:5
         },
         {item:"ফাস্ট ফোড যুক্ত করুন",
         link:"/dashboard/addFastFood",
         icon:<CiShop />,
-        id:5
+        id:6
         },
         {item:"ফাস্ট ফোড আপডেট করুন",
         link:"/dashboard/updateFastFood",
         icon:<CiShop />,
-        id:6
+        id:7
         },
         {item:"প্যাকেজ যুক্ত করুন",
         link:"/dashboard/addPackages",
         icon:<CiShop />,
-        id:7
+        id:8
         },
         {item:"প্যাকেজ আপডেট করুন",
         link:"/dashboard/updatePackage",
         icon:<CiShop />,
-        id:8
+        id:9
         },
         {item0:"কাস্টম প্রাইজ আপডেট করুন",
         link1:"/dashboard/updateCustomPrice",
         link2:"/dashboard/updateCustomPrice2",
         icon:<CiShop />,
-        id:9
+        id:10
         },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
-        id:10
+        id:11
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:11
+        id:12
         },
         
     ]
@@ -89,15 +95,27 @@ const Dashboard = () => {
                         <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
                             {/* Sidebar content here */}
                             {/* for small device */}
-                            {navLink.map(items => <>
+                            {navLink.map(items => 
+                           <>
                             <NavLink to={items?.link} key={items.id}>
-                            <div className="flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4">
+                            <div onClick={closeDrawer} className={`flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4 ${items?.item0 === "কাস্টম প্রাইজ আপডেট করুন" && "hidden"}`}>
                             <div className="text-xl">{items?.icon}</div>
-                            <li onClick={closeDrawer}>
+                            <li className={``}>
                             {items?.item}</li>
                             </div>
                             </NavLink>
-                        </>)}          
+
+
+                            {items?.item0 === "কাস্টম প্রাইজ আপডেট করুন" && <details className="dropdown dropdown-top">
+                            <summary className="flex items-center font-poppins font-medium hover:bg-neutral p-2 rounded text-lightText hover:text-primary capitalize gap-4 shadow mb-4 cursor-pointer"><BsArrow90DegDown /> <span>{items?.item0}</span></summary>
+                            <ul className="menu dropdown-content bg-primary rounded z-1  p-2 shadow-sm text-center">
+                                <Link to={items?.link1}><button className="text-sm font-medium bg-neutral text-lightText p-[5px] rounded hover:text-primary">পার কেজি আপডেট</button></Link>
+                                <div className="text-neutral">____OR____</div>
+                                <Link to={items?.link2}><button className="text-sm font-medium bg-neutral text-lightText p-[5px] rounded hover:text-primary">পার আইটেম আপডেট</button></Link>
+                            </ul>
+                            </details>}
+                           </>
+                        )}           
                         </ul>
                     </div>
                 </div>

@@ -27,6 +27,7 @@ import MorePackages from "../Pages/Home/HomeComponents/Package/MorePackages/More
 import CustomOrderForm from "../Pages/Home/HomeComponents/Package/MorePackages/CustomOrderForm/CustomOrderForm";
 import EditCustomPrice from "../Pages/Dashboard/EditCustomPrice/EditCustomPrice";
 import EditCustomPriceTwo from "../Pages/Dashboard/EditCustomPrice/EditCustomPriceTwo";
+import PackageOrders from "../Pages/Dashboard/AllOrders/PackageOrders/PackageOrders";
 
 export const router = createBrowserRouter([
     {
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
                 {
                     path:'allOrders',
                     element:<PrivetRoute><AllOrders /></PrivetRoute>
+                },
+                {
+                    path:'packageOrders',
+                    element:<PrivetRoute><PackageOrders /></PrivetRoute>
                 },
                 {
                     path:'addDebts',

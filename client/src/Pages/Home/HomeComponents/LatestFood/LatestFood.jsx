@@ -13,7 +13,7 @@ const LatestFood = () => {
     queryKey:"fastFoods",
     queryFn:async()=> await getAllFastFood()
   })
-
+console.log(fastFoods);
   const scrollCarousel = (direction) => {
     if (carouselRef.current) {
       const cardWidth = carouselRef.current.firstChild.offsetWidth; 

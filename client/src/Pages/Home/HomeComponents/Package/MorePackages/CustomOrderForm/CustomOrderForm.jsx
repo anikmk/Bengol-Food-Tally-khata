@@ -1,4 +1,3 @@
-import { FaMinus, FaPlus } from "react-icons/fa";
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import Container from "../../../../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
@@ -11,16 +10,17 @@ import { jilabi } from "./FormData/formData";
 import { doi } from "./FormData/formData";
 import { chomoca } from "./FormData/formData";
 import { singkara } from "./FormData/formData";
-import { drinks } from "./FormData/formData";
 import CustomerOrderFacilites from "./CustomerOrderFacilities/CustomerOrderFacilites";
 import FormHeading from "./FormHeading/FormHeading";
+import { useQuery } from "@tanstack/react-query";
+import { createCustomWithOutPackageOrder, createCustomWithPackageOrder, getCustomPerKgProductPrice, getCustomPerPichProductPrice } from "../../../../../../Api/customOrderRelatedApi/customApi";
 const CustomOrderForm = () => {
-    const [quantity,setQuantity] = useState(1);
+    const [isCalculation,setIsCalculation] = useState(false)
     const [load,setLoad] = useState(false);
     const [packageRequired, setPackageRequired] = useState(true);
     const [totalPackagePrice,setTotalPackagePrice] = useState(0);
     const [showFacilities,setShowFacilites] = useState(false);
-  console.log(showFacilities);
+
     // multiple state start
     const [p_howMuchPackage, setHowMuchPackage] = useState(0);
     const [p_customerFullName, setCustomerFullName] = useState();
@@ -33,11 +33,17 @@ const CustomOrderForm = () => {
     const [p_jilabi, setJilabi] = useState(false);
     const [p_nimky, setNimky] = useState(false);
     const [p_misty, setMisty] = useState(false);
-    const [p_drinks, setDrinks] = useState();
+    const [p_doi, setDoi] = useState();
     const [p_water, setWater] = useState();
-
+    
+    const {data:customPerKgProductPrice,isLoading} = useQuery({
+      queryKey:["customPerKgProductPrice"],
+      queryFn: async () => await getCustomPerKgProductPrice()
+    })
+    console.log(customPerKgProductPrice);
+    // todo: i will update custom dynamic price to let veriables
+    
     // multiple state end
-    const price = totalPackagePrice;
 
      // Handle Package Change
   const handlePackageChange = (e) => {
@@ -45,147 +51,226 @@ const CustomOrderForm = () => {
     setPackageRequired(value);
   };
 
-    const handleIncreseFood = () => {
-        setQuantity(quantity + 1)
-      }
-      const hanldeDecreseFood = () => {
-        if(quantity === 1 ){
-          return toast.error("quantity not down the zero")
-        }
-        setQuantity(quantity - 1)
-      }
-      let totalFoodPrice = price * quantity;
-
-      // for single items price
-      let awater500 = 15; let awater1000 = 20;  let awater2000 = 40;
-      let aspeed = 30; let acocacula = 25; let asevenUp = 25; 
-      let achomoca = 20; let asingkara = 20; let ajilabi = 5;
-      let animky = 3; let amisty = 8;
-
       // for with package handler submit function
+      
       const handleIsPackageOrder = async(e) => {
         e.preventDefault();
+        if(isCalculation){
         const form = e.target;
+        const status = "With Package";
         const howMuchPackage = form.howMuchPackage.value;
         const typeOfPackage = form.typeOfPackage.value;
         const religion = form.religion.value;
         const water = form.water.value;
-        const drinks = form.drinks.value;
+        const doi = form.doi.value;
         const chomoca = form.chomoca.checked;
         const singkara = form.singkara.checked;
         const jilabi = form.jilabi.checked;
         const nimky = form.nimky.checked;
         const misty = form.misty.checked;
         const pocketCondition = form.pocketCondition.value;
-        const totalPackagePrice = price * quantity;
+        const totalWithPackagePrice = totalPackagePrice;
         const customerFullName = form.fullName.value;
         const customerAddress = form.address.value;
         const customerPhone = form.phone.value;
         const customerEmail = form.email.value;
         const customerDescription = form.description.value;
-        const customerOrderData = {howMuchPackage,typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
-        console.log("with package",customerOrderData);   
+        const customerOrderData = {status,howMuchPackage,typeOfPackage,religion,water,doi,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalWithPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
+        // console.log("with package",customerOrderData); 
+        setLoad(true)
+        const result = await createCustomWithPackageOrder(customerOrderData);
+        if(result?.insertedId){
+          setLoad(false)
+          toast.success('আপনার অর্ডার সম্পুর্ণ হয়েছে। দয়া করে অপেক্ষা করুন কিচ্ছুক্ষণের মধ্যে অনিক বেঙ্গল ফুডের প্রতিনিদি আপনার সাথে যোগাযোগ করবে।',{duration:7000})
+          setIsCalculation(false)
+          form.reset();
+        }
+        else{toast.error('দুঃখিত আবার চেষ্টা করুন')}
+        
+        }  
+        else{toast.error("দয়া করে আগে হিসাব করুন। 😊")}
       }
-      // for without package handle function
+      // for without package handle function submit function
       const handleWithOutPackageOrder = async(e) => {
         e.preventDefault();
-        const form = e.target;
-        const typeOfPackage = form.typeOfPackage.value;
-        const religion = form.religion.value;
-        const water = form.water.value;
-        const drinks = form.drinks.value;
-        const chomoca = form.chomoca.value;
-        const singkara = form.singkara.value;
-        const jilabi = form.jilabi.value;
-        const nimky = form.nimky.value;
-        const misty = form.misty.value;
-        const pocketCondition = form.pocketCondition.value;
-        const totalPackagePrice = price * quantity;
-        const customerFullName = form.fullName.value;
-        const customerAddress = form.address.value;
-        const customerPhone = form.phone.value;
-        const customerEmail = form.email.value;
-        const customerDescription = form.description.value;
-        const customerOrderData = {typeOfPackage,religion,water,drinks,chomoca,singkara,pocketCondition,jilabi,nimky,misty,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
-        console.log("with out package",customerOrderData);
+        if(isCalculation) {
+          const form = e.target;
+          const status = "WithOut Package";
+          const typeOfPackage = form.typeOfPackage.value;
+          const religion = form.religion.value;
+          const water = form.water.value;
+          const chomoca = form.chomoca.value;
+          const singkara = form.singkara.value;
+          const jilabi = form.jilabi.value;
+          const nimky = form.nimky.value;
+          const misty = form.misty.value;
+          const pocketCondition = form.pocketCondition.value;
+          const totalCustomPackagePrice = totalPackagePrice;
+          const customerFullName = form.fullName.value;
+          const customerAddress = form.address.value;
+          const customerPhone = form.phone.value;
+          const customerEmail = form.email.value;
+          const customerDescription = form.description.value;
+          const customerOrderData = {status,typeOfPackage,religion,water,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalCustomPackagePrice,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
+          setLoad(true)
+        const result = await createCustomWithOutPackageOrder(customerOrderData);
+        if(result?.insertedId){
+          setLoad(false)
+          toast.success('আপনার অর্ডার সম্পুর্ণ হয়েছে। দয়া করে অপেক্ষা করুন কিচ্ছুক্ষণের মধ্যে অনিক বেঙ্গল ফুডের প্রতিনিদি আপনার সাথে যোগাযোগ করবে।',{duration:7000})
+          form.reset();
+          setIsCalculation(false)
+        }
+        else{toast.error('দুঃখিত আবার চেষ্টা করুন')}
+        }
+        else{toast.error("দয়া করে আগে হিসাব করুন। 😊")}
+       
        
       }
+       // get single items price
+       const {data:singleItemPrice,isLoading:singlePriceLoad} = useQuery({
+        queryKey:"singleItemPrice",
+        queryFn:async () => await getCustomPerPichProductPrice()
+       })
+       
       
+
+
       // handle calculate total price with package
       const handleCalculateTotalPackagePrice = (e) => {
         e.preventDefault();
-        const form = e.target.form; 
-        const howMuchPackage = form.howMuchPackage.value;
-        const customerFullName = form.fullName.value;
+        setIsCalculation(true)
+        // যেগুলো চেক করা হবে
+        const isChomocaSelected = e.target.form.chomoca.checked;
+        const isSingkaraSelected = e.target.form.singkara.checked;
+        const isJilabiSelected = e.target.form.jilabi.checked;
+        const isNimkySelected = e.target.form.nimky.checked;
+        const isMistySelected = e.target.form.misty.checked;
+    
+        // যেগুলোর ভ্যালু দরকার হবে
+        const doiValue = e.target.form.doi.value;
+        const waterValue = e.target.form.water.value;
+        console.log(doiValue,waterValue);
+        // অন্যান্য ফিল্ড থেকে ভ্যালু নিচ্ছি
+        const howMuchPackage = e.target.form.howMuchPackage.value;
+        const customerFullName = e.target.form.fullName.value;
+    
         setHowMuchPackage(howMuchPackage);
         setCustomerFullName(customerFullName);
-        setCustomerPhone(form.phone.value);
-        setPocketCondition(form.pocketCondition.value);
-        setTypeOfPackage(form.typeOfPackage.value);
-        setReligion(form.religion.value);
-        setChomoca(form.chomoca.checked);
-        setSingkara(form.singkara.checked);
-        setJilabi(form.jilabi.checked);
-        setNimky(form.nimky.checked);
-        setMisty(form.misty.checked);
-        setDrinks(form.drinks.value);
-        setWater(form.water.value);
-        const totalWater500Price = howMuchPackage * awater500;
-        const totalWater1000Price = howMuchPackage * awater1000;
-        const totalWater2000Price = howMuchPackage * awater2000;
-        const totalSpeedPrice = howMuchPackage * aspeed;
-        const totalCocaculaPrice = howMuchPackage * acocacula;
-        const totalSevenUpPrice = howMuchPackage * asevenUp;
-        const totalChomocaPrice = howMuchPackage * achomoca;
-        const totalSingkaraPrice = howMuchPackage * asingkara;
-        const totalJilabiPrice = howMuchPackage * ajilabi;
-        const totalNimkyPrice = howMuchPackage * animky;
-        const totalMistyPrice = howMuchPackage * amisty;
-      
-        const totalPackagePriceIs = totalWater500Price+totalWater1000Price +
-          totalWater2000Price +totalSpeedPrice +totalCocaculaPrice +
-          totalSevenUpPrice +totalChomocaPrice +totalSingkaraPrice +
-          totalJilabiPrice +totalNimkyPrice +totalMistyPrice;
-      
+        setCustomerPhone(e.target.form.phone.value);
+        setPocketCondition(e.target.form.pocketCondition.value);
+        setTypeOfPackage(e.target.form.typeOfPackage.value);
+        setReligion(e.target.form.religion.value);
+    
+        // যেটা চেক করা হবে সেটা সেট করবো
+        setChomoca(isChomocaSelected);
+        setSingkara(isSingkaraSelected);
+        setJilabi(isJilabiSelected);
+        setNimky(isNimkySelected);
+        setMisty(isMistySelected);
+        setDoi(doiValue);
+        setWater(waterValue);
+        console.log(doiValue);
+        // এবার শুধুমাত্র চেক করা বা ইনপুট দেওয়া আইটেম গুলো যোগ করবো
+        let totalPackagePriceIs = 0;
+    
+        if (waterValue) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichWater;
+        }
+        if (isChomocaSelected) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichChomoca;
+        }
+        if (doiValue) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichDoi;
+        }
+        if (isSingkaraSelected) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichSingkara;
+        }
+        if (isJilabiSelected) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichJilabi;
+        }
+        if (isNimkySelected) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichNimky;
+        }
+        if (isMistySelected) {
+            totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichMisty;
+        }
+    
+        console.log(totalPackagePriceIs);
+    
+        // টোটাল প্রাইস সেট করবো
         setTotalPackagePrice(totalPackagePriceIs);
-        setShowFacilites(true)
-        console.log(totalPackagePriceIs); // এর সাথে `totalPackagePrice` গেট হবে।
-        toast.success(`মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalPackagePriceIs} টাকা`,{duration:7000});
-
-      };
+        setShowFacilites(true);
+    
+        toast.success(
+            `মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalPackagePriceIs} টাকা`,
+            { duration: 7000 }
+        );
+    };
       
       // handle calculate total price without package
       const handleCalculateWithOutPackage = (e) => {
-        e.preventDefault()
-         // for one kg items price
-      let perPichwater = 15;let perPichDrink = 25;let perPichchomoca = 20;
-      let perPichsingkara = 20;let perKgjilabi = 5;let perKgnimky = 3;
-      let perKgmisty = 300;
-        const form = e.target.form; 
-        const customerFullName = form.fullName.value;
-        const misty = form.misty.value;
-        const nimky = form.nimky.value;
-        const jilabi = form.jilabi.value;
-        const chomoca = form.chomoca.value;
-        const singkara = form.singkara.value;
-        const water = form.water.value;
-        const drinks = form.drinks.value;
-        const totalMistyPrice = misty * perKgmisty;
-        const totalNimkyPrice = nimky * perKgnimky;
-        const totalJilabiPrice = jilabi * perKgjilabi;
-        const totalChomocaPrice = chomoca * perPichchomoca;
-        const totalSingkaraPrice = singkara * perPichsingkara;
-        const totalWaterPrice = water * perPichwater;
-        const totalDrinksPrice = drinks * perPichDrink;
-        const totalItemsPrices = totalMistyPrice + totalNimkyPrice+totalJilabiPrice+totalChomocaPrice+totalSingkaraPrice+totalWaterPrice+totalDrinksPrice
-          console.log(totalItemsPrices);
-          setTotalPackagePrice(totalItemsPrices)
-          setChomoca(chomoca);  setSingkara(singkara); setJilabi(jilabi);
-          setNimky(nimky); setMisty(misty); setDrinks(drinks);
-          setWater(water);
-          setShowFacilites(true)
-          toast.success(`মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalItemsPrices} টাকা`,{duration:7000});
-      }
+        e.preventDefault();
+        setIsCalculation(true)
+        // আইটেমগুলোর দাম নির্ধারণ করছি
+        let perPichWater = customPerKgProductPrice?.perPichWater || 0;
+        let perPichChomoca = customPerKgProductPrice?.perPichChomoca || 0;
+        let perPichSingkara = customPerKgProductPrice?.perPichSingkara || 0;
+        let perKgJilabi = customPerKgProductPrice?.perKgJilabi || 0;
+        let perKgNimky = customPerKgProductPrice?.perKgnimky || 0;
+        let perKgMisty = customPerKgProductPrice?.perKgMisty || 0;
+        let perKgDoi = customPerKgProductPrice?.perKgDoi || 0;
+    
+        // ফর্মের ডেটা নিচ্ছি
+        const form = e.target.form;
+    
+        const customerFullName = form.fullName.value || '';
+        const misty = parseInt(form.misty.value) || 0;
+        const nimky = parseInt(form.nimky.value) || 0;
+        const jilabi = parseInt(form.jilabi.value) || 0;
+        const chomoca = parseInt(form.chomoca.value) || 0;
+        const singkara = parseInt(form.singkara.value) || 0;
+        const water = parseInt(form.water.value) || 0;
+        const doi = parseInt(form.doi.value) || 0;
+    
+        // ক্যালকুলেশন করছি
+        const totalMistyPrice = misty * perKgMisty;
+        const totalNimkyPrice = nimky * perKgNimky;
+        const totalJilabiPrice = jilabi * perKgJilabi;
+        const totalChomocaPrice = chomoca * perPichChomoca;
+        const totalSingkaraPrice = singkara * perPichSingkara;
+        const totalWaterPrice = water * perPichWater;
+        const totalDoiPrice = doi * perKgDoi
+    
+        // মোট প্রাইস যোগ করছি (যে ফিল্ডগুলো সিলেক্ট করা হবে শুধু সেগুলো যোগ হবে)
+        const totalItemsPrices =
+            totalMistyPrice +
+            totalNimkyPrice +
+            totalJilabiPrice +
+            totalChomocaPrice +
+            totalSingkaraPrice +
+            totalDoiPrice+
+            totalWaterPrice;
+    
+        console.log(totalItemsPrices);
+    
+        // স্টেট আপডেট করছি
+        setTotalPackagePrice(totalItemsPrices);
+        setChomoca(chomoca);
+        setSingkara(singkara);
+        setJilabi(jilabi);
+        setNimky(nimky);
+        setMisty(misty);
+        setWater(water);
+        setDoi(doi)
+        setShowFacilites(true);
+    
+        // টোস্ট মেসেজ দেখাচ্ছি
+        toast.success(
+            `মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalItemsPrices} টাকা`,
+            { duration: 7000 }
+        );
+    };
+    
 
 
       const handleTrustBengalFood = (e) => {
@@ -193,6 +278,7 @@ const CustomOrderForm = () => {
           toast.success(" অনিক বেঙ্গল ফুড আপনার তথ্য সংরক্ষণ করে রাখবে!", { duration: 4000 });
         }
       }
+      if(isLoading) return <>loading...</>
     return <>
          <div>
    <Container>
@@ -200,16 +286,7 @@ const CustomOrderForm = () => {
      <div className="flex flex-col items-center justify-center ">
        <div className="shadow-lg p-4 w-full md:w-[70%]">
          <div className=" space-y-4">
-           <div className="flex items-center justify-around md:gap-3">
-               <div className="flex text-base items-center gap-9 py-3 px-4 font-semibold shadow-lg">
-                   <div onClick={hanldeDecreseFood} className="cursor-pointer hover:text-primary"><FaMinus  /></div>
-                   <div className="text-xl">{quantity}</div>
-                   <div onClick={handleIncreseFood} className="cursor-pointer hover:text-primary"><FaPlus /></div>
-               </div>
-               <div className="px-[4px] py-3 text-xl hover:cursor-pointer hover:text-primary font-semibold shadow-lg">
-                  মোট: {totalFoodPrice} টাকা
-               </div>
-           </div>
+           
            {/* belling adress */}
            <div className="">
            
@@ -324,16 +401,14 @@ const CustomOrderForm = () => {
     
                 <div className='md:flex items-center  gap-5'>
                 <div className="w-full">
-                <h3 className="mb-2 text-[15px] text-slate-700">ড্রিঙ্ক নির্বাচন করুন</h3>
+                <h3 className="mb-2 text-[15px] text-slate-700">ধই নির্বাচন করুন</h3>
                 <select
-                    name="drinks"
+                    name="doi"
                     className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
                     >
                     <option value="" disabled selected>নির্বাচন করুন</option>
-                    <option value="speed">স্পিড-৩০ টাকা</option>
-                    <option value="tiger">টাইগার- ৩০ টাকা</option>
-                    <option value="cocacula">কুককুলা- ২৫ টাকা</option>
-                    <option value="7up">৭আপ- ২৫ টাকা</option>
+                    <option value="doi">কাপ দই</option>
+                    
                 </select>
                  </div>
     
@@ -344,9 +419,7 @@ const CustomOrderForm = () => {
                     className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
                     >
                     <option value="" disabled selected>নির্বাচন করুন</option>
-                    <option value="half letter">৫০০ গ্রাম- ১৫ টাকা</option>
-                    <option value="1 letter">১০০০ গ্রাম- ৩০ টাকা</option>
-                    <option value="2 letter">২০০০ গ্রাম- ৫৫ টাকা</option>
+                    <option value={true}>৫০০ গ্রাম</option>
                 </select>
                 </div>
                 </div>
@@ -436,20 +509,17 @@ const CustomOrderForm = () => {
                 <div className="flex items-center gap-2">
                 <FaArrowAltCircleRight />
                 <p>
-                  ড্রিঙ্ক হিসাবে আপনি{" "}
-                  <span className="underline">{p_drinks === "speed" && "স্প্রিড"}
-                  {p_drinks === "tiger" && "টাইগার"}
-                  {p_drinks === "cocacula" && "কুকাকুলা"}
-                  {p_drinks === "7up" && "সেভেন আপ"}</span> সিলেক্ট করেছেন।
+                  ধই হিসাবে আপনি {p_doi === "doi" && "কাপ ধই"} সিলেক্ট করেছেন।
                 </p>
               </div>
               <div className="flex items-center gap-2">
               <FaArrowAltCircleRight />
               <p>
                 খাবার পানি হিসাবে আপনি{" "}
-                <span className="underline">{p_water === "half letter" && "আধা লিটার "}
-                {p_water === "1 letter" && "এক লিটার "}
-                {p_water === "2 letter" && "দুই লিটার "}</span> 
+                <span className="underline">
+                  {p_water === "true" && "আধা লিটার "}
+                
+               </span> 
                 সিলেক্ট করেছেন।
               </p>
             </div>
@@ -460,6 +530,8 @@ const CustomOrderForm = () => {
                       <label>আপনার দেওয়া তথ্য অনুযাই আমরা এই ডাটা সেইভ করে রাখব। যদি ভূল না হয় তাহলে ঠিক চিহ্নতে চাপ দিন। ধন্যবাদ</label>
                       </div>
                   </div>
+                  <div className="divider"></div>
+                  <div className="text-primary text-lg font-semibold">আপনার সর্বমোট হিসাব = {totalPackagePrice} টাকা মাত্র।</div>
                   <div className="divider"></div>
                   </div>
                 }
@@ -590,6 +662,11 @@ const CustomOrderForm = () => {
                 }
             </select>
             </div>
+          
+            </div>
+            {/* water and singkara start */}
+
+            <div className='md:flex items-center  gap-5'>
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">সিংকারা নির্বাচন করুন</h3>
               <select
@@ -602,22 +679,6 @@ const CustomOrderForm = () => {
                 }
             </select>
             </div>
-            </div>
-            {/* water and drink start */}
-
-            <div className='md:flex items-center  gap-5'>
-            <div className="w-full">
-            <h3 className="mb-2 text-[15px] text-slate-700">ড্রিঙ্ক নির্বাচন করুন</h3>
-            <select
-                name="drinks"
-                className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
-                >
-                <option value="" disabled selected>নির্বাচন করুন</option>
-                {
-                    drinks?.map(option => <option key={option?.id} value={option?.value}>{option?.text}</option>)
-                }
-            </select> 
-             </div>
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">পানিও নির্বাচন করুন</h3>
@@ -679,9 +740,9 @@ const CustomOrderForm = () => {
                     <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_misty} কেজি মিষ্টি</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_nimky} কেজি নিমকি</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_jilabi} কেজি জিলাপী</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_doi} কেজি ধই</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_singkara} টি সিংকারা</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_chomoca} টি চমচা</p></div>
-                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_drinks} লিটার ড্রিঙ্কস</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_water} লিটার পানি</p></div>
                   <div className="divider"></div>
                   <div className="text-primary text-lg font-semibold">আপনার সর্বমোট হিসাব = {totalPackagePrice} টাকা মাত্র।</div>
