@@ -35,7 +35,7 @@ const CustomOrderForm = () => {
     const [p_misty, setMisty] = useState(false);
     const [p_doi, setDoi] = useState();
     const [p_water, setWater] = useState();
-    
+    const [p_Date,setDate] = useState()
     const {data:customPerKgProductPrice,isLoading} = useQuery({
       queryKey:["customPerKgProductPrice"],
       queryFn: async () => await getCustomPerKgProductPrice()
@@ -75,7 +75,18 @@ const CustomOrderForm = () => {
         const customerPhone = form.phone.value;
         const customerEmail = form.email.value;
         const customerDescription = form.description.value;
-        const customerOrderData = {status,howMuchPackage,typeOfPackage,religion,water,doi,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalWithPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
+        const eventDate = new Date(form.date.value);
+    
+        // ✅ Check if the selected date is less than or equal to 2 days from today
+        const today = new Date();
+        const diffTime = eventDate.getTime() - today.getTime();
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    
+        if (diffDays <= 2) {
+          toast.error("দয়া করে কমপক্ষে ২ দিন পূর্বে অর্ডার করুন। 😊 সুবিধার্তে অনিক ফুড🥧");
+          return;
+        }
+        const customerOrderData = {status,howMuchPackage,typeOfPackage,religion,water,doi,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalWithPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,eventDate}
         // console.log("with package",customerOrderData); 
         setLoad(true)
         const result = await createCustomWithPackageOrder(customerOrderData);
@@ -111,7 +122,18 @@ const CustomOrderForm = () => {
           const customerPhone = form.phone.value;
           const customerEmail = form.email.value;
           const customerDescription = form.description.value;
-          const customerOrderData = {status,typeOfPackage,religion,water,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalCustomPackagePrice,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
+          const eventDate = new Date(form.date.value);
+    
+          // ✅ Check if the selected date is less than or equal to 2 days from today
+          const today = new Date();
+          const diffTime = eventDate.getTime() - today.getTime();
+          const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      
+          if (diffDays <= 2) {
+            toast.error("দয়া করে কমপক্ষে ২ দিন পূর্বে অর্ডার করুন। 😊 সুবিধার্তে অনিক ফুড🥧");
+            return;
+          }
+          const customerOrderData = {status,typeOfPackage,religion,water,chomoca,singkara,pocketCondition,jilabi,nimky,misty,totalCustomPackagePrice,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,eventDate}
           setLoad(true)
         const result = await createCustomWithOutPackageOrder(customerOrderData);
         if(result?.insertedId){
@@ -149,7 +171,8 @@ const CustomOrderForm = () => {
         // যেগুলোর ভ্যালু দরকার হবে
         const doiValue = e.target.form.doi.value;
         const waterValue = e.target.form.water.value;
-        console.log(doiValue,waterValue);
+        const dateValue = e.target.form.date.value;
+        setDate(dateValue)
         // অন্যান্য ফিল্ড থেকে ভ্যালু নিচ্ছি
         const howMuchPackage = e.target.form.howMuchPackage.value;
         const customerFullName = e.target.form.fullName.value;
@@ -222,7 +245,7 @@ const CustomOrderForm = () => {
     
         // ফর্মের ডেটা নিচ্ছি
         const form = e.target.form;
-    
+        
         const customerFullName = form.fullName.value || '';
         const misty = parseInt(form.misty.value) || 0;
         const nimky = parseInt(form.nimky.value) || 0;
@@ -231,7 +254,8 @@ const CustomOrderForm = () => {
         const singkara = parseInt(form.singkara.value) || 0;
         const water = parseInt(form.water.value) || 0;
         const doi = parseInt(form.doi.value) || 0;
-    
+        const dateValue = form.date.value;
+        
         // ক্যালকুলেশন করছি
         const totalMistyPrice = misty * perKgMisty;
         const totalNimkyPrice = nimky * perKgNimky;
@@ -262,8 +286,8 @@ const CustomOrderForm = () => {
         setMisty(misty);
         setWater(water);
         setDoi(doi)
+        setDate(dateValue)
         setShowFacilites(true);
-    
         // টোস্ট মেসেজ দেখাচ্ছি
         toast.success(
             `মিঃ ${customerFullName} আপনার সর্বমোট প্যাকেজ এর হিসাব = ${totalItemsPrices} টাকা`,
@@ -447,11 +471,17 @@ const CustomOrderForm = () => {
                 <input name="email" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="email" required/>
                 </div>
                 </div>
-                <div>
+               <div className="md:flex items-center  gap-5">
+               <div className="w-full">
                   <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
                   <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
                 <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
                 </div>
+                <div className="w-full">
+                <h3 className="mb-2 text-[15px] text-slate-700"> অনুষ্টানের তারিখ সিলেক্ট করুন</h3>
+                  <input name="date" type="date" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" required/>
+                </div>
+               </div>
                 <div className="flex items-center gap-4">
                 <div onClick={handleCalculateTotalPackagePrice} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
                 <button>হিসাব করুন</button>
@@ -521,6 +551,20 @@ const CustomOrderForm = () => {
                 
                </span> 
                 সিলেক্ট করেছেন।
+              </p>
+            </div>
+              <div className="flex items-center gap-2">
+              <FaArrowAltCircleRight />
+              <p>
+                আপনার অনুষ্টানের তারিখ <span className="underline font-semibold"> {  p_Date } </span> 
+                সিলেক্ট করেছেন।
+              </p>
+            </div>
+              <div className="flex items-center gap-2">
+              <FaArrowAltCircleRight />
+              <p>
+               আমরা  <span className="underline font-semibold"> {  p_Date } </span> 
+                তারিখ খাবার প্রস্তুত রাখবো।
               </p>
             </div>
   
@@ -717,11 +761,17 @@ const CustomOrderForm = () => {
             <input name="email" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="email" required/>
             </div>
             </div>
-            <div>
-              <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
-              <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
-            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
-            </div>
+            <div className="md:flex items-center  gap-5">
+               <div className="w-full">
+                  <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
+                  <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
+                <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
+                </div>
+                <div className="w-full">
+                <h3 className="mb-2 text-[15px] text-slate-700"> অনুষ্টানের তারিখ সিলেক্ট করুন</h3>
+                  <input name="date" type="date" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" required/>
+                </div>
+               </div>
             <div className="flex items-center gap-4">
             <div onClick={handleCalculateWithOutPackage} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
             <button>হিসাব করুন</button>
@@ -744,6 +794,7 @@ const CustomOrderForm = () => {
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_singkara} টি সিংকারা</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_chomoca} টি চমচা</p></div>
                    <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_water} লিটার পানি</p></div>
+                   <div className={`flex items-center gap-3`}><FaArrowAltCircleRight /><p>{p_Date} তারিখ আপনার খাবার তৈরি করা থাকবে</p></div>
                   <div className="divider"></div>
                   <div className="text-primary text-lg font-semibold">আপনার সর্বমোট হিসাব = {totalPackagePrice} টাকা মাত্র।</div>
                    </>
