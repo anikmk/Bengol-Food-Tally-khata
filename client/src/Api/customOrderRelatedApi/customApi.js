@@ -1,11 +1,6 @@
 
 import axiosPublic from "../../hooks/useAxiosPublic"
 
-// export const createCurrentPerKgProductPrice = async(customPrice) => {
-//     const {data} = await axiosPublic.post('/customPrice',customPrice);
-//     return data;
-// };
-
 export const getCustomPerKgProductPrice = async() => {
     const {data} = await axiosPublic.get('/customPerKgPrice');
     return data;
@@ -32,5 +27,15 @@ export const createCustomWithPackageOrder = async(customerOrderDataWithPackage) 
 // with out package create handler:
 export const createCustomWithOutPackageOrder = async(customerOrderDataWithOutPackage) => {
     const {data} = await axiosPublic.post('/user/create/order/withOutPackage',customerOrderDataWithOutPackage);
+    return data;
+}
+
+// get with package orders data:
+export const getWithPackageOrdersData = async()=>{
+    const {data} = await axiosPublic.get('/with/package/all/orders');
+    return data;
+}
+export const getWithOutPackageOrdersData = async()=>{
+    const {data} = await axiosPublic.get('/with/out/package/all/orders');
     return data;
 }
