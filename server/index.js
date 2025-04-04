@@ -327,6 +327,23 @@ app.post("/customerOrder", async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
+app.put('/update/and/edit/fast/food',async(req,res) => {
+  try{
+    const updateData = req.body;
+    const foodName = req.body.foodName;
+    delete foodName;
+    const result = await fastFoodCollection.updateOne({foodName},{$set:updateData});
+    res.send(result)
+  }
+
+  catch (err) {
+    res.status(500).send({ message: "Internal server error", error: err.message });
+  }
+})
+
+
+
+
 // order product 
 app.get("/customer/allOrders",async(req,res) => {
   try{
@@ -476,6 +493,52 @@ app.patch('/updateCustomPerPichPrice', async (req, res) => {
 });
 
 // package order handler:
+
+
+
+// main package handler:
+app.post('/customer/order/main/package',async(req,res) => {
+  try{
+    const data = req.body;
+    const result = await packageOrderCollection.insertOne(data);
+    res.send(result);
+  }
+  catch(err) {
+  res.status(500).send({ message: "Internal server error" });
+  }
+})
+
+// main package get handler:
+
+app.get('/main/package/all/customers/orders', async (req, res) => {
+  try {
+    // শুধুমাত্র "main package" স্ট্যাটাসের ডাটা ফেচ করা হচ্ছে
+    const query = { status: 'main package' };
+
+    const result = await packageOrderCollection.find(query).toArray();
+    res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
+app.delete('/delete/main/package/order/:id', async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await packageOrderCollection.deleteOne(query);
+    if(result.deletedCount === 0){
+      return res.status(400).send({message:"order not found"})
+    }
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
+
+
+
 // with package handler
 app.post('/user/create/order/withPackage',async(req,res) => {
   try{
@@ -527,6 +590,32 @@ app.get('/with/out/package/all/orders', async (req, res) => {
     res.status(500).send({ message: "Internal server error" });
   }
 });
+// delete with package order:
+app.delete('/delete/with/package/order/:id', async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await packageOrderCollection.deleteOne(query);
+    if(result.deletedCount === 0){
+      return res.status(400).send({message:"order not found"})
+    }
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+// delete with out package order:
+app.delete('/delete/with/out/package/order/:id', async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await packageOrderCollection.deleteOne(query);
+    if(result.deletedCount === 0){
+      return res.status(400).send({message:"order not found"})
+    }
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)

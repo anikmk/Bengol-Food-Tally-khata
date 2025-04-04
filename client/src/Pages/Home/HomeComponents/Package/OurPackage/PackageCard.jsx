@@ -22,7 +22,7 @@ const PackageCard = ({item,loading}) => {
                   <p className="text-gray-600 mb-3">{packageDes}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-secondary">
-                      {"pkg.price"}
+                      {"pkg."}
                     </span>
                     <Link to={`/morePackagesForWedding?id=${_id}&name=${encodeURIComponent(packageName)}`}>
                     <button className="bg-primary text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-secondary transition">

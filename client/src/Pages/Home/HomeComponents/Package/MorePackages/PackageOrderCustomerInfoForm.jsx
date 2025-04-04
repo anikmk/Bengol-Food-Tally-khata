@@ -4,33 +4,34 @@ import { MdDownloadDone } from "react-icons/md";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { CiDiscount1 } from "react-icons/ci";
 import { SiFoodpanda } from "react-icons/si";
-import Container from "../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useQuery, } from "@tanstack/react-query";
-import { getCustomersAllOrders, getSingleFoodById, submitFastFoodOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
-import Loader from "../../../Componnents/Shared/Loader/Loader";
 import toast from "react-hot-toast"
-import useAuth from "../../../hooks/useAuth";
-import Load from "../../../Componnents/Shared/Loader/load/Load";
-const OrderDetailsPage = () => {
+import { createMainPackageOrder } from "../../../../../Api/PackageRelatedApi/packageApi";
+import useAuth from "../../../../../hooks/useAuth";
+import Loader from "../../../../../Componnents/Shared/Loader/Loader";
+import Container from "../../../../../Componnents/Shared/Container/Container";
+import Load from "../../../../../Componnents/Shared/Loader/load/Load";
+const PackageOrderCustomerInfoForm = () => {
   const {user,loading} = useAuth();
+  const [quantity,setQuantity] = useState(1)
   const [load,setLoad] = useState(false);
-  const [quantity,setQuantity] = useState(1);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const id = searchParams.get("id");
+  // packages related data get from url
+  const packageName = searchParams.get("packageName");
+  const numberOfPeople = searchParams.get("numberOfPeople");
+  const packagePrice = searchParams.get("packagePrice");
+  const packageDescription = searchParams.get("description");
+  console.log(packageName,numberOfPeople,packagePrice,packageDescription);
+
+  // todo: porer kaj hobe form ta update kora jokon kew package order korbe tokon 
+  // jeno eta sotik moto kaj kore 
 
 
-  const {data:detailsFood,isLoading} = useQuery({
-    queryKey:[id,"detailsFood"],
-    queryFn:async()=> await getSingleFoodById(id)
-  })
+  if (loading) return <Loader />;
 
-  if (loading || isLoading) return <Loader />;
-  if (!detailsFood) return <div>Data not found!</div>;
-
-  let price = detailsFood?.foodPrice;
+  let price = packagePrice;
   const handleIncreseFood = () => {
     setQuantity(quantity + 1)
   }
@@ -40,11 +41,11 @@ const OrderDetailsPage = () => {
     }
     setQuantity(quantity - 1)
   }
-  let totalFoodPrice = price * quantity;
+  let totalPackagePrice = price * quantity;
 
 const handleConfirmOrder = () => {
-  if(totalFoodPrice <= 100){
-   return toast.error("দুঃখিত ! মিনিমাম ১০০ টাকার খাবার অর্ডার করুন")
+  if(totalPackagePrice <= 100){
+    toast.error("দুঃখিত ! মিনিমাম ১০০ টাকার খাবার অর্ডার করুন")
   }
 }
 
@@ -52,19 +53,18 @@ const handleConfirmOrder = () => {
 const handleOrderSubmit = async(e) => {
   e.preventDefault();
   const form = e.target;
-  const foodName = detailsFood?.foodName;
-  const foodPrice = detailsFood?.foodPrice;
-  const totalFoodPrice = price * quantity;
+  const status = "main package"
+  const totalPackagePrice = price * quantity;
   const customerFullName = form.fullName.value;
   const customerAddress = form.address.value;
   const customerPhone = form.phone.value;
   const customerEmail = form.email.value;
   const customerDescription = form.description.value;
-  const customerOrderData = {foodName,quantity,foodPrice,totalFoodPrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,}
-
+  const customerOrderData = {packageName,numberOfPeople,quantity,totalPackagePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,status}
+console.log(customerOrderData);
   setLoad(true)
   try{
-    const result = await submitFastFoodOrder(customerOrderData);
+    const result = await createMainPackageOrder(customerOrderData);
     if(result.insertedId){
       toast.success("অভিনন্দন ! আপনার অর্ডার সম্পুর্ণ হয়েছে। দয়া করে অপেক্ষা করুন, আমাদের প্রতিনিধি কিচ্ছুক্ষনের মধ্যে আপনার সাথে যোগাযোগ করবে।",{duration:8000});
       form.reset();
@@ -83,17 +83,16 @@ const handleOrderSubmit = async(e) => {
    <div className="my-14">
     
      <div className="flex flex-col items-center justify-center ">
-       <div className="border p-4 shadow-xl w-full md:w-[40%] relative">
-        <div className="absolute -top-10 left-[42%] rounded-full overflow-hidden bg-primary w-24 h-24 flex flex-col items-center justify-center"><img className="w-24 h-24 rounded-full" src={detailsFood?.foodImg} alt="" /></div>
+       <div className="border p-4 shadow-xl w-full md:w-[40%]">
          <div className=" space-y-4">
-           <h2 className="font-medium text-xl text-black">{detailsFood?.foodName}</h2>
+           <h2 className="font-medium text-xl text-black">{packageName}</h2>
            <div className="flex items-center gap-5">
              <div>rating</div>
              <span>2.4 (3)</span>
            <div>SKU:25415</div>
            </div>
-           <p className="text-black font-medium text-2xl ">{detailsFood?.foodPrice} টাকা</p>
-           <p className="text-sm">{detailsFood?.foodDescription}</p>
+           <p className="text-black font-medium text-2xl ">{packagePrice} টাকা</p>
+           <p className="text-sm">{packageDescription}</p>
            <div className="flex items-center justify-between md:gap-3">
                <div className="flex text-base items-center gap-9 py-3 px-4 font-semibold shadow-lg">
                    <div onClick={hanldeDecreseFood} className="cursor-pointer hover:text-primary"><FaMinus  /></div>
@@ -101,7 +100,7 @@ const handleOrderSubmit = async(e) => {
                    <div onClick={handleIncreseFood} className="cursor-pointer hover:text-primary"><FaPlus /></div>
                </div>
                <div className="px-[4px] py-3 text-xl hover:cursor-pointer hover:text-primary font-semibold shadow-lg">
-                  মোট: {totalFoodPrice} টাকা
+                  মোট: {totalPackagePrice} টাকা
                </div>
            </div>
            {/* belling adress */}
@@ -189,4 +188,4 @@ const handleOrderSubmit = async(e) => {
  </Container>
 </div>
 }
-export default OrderDetailsPage;
+export default PackageOrderCustomerInfoForm;

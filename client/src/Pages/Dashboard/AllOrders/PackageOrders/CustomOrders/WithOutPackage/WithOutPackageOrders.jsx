@@ -17,7 +17,7 @@ const WithOutPackageOrders = () => {
         <div className="my-10">
        <div className=" mb-5">
 
-           <p className="text-lg mb-2 text-primary font-medium">এখানে প্যাকেজ সহ সকল অর্ডার এর লিস্ট</p>
+           <p className="text-lg mb-2 text-primary font-medium">এখানে প্যাকেজ ছাড়া সকল অর্ডার এর লিস্ট</p>
            <button onClick={handleMoreText} className="bg-primary py-[2px] text-sm text-neutral shadow-lg px-2 hover:bg-[#ff1c68] transition-all capitalize rounded mb-5">{moreText ? "বন্ধ করুন":"আরো জানুন"}</button> 
            {
                moreText && <div>

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "react-router-dom";
 import { getMorePackages } from "../../../../../Api/PackageRelatedApi/packageApi";
 import MorePackagesCard from "./MorePackagesCard";
+import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 
 const MorePackages = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const MorePackages = () => {
 
   console.log(morePackages?.[0]?.packageOptions);
 
-  if (isLoading) return <p>লোড হচ্ছে...</p>;
+  if (isLoading) return <Loader />;
   return (
     <div className="min-h-screen bg-gray-50 py-10">
       <div className="max-w-6xl mx-auto px-4">

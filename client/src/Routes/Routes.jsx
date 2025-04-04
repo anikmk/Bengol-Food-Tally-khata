@@ -28,6 +28,9 @@ import CustomOrderForm from "../Pages/Home/HomeComponents/Package/MorePackages/C
 import EditCustomPrice from "../Pages/Dashboard/EditCustomPrice/EditCustomPrice";
 import EditCustomPriceTwo from "../Pages/Dashboard/EditCustomPrice/EditCustomPriceTwo";
 import PackageOrders from "../Pages/Dashboard/AllOrders/PackageOrders/PackageOrders";
+import PackageOrderCustomerInfoForm from "../Pages/Home/HomeComponents/Package/MorePackages/PackageOrderCustomerInfoForm";
+import EditPackage from "../Pages/Dashboard/EditPackage/EditPackage";
+import EditFastFood from "../Pages/Dashboard/EditFastFood/EditFastFood";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +53,10 @@ export const router = createBrowserRouter([
             {
                 path:'/foodDetails',
                 element:<UserRoute><OrderDetailsPage /></UserRoute>
+            },
+            {
+                path:'/packageOrderInfoForm',
+                element: <PackageOrderCustomerInfoForm />
             },
             {
                 path:'/morePackagesForWedding',
@@ -127,6 +134,14 @@ export const router = createBrowserRouter([
                 {
                     path:'addPackages',
                     element:<AddPackages />
+                },
+                {
+                    path:'updatePackage',
+                    element:<EditPackage />
+                },
+                {
+                    path:'updateFastFood',
+                    element:<EditFastFood />
                 },
                 {
                     path:'updateCustomPrice',

@@ -38,3 +38,9 @@ export const getShopingCartProduct = async (email) => {
     const {data} = await axiosPublic.get(`/singleShopingCartProduct/${email}`);
     return data;
 }
+
+// fast food update related api:
+export const UpdateFastFood = async (updateData) => {
+    const {data} = await axiosPublic.put('/update/and/edit/fast/food',updateData);
+    return data;
+}

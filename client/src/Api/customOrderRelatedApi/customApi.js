@@ -35,7 +35,19 @@ export const getWithPackageOrdersData = async()=>{
     const {data} = await axiosPublic.get('/with/package/all/orders');
     return data;
 }
+
+// get with out package orders data:
 export const getWithOutPackageOrdersData = async()=>{
     const {data} = await axiosPublic.get('/with/out/package/all/orders');
+    return data;
+}
+
+// delete with package order:
+export const deleteWithPackageOrder = async(id) => {
+    const {data} = await axiosPublic.delete(`delete/with/package/order/${id}`);
+    return data;
+}
+export const deleteWithOutPackageOrder = async(id) => {
+    const {data} = await axiosPublic.delete(`delete/with/out/package/order/${id}`);
     return data;
 }

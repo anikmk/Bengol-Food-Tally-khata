@@ -27,7 +27,7 @@ const MorePackagesCard = ({ item, loading }) => {
             <p className="text-base font-bold text-gray-700 mt-2">
                 মূল্য: {item?.childrenPackage?.[0]?.childrenPackagePrice || 0} টাকা
             </p>
-            <Link to={`/foodDetails/?packageName=${item?.childrenPackage?.[0]?.childrenPackageName}&numberOfPeople=${item?.numberOfPeople}&packagePrice=${item?.childrenPackage?.[0]?.childrenPackagePrice}&description=${item?.childrenPackage?.[0]?.childrenPackageDescriptionSmall}`}> 
+            <Link to={`/packageOrderInfoForm/?packageName=${item?.childrenPackage?.[0]?.childrenPackageName}&numberOfPeople=${item?.numberOfPeople}&packagePrice=${item?.childrenPackage?.[0]?.childrenPackagePrice}&description=${item?.childrenPackage?.[0]?.childrenPackageDescriptionSmall}`}> 
             <button className="mt-4 w-full bg-primary text-white py-2 rounded-xl hover:bg-[rgb(243,31,102)] transition">
                 এখুনি অর্ডার করুন
             </button>

@@ -18,8 +18,8 @@ const ComboPackageCard = ({ items, loading }) => {
           </h2>
           <p className="text-gray-600 mb-3">{packageDes}</p>
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold text-secondary">
-              {"pkg.price"}
+            <span className="text-lg text-secondary">
+              {"🍕🍔🎂☕🍟"}
             </span>
             <Link
               to={`/morePackagesForWedding?id=${_id}&name=${encodeURIComponent(

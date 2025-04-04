@@ -59,7 +59,7 @@ const WithPackageOrders = () => {
                 </table>
             </div>
         </div>
-
+                        <div className="divider"></div>
    </div>
     </>
 }
