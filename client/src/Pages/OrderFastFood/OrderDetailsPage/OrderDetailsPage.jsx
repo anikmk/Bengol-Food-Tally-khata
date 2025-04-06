@@ -1,3 +1,4 @@
+import emailjs from '@emailjs/browser';
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { IoHeartOutline, IoReload } from "react-icons/io5";
 import { MdDownloadDone } from "react-icons/md";
@@ -8,7 +9,7 @@ import Container from "../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery, } from "@tanstack/react-query";
-import { getCustomersAllOrders, getSingleFoodById, submitFastFoodOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
+import { getSingleFoodById, submitFastFoodOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
 import Loader from "../../../Componnents/Shared/Loader/Loader";
 import toast from "react-hot-toast"
 import useAuth from "../../../hooks/useAuth";
@@ -66,8 +67,36 @@ const handleOrderSubmit = async(e) => {
   try{
     const result = await submitFastFoodOrder(customerOrderData);
     if(result.insertedId){
-      toast.success("অভিনন্দন ! আপনার অর্ডার সম্পুর্ণ হয়েছে। দয়া করে অপেক্ষা করুন, আমাদের প্রতিনিধি কিচ্ছুক্ষনের মধ্যে আপনার সাথে যোগাযোগ করবে।",{duration:8000});
+      toast.success("অভিনন্দন ! আপনার ইমেইল চেক করুণ",{duration:8000});
       form.reset();
+      // here handle email js:
+        // ✅ EmailJS দিয়ে কাস্টোমারকে কনফার্মেশন ইমেইল পাঠানো হচ্ছে
+      emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          to_email: customerEmail,
+          to_name: customerFullName,
+          food_name: foodName,
+          quantity: quantity,
+          total_price: totalFoodPrice,
+          address: customerAddress,
+          shop_name: "অনিক কনফেকশন",
+          from_name: "প্রোঃ অর্জুন",
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(() => {
+        toast.success('আপনার কনফার্মেশন ইমেইল পাঠানো হয়েছে!', {
+          position: "bottom-center"
+        })
+      })
+      .catch((error) => {
+        console.error("ইমেইল পাঠাতে সমস্যা হয়েছে:", error);
+        toast.success('ইমেইল পাঠাতে ব্যর্থ। তবে অর্ডার সফল হয়েছে!', {
+          position: "bottom-center"
+        })
+      });
     }
   }
   catch(err){
@@ -148,7 +177,6 @@ const handleOrderSubmit = async(e) => {
         </div>         
     </form>
            </div>
-           {/* <div onClick={handleConfirmOrder} className="w-full bg-primary text-center p-2 text-neutral"><button>অর্ডার করুন</button></div> */}
            <div className="flex items-center gap-3 font-medium cursor-pointer hover:text-primary">
            <IoHeartOutline />
             সেইব করে রাখুন
