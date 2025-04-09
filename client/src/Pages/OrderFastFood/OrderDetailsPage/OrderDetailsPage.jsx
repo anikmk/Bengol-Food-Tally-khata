@@ -16,6 +16,7 @@ import useAuth from "../../../hooks/useAuth";
 import Load from "../../../Componnents/Shared/Loader/load/Load";
 const OrderDetailsPage = () => {
   const {user,loading} = useAuth();
+  const [customerAddress, setCustomerAddress] = useState("");
   const [load,setLoad] = useState(false);
   const [quantity,setQuantity] = useState(1);
   const location = useLocation();
@@ -48,7 +49,29 @@ const handleConfirmOrder = () => {
    return toast.error("দুঃখিত ! মিনিমাম ১০০ টাকার খাবার অর্ডার করুন")
   }
 }
+const handleAddressChange = (e) => {
+  const selectedAddress = e.target.value;
+  setCustomerAddress(selectedAddress);
 
+  switch (selectedAddress) {
+    case "rajnagar":
+      toast.success("ডেলিভারি চার্জঃ ১০ টাকা");
+      break;
+    case "kharpara":
+    case "bajua":
+      toast.success("ডেলিভারি চার্জঃ ২০ টাকা");
+      break;
+    case "parshipara":
+    case "karnigram":
+      toast.success("ডেলিভারি চার্জঃ ৩০ টাকা");
+      break;
+    case "mojidpur":
+      toast.success("ডেলিভারি চার্জঃ ৪০ টাকা");
+      break;
+    default:
+      break;
+  }
+};
 
 const handleOrderSubmit = async(e) => {
   e.preventDefault();
@@ -81,7 +104,7 @@ const handleOrderSubmit = async(e) => {
           quantity: quantity,
           total_price: totalFoodPrice,
           address: customerAddress,
-          shop_name: "অনিক কনফেকশন",
+          shop_name: "অনিক কনফেকশন (বেজ্ঞল ফুড)",
           from_name: "প্রোঃ অর্জুন",
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
@@ -151,7 +174,20 @@ const handleOrderSubmit = async(e) => {
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">ঠিকানা দিন</h3>
-            <input name="address" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="text" placeholder='যেমন গ্রাম এর নাম দিন---' required/>
+            <select
+                value={customerAddress}
+                onChange={handleAddressChange}
+                name="address"
+                className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm"
+                required>
+                <option value="" disabled selected>নির্বাচন করুন</option>
+                <option value="rajnagar">রাজনগর</option>
+                <option value="kharpara">খারপাড়া</option>
+                <option value="parshipara">পারশিপাড়া</option>
+                <option value="bajua">বাজুয়া</option>
+                <option value="karnigram">কণিগ্রাম</option>
+                <option value="mojidpur">মজিদপুর</option>
+            </select>
             </div>
             </div>
             <div className='md:flex items-center  gap-5'>

@@ -9,8 +9,6 @@ const WithPackageOrders = () => {
         queryKey:"withPackageOrdersData",
         queryFn:async () => await getWithPackageOrdersData() 
     })
-    console.log(withPackageOrdersData);
-    
         const handleMoreText = () => {
             setMoreText(!moreText)
         }

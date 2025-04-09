@@ -1,3 +1,4 @@
+import { Cursor, useTypewriter } from 'react-simple-typewriter'
 import { Link } from "react-router-dom";
 import img from "../../../../assets/img/42159.jpg";
 import useAuth from "../../../../hooks/useAuth";
@@ -10,6 +11,16 @@ const Hero = () => {
     queryKey:[user?.email,"dbUser"],
     queryFn:async()=>await getSingleUser(user?.email)
   })
+  const [text] = useTypewriter({
+    words: [ "অনিক কনফেকশন বেঙ্গল ফুড",
+      "প্রোঃ অর্জুন মল্লিক",
+      "স্থানঃ রাজনগর উপজেলার সামনে",
+      "স্বাদের অঙ্গীকার, প্রতিটি কামড়ে",],
+    loop: 0,
+    typeSpeed: 150,
+    deleteSpeed: 90,
+  })
+
   if(loading || isLoading) return <Loader />
     return <>
       <div
@@ -23,7 +34,8 @@ const Hero = () => {
               <div className="md:w-[550px]">
                 {/* sociol sign up */}
                 <div>
-                <h1 className="mb-5 text-2xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">অনিক কনফেকশন আপনার বিশ্বস্ত বেঙ্গল ফুড</h1>
+                <h1 className="mb-5 text-2xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">{text}</h1>
+                <Cursor cursorColor='white' />
                 <p className="text-sm text-neutral mb-5">মোঠো ফোন দিয়ে নিমিশেই দোকানের যাবতীয় হিসাব নিকাশ রাখুন </p>
                 <div className="flex items-center justify-center gap-5 md:gap-8">
                   {

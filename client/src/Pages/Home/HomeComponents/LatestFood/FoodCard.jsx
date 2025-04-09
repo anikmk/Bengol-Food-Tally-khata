@@ -29,7 +29,7 @@ const FoodCard = ({food,loading}) => {
                           {food?.foodDescription}
                         </div>
                         <div className="flex items-center my-2 text-sm justify-between">
-                          <p className="text-primary text-[16px]">start</p>
+                          <p className="text-primary text-[16px]">Star</p>
                           <p className={`${food?.available === true ? "text-green-700":"text-primary"} text-[16px]`}>{food?.available === true ? "In Stock":"Stock Out"}</p>
                         </div>
                         <div className="relative">

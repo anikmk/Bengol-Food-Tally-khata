@@ -14,6 +14,7 @@ import CustomerOrderFacilites from "./CustomerOrderFacilities/CustomerOrderFacil
 import FormHeading from "./FormHeading/FormHeading";
 import { useQuery } from "@tanstack/react-query";
 import { createCustomWithOutPackageOrder, createCustomWithPackageOrder, getCustomPerKgProductPrice, getCustomPerPichProductPrice } from "../../../../../../Api/customOrderRelatedApi/customApi";
+import Loader from "../../../../../../Componnents/Shared/Loader/Loader";
 const CustomOrderForm = () => {
     const [isCalculation,setIsCalculation] = useState(false)
     const [load,setLoad] = useState(false);
@@ -40,7 +41,6 @@ const CustomOrderForm = () => {
       queryKey:["customPerKgProductPrice"],
       queryFn: async () => await getCustomPerKgProductPrice()
     })
-    console.log(customPerKgProductPrice);
     // todo: i will update custom dynamic price to let veriables
     
     // multiple state end
@@ -153,9 +153,6 @@ const CustomOrderForm = () => {
         queryKey:"singleItemPrice",
         queryFn:async () => await getCustomPerPichProductPrice()
        })
-       
-      
-
 
       // handle calculate total price with package
       const handleCalculateTotalPackagePrice = (e) => {
@@ -192,7 +189,6 @@ const CustomOrderForm = () => {
         setMisty(isMistySelected);
         setDoi(doiValue);
         setWater(waterValue);
-        console.log(doiValue);
         // এবার শুধুমাত্র চেক করা বা ইনপুট দেওয়া আইটেম গুলো যোগ করবো
         let totalPackagePriceIs = 0;
     
@@ -217,8 +213,6 @@ const CustomOrderForm = () => {
         if (isMistySelected) {
             totalPackagePriceIs += howMuchPackage * singleItemPrice?.perPichMisty;
         }
-    
-        console.log(totalPackagePriceIs);
     
         // টোটাল প্রাইস সেট করবো
         setTotalPackagePrice(totalPackagePriceIs);
@@ -275,8 +269,6 @@ const CustomOrderForm = () => {
             totalDoiPrice+
             totalWaterPrice;
     
-        console.log(totalItemsPrices);
-    
         // স্টেট আপডেট করছি
         setTotalPackagePrice(totalItemsPrices);
         setChomoca(chomoca);
@@ -294,15 +286,13 @@ const CustomOrderForm = () => {
             { duration: 7000 }
         );
     };
-    
-
 
       const handleTrustBengalFood = (e) => {
         if (e.target.checked) {
           toast.success(" অনিক বেঙ্গল ফুড আপনার তথ্য সংরক্ষণ করে রাখবে!", { duration: 4000 });
         }
       }
-      if(isLoading) return <>loading...</>
+      if(isLoading || singlePriceLoad) return <Loader />
     return <>
          <div>
    <Container>

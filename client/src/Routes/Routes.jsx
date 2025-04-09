@@ -31,6 +31,8 @@ import PackageOrders from "../Pages/Dashboard/AllOrders/PackageOrders/PackageOrd
 import PackageOrderCustomerInfoForm from "../Pages/Home/HomeComponents/Package/MorePackages/PackageOrderCustomerInfoForm";
 import EditPackage from "../Pages/Dashboard/EditPackage/EditPackage";
 import EditFastFood from "../Pages/Dashboard/EditFastFood/EditFastFood";
+import BirthdayCakeCategorys from "../Componnents/BirthdayCake/BirthdayCakeCategorys/BirthdayCakeCategorys";
+import BirthdayCakeCard from "../Componnents/BirthdayCake/BirthdayCakeCard/BirthdayCakeCard";
 
 export const router = createBrowserRouter([
     {
@@ -77,6 +79,14 @@ export const router = createBrowserRouter([
             {
                 path:'/allProduct',
                 element:<AllProduct />
+            },
+            {
+                path:'/birthdayCakeCategory',
+                element:<BirthdayCakeCategorys />
+            },
+            {
+                path:'/birthdayCakeCard',
+                element:<BirthdayCakeCard />
             },
             {
                 path:"/about",

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { GiStairsCake } from "react-icons/gi";
 const CustomOrder = () => {
     return <>
      <div className="bg-gray-100 py-10">
@@ -7,7 +7,7 @@ const CustomOrder = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-8">
               <div>
                 <img
-                  src="./about.png"
+                  src="./package.png"
                   alt="About Us"
                   className="rounded-lg"
                 />
@@ -29,12 +29,23 @@ const CustomOrder = () => {
                 </ul>
                 <p>🎉 অর্ডার করতে নিচের বিস্তারিত দেখুন বাটনে ক্লিক করুন এবং সহজেই ফর্ম পূরণ করে আপনার পছন্দের প্যাকেজ নিশ্চিত করুন!</p>
                 <div className="mt-5">
+                <div className="flex items-center gap-4">
                 <Link
                   to="/customPackageOrderForm" 
                   className="bg-primary text-white px-6 mt-8 py-3 rounded-md shadow hover:bg-secondary transition"
                 >
                   বিস্তারিত জানুন
                 </Link>
+                <Link
+                  to="/birthdayCakeCategory" 
+                  className="bg-primary text-white px-6 mt-8 py-3 rounded-md shadow hover:bg-secondary transition"
+                >
+                  <div className="flex items-center gap-2">
+                    <GiStairsCake />
+                    <span>বার্থডে কেক</span>
+                  </div>
+                </Link>
+                </div>
                 </div>
               </div>              
             </div>

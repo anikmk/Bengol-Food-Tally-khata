@@ -9,7 +9,7 @@ const OurPackage = () => {
         queryKey:"packages",
         queryFn:async () => await getAllPackages() 
     })
-  
+    
     return <>
     
     <Container>

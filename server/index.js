@@ -34,6 +34,7 @@ const fastFoodOrderCollection = client.db("BengolShop").collection("fastFoodOrde
 const packageCollection = client.db("BengolShop").collection("packages");
 const CustomPriceCollection = client.db("BengolShop").collection("customPrices");
 const packageOrderCollection = client.db("BengolShop").collection("packageOrders");
+const birthdayCollection = client.db("BengolShop").collection("birthday");
 
 async function run() {
   try {
@@ -617,6 +618,25 @@ app.delete('/delete/with/out/package/order/:id', async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
+
+
+// birthday handler:
+app.get('/all/birthday/categories',async(req,res) => {
+  try{
+    const result = await birthdayCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+app.get('/all/birthday/categories/:id',async(req,res) => {
+  try{
+    const id = req.query.id
+    const query = {_id: new ObjectId(id)}
+    const result = await birthdayCollection.findOne(query);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
