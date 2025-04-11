@@ -33,6 +33,7 @@ import EditPackage from "../Pages/Dashboard/EditPackage/EditPackage";
 import EditFastFood from "../Pages/Dashboard/EditFastFood/EditFastFood";
 import BirthdayCakeCategorys from "../Componnents/BirthdayCake/BirthdayCakeCategorys/BirthdayCakeCategorys";
 import BirthdayCakeCard from "../Componnents/BirthdayCake/BirthdayCakeCard/BirthdayCakeCard";
+import BirthdayOrderForm from "../Componnents/BirthdayCake/BirthdayOrderForm/BirthdayOrderForm";
 
 export const router = createBrowserRouter([
     {
@@ -87,6 +88,10 @@ export const router = createBrowserRouter([
             {
                 path:'/birthdaycategoryCard',
                 element:<BirthdayCakeCard />
+            },
+            {
+                path:'/birthdayOrderForm',
+                element:<BirthdayOrderForm />
             },
             {
                 path:"/about",

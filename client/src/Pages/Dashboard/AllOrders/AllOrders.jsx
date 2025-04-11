@@ -37,7 +37,9 @@ const AllOrders = () => {
                             <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Phone</th>
                             <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Food Name</th>
                             <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Quantity</th>
-                            <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Total Price</th>
+                            <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Money</th>
+                            <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Charge</th>
+                            <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Total Money</th>
                             <th className="text-sm md:text-base md:py-2 py-[4px] md:px-4 px-[6px] border">Action</th>
                         </tr>
                     </thead>

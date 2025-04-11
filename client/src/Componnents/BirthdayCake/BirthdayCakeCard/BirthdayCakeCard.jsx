@@ -13,7 +13,7 @@ const BirthdayCakeCard = () => {
         queryKey:[id,"birthDayCardDetails"],
         queryFn:async()=>await getBirthdayCategoriesDetails(id)
     })
-    console.log(birthDayCardDetails?.designs);
+    console.log(birthDayCardDetails?.size);
     return <>
     <Container>
 
@@ -26,7 +26,7 @@ const BirthdayCakeCard = () => {
     </div>
     <div className="grid md:grid-cols-4 grid-cols-1 gap-5 items-center">
                     {birthDayCardDetails?.designs.map((cake) => (
-                        <BirthDayCardDetails key={cake?.name} cake={cake} loading={isLoading}/>
+                        <BirthDayCardDetails key={cake?.name} cake={cake} size={birthDayCardDetails?.size} flavor={birthDayCardDetails?.flavor} loading={isLoading}/>
                     ))}
      </div>
     </div>

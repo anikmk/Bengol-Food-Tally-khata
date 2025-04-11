@@ -35,6 +35,7 @@ const packageCollection = client.db("BengolShop").collection("packages");
 const CustomPriceCollection = client.db("BengolShop").collection("customPrices");
 const packageOrderCollection = client.db("BengolShop").collection("packageOrders");
 const birthdayCollection = client.db("BengolShop").collection("birthday");
+const birthdayOrderCollection = client.db("BengolShop").collection("birthdayOrders");
 
 async function run() {
   try {
@@ -646,6 +647,16 @@ app.get('/all/birthday/categories/:id',async(req,res) => {
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
+app.post('/create/birthday/order/info',async(req,res) => {
+  try{
+    const orderInfo = req.body;
+    const result = await birthdayOrderCollection.insertOne(orderInfo);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

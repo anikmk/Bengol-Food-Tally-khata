@@ -11,3 +11,8 @@ export const getBirthdayCategoriesDetails = async(id)=>{
 const {data} = await axiosPublic.get(`/all/birthday/categories/${id}`);
 return data
 }
+
+export const submitBirthdayCakeOrderInfo = async(cakeOrderInfo) => {
+    const {data} = await axiosPublic.post("/create/birthday/order/info",cakeOrderInfo);
+    return data
+}

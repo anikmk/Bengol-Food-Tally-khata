@@ -2,7 +2,7 @@ import { CiHeart } from "react-icons/ci";
 import Loader from "../../Shared/Loader/Loader";
 import { Link } from "react-router-dom";
 
-const BirthDayCardDetails = ({ cake, loading }) => {
+const BirthDayCardDetails = ({ cake,size,flavor, loading }) => {
   if (loading) return <Loader />;
 
   return (
@@ -28,7 +28,7 @@ const BirthDayCardDetails = ({ cake, loading }) => {
                 <p className="text-sm text-gray-600">{cake?.description}</p>
 
                 <div className="flex items-center justify-between text-sm font-medium">
-                  <span className="text-yellow-500">⭐ Star</span>
+                  <span className="text-pink-700">⭐ {size}</span>
                   <span
                     className={`${
                       cake?.availability === "Available" ? "text-green-600" : "text-red-500"
@@ -42,7 +42,7 @@ const BirthDayCardDetails = ({ cake, loading }) => {
                   <h4 className="text-center border border-primary font-medium py-2 rounded transition-opacity duration-300 group-hover:opacity-0">
                     {cake?.price} টাকা
                   </h4>
-                  <Link to={`/orderBirthdayCake`}>
+                  <Link to={`/birthdayOrderForm?name=${encodeURIComponent(cake?.name)}&price=${encodeURIComponent(cake?.price)}&availability=${encodeURIComponent(cake?.availability)}&image=${encodeURIComponent(cake?.image)}&flavor=${encodeURIComponent(flavor)}&size=${encodeURIComponent(size)}`}>
                     <button className="mx-auto w-full px-4 py-2 absolute -bottom-20 group-hover:bottom-0 font-medium text-white bg-pink-600 hover:bg-pink-700 transition-all duration-300 rounded">
                       এখনই কিনুন
                     </button>

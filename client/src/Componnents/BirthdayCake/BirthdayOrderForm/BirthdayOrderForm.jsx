@@ -5,39 +5,38 @@ import { MdDownloadDone } from "react-icons/md";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { CiDiscount1 } from "react-icons/ci";
 import { SiFoodpanda } from "react-icons/si";
-import Container from "../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useQuery, } from "@tanstack/react-query";
-import { getSingleFoodById, submitFastFoodOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
-import Loader from "../../../Componnents/Shared/Loader/Loader";
 import toast from "react-hot-toast"
-import useAuth from "../../../hooks/useAuth";
-import Load from "../../../Componnents/Shared/Loader/load/Load";
-const OrderDetailsPage = () => {
+import useAuth from '../../../hooks/useAuth';
+import Loader from '../../Shared/Loader/Loader';
+import Container from '../../Shared/Container/Container';
+import Load from '../../Shared/Loader/load/Load';
+import { submitBirthdayCakeOrderInfo } from '../../../Api/BirthdayRelatedApi/birthday';
+
+const BirthdayOrderForm = () => {
   const {user,loading} = useAuth();
   const [rajnagarCharge,setRajnagarCharge] = useState(0)
   const [karnigramCharge,setKarnigramCharge] = useState(0)
   const [kharparaCharge,setKharparaCharge] = useState(0)
   const [mojidpurCharge,setMojidpurCharge] = useState(0)
   const totalCharge = rajnagarCharge || karnigramCharge || kharparaCharge || mojidpurCharge;
+ 
   const [customerAddress, setCustomerAddress] = useState("");
   const [load,setLoad] = useState(false);
   const [quantity,setQuantity] = useState(1);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const id = searchParams.get("id");
+  const birthdayCakeShapeName = searchParams.get("name");
+  const birthdayCakePrice = searchParams.get("price");
+  const birthdayCakeAvailability = searchParams.get("availability");
+  const birthdayCakeImage = searchParams.get("image");
+  const cakeSize = searchParams.get("size");
+  const cakeFlavor = searchParams.get("flavor");
+    console.log(birthdayCakeShapeName,birthdayCakePrice,birthdayCakeAvailability);
+  if (loading) return <Loader />;
 
-
-  const {data:detailsFood,isLoading} = useQuery({
-    queryKey:[id,"detailsFood"],
-    queryFn:async()=> await getSingleFoodById(id)
-  })
-
-  if (loading || isLoading) return <Loader />;
-  if (!detailsFood) return <div>Data not found!</div>;
-
-  let price = detailsFood?.foodPrice;
+  let price = birthdayCakePrice;
   const handleIncreseFood = () => {
     setQuantity(quantity + 1)
   }
@@ -57,27 +56,28 @@ const handleConfirmOrder = () => {
 const handleAddressChange = (e) => {
   const selectedAddress = e.target.value;
   setCustomerAddress(selectedAddress);
+    // Reset all charges first
   setRajnagarCharge(0);
   setKarnigramCharge(0);
   setKharparaCharge(0);
   setMojidpurCharge(0);
   switch (selectedAddress) {
     case "rajnagar":
-      setRajnagarCharge(10);
+        setRajnagarCharge(30);
       toast.success("ডেলিভারি চার্জঃ ১০ টাকা");
       break;
     case "kharpara":
     case "bajua":
-      setKharparaCharge(20);
+        setKharparaCharge(40);
       toast.success("ডেলিভারি চার্জঃ ২০ টাকা");
       break;
     case "parshipara":
     case "karnigram":
-      setKarnigramCharge(30);
+        setKarnigramCharge(50);
       toast.success("ডেলিভারি চার্জঃ ৩০ টাকা");
       break;
     case "mojidpur":
-      setMojidpurCharge(40);
+        setMojidpurCharge(60);
       toast.success("ডেলিভারি চার্জঃ ৪০ টাকা");
       break;
     default:
@@ -88,23 +88,26 @@ const handleAddressChange = (e) => {
 const handleOrderSubmit = async(e) => {
   e.preventDefault();
   const form = e.target;
-  const foodName = detailsFood?.foodName;
-  const foodPrice = detailsFood?.foodPrice;
-  const totalFoodPrice = price * quantity;
-  const totalFoodPriceWithCharge = totalFoodPrice + totalCharge
+  const cakeShapeName = birthdayCakeShapeName;
+  const totalCakePrice = price * quantity;
+  const totalPriceWithCharge = totalCakePrice + totalCharge;
   const moneyCharge = totalCharge;
   const customerFullName = form.fullName.value;
   const customerAddress = form.address.value;
   const customerPhone = form.phone.value;
   const customerEmail = form.email.value;
   const customerDescription = form.description.value;
-  const customerOrderData = {foodName,quantity,foodPrice,totalFoodPrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,totalFoodPriceWithCharge,moneyCharge}
+  const availability = birthdayCakeAvailability;
+  const cakeImage = birthdayCakeImage;
+
+  const customerOrderData = {cakeShapeName,quantity,totalCakePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,availability,cakeImage,moneyCharge,totalPriceWithCharge}
 
   setLoad(true)
   try{
-    const result = await submitFastFoodOrder(customerOrderData);
+    const result = await submitBirthdayCakeOrderInfo(customerOrderData);
+    console.log(result);
     if(result.insertedId){
-      toast.success("অভিনন্দন ! আপনার ইমেইল চেক করুণ",{duration:8000});
+      toast.success("অভিনন্দন ! আপনার ইমেইল চেক করুণ",{duration:4000});
       form.reset();
       // here handle email js:
         // ✅ EmailJS দিয়ে কাস্টোমারকে কনফার্মেশন ইমেইল পাঠানো হচ্ছে
@@ -114,11 +117,11 @@ const handleOrderSubmit = async(e) => {
         {
           to_email: customerEmail,
           to_name: customerFullName,
-          food_name: foodName,
+          food_name: birthdayCakeShapeName, cakeFlavor, cakeSize,
           quantity: quantity,
           total_price: totalFoodPrice,
           total_charge: moneyCharge,
-          total_money: totalFoodPriceWithCharge,
+          total_money: totalPriceWithCharge,
           address: customerAddress,
           shop_name: "অনিক কনফেকশন (বেজ্ঞল ফুড)",
           from_name: "প্রোঃ অর্জুন",
@@ -127,6 +130,7 @@ const handleOrderSubmit = async(e) => {
       )
       .then(() => {
         toast.success('আপনার কনফার্মেশন ইমেইল পাঠানো হয়েছে!', {
+            duration:8000,
           position: "bottom-center"
         })
       })
@@ -151,17 +155,15 @@ const handleOrderSubmit = async(e) => {
    <div className="my-14">
     
      <div className="flex flex-col items-center justify-center ">
-       <div className="border p-4 shadow-xl w-full md:w-[40%] relative">
-        <div className="absolute -top-10 left-[42%] rounded-full overflow-hidden bg-primary w-24 h-24 flex flex-col items-center justify-center"><img className="w-24 h-24 rounded-full" src={detailsFood?.foodImg} alt="" /></div>
+       <div className="border p-4 shadow-xl w-full md:w-[40%]">
          <div className=" space-y-4">
-           <h2 className="font-medium text-xl text-black">{detailsFood?.foodName}</h2>
+           <h2 className="font-medium text-xl text-black">{birthdayCakeShapeName}</h2>
            <div className="flex items-center gap-5">
              <div>rating</div>
              <span>2.4 (3)</span>
            <div>SKU:25415</div>
            </div>
-           <p className="text-black font-medium text-2xl ">{detailsFood?.foodPrice} টাকা</p>
-           <p className="text-sm">{detailsFood?.foodDescription}</p>
+           <p className="text-black font-medium text-2xl ">{birthdayCakePrice} টাকা</p>
            <div className="flex items-center justify-between md:gap-3">
                <div className="flex text-base items-center gap-9 py-3 px-4 font-semibold shadow-lg">
                    <div onClick={hanldeDecreseFood} className="cursor-pointer hover:text-primary"><FaMinus  /></div>
@@ -269,4 +271,4 @@ const handleOrderSubmit = async(e) => {
  </Container>
 </div>
 }
-export default OrderDetailsPage;
+export default BirthdayOrderForm;

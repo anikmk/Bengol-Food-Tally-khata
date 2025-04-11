@@ -2,8 +2,9 @@ import { deleteCustomerOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
 import Loader from "../../../Componnents/Shared/Loader/Loader";
 import toast from "react-hot-toast"
 const OrderCard = ({order,loading,reFetch}) => {
-    const {_id,customerFullName,customerPhone,foodName,totalFoodPrice,foodPrice,quantity,customerAddress,customerEmail,customerDescription} = order;
-
+    const {_id,customerFullName,customerPhone,foodName,totalFoodPrice,moneyCharge,totalFoodPriceWithCharge
+,      foodPrice,quantity,customerAddress,customerEmail,customerDescription} = order;
+console.log(order);
     const customerOrderDeleteHandler = async (id) => {
       const isConfirmed = window.confirm(
         `আপনি কি নিশ্চিত যে ${customerFullName} নামের কাস্টমার কে মুছে ফেলতে চান?`
@@ -35,6 +36,8 @@ if(loading) return <Loader />
             <td className="py-2 px-4 border">{foodName}</td>
             <td className="py-2 px-4 border">{quantity}</td>
             <td className="py-2 px-4 border">{totalFoodPrice} BDT</td>
+            <td className="py-2 px-4 border">{moneyCharge} BDT</td>
+            <td className="py-2 px-4 border">{totalFoodPriceWithCharge} BDT</td>
             <td className="py-2 px-4 border">
                 <button onClick={()=>customerOrderDeleteHandler(_id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
             </td>
