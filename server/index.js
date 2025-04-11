@@ -623,14 +623,23 @@ app.delete('/delete/with/out/package/order/:id', async(req,res) => {
 // birthday handler:
 app.get('/all/birthday/categories',async(req,res) => {
   try{
-    const result = await birthdayCollection.find().toArray();
+    const {flavor,size} = req.query;
+    const query = {};
+    if(flavor){
+      query.flavor = flavor;
+    }
+    if(size){
+      query.size = size;
+    }
+    const result = await birthdayCollection.find(query).toArray();
     res.send(result);
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
 app.get('/all/birthday/categories/:id',async(req,res) => {
   try{
-    const id = req.query.id
+    const id = req.params.id;
     const query = {_id: new ObjectId(id)}
     const result = await birthdayCollection.findOne(query);
     res.send(result);

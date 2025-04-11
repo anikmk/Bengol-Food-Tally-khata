@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
                 element:<BirthdayCakeCategorys />
             },
             {
-                path:'/birthdayCakeCard',
+                path:'/birthdaycategoryCard',
                 element:<BirthdayCakeCard />
             },
             {
