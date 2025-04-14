@@ -34,6 +34,8 @@ import EditFastFood from "../Pages/Dashboard/EditFastFood/EditFastFood";
 import BirthdayCakeCategorys from "../Componnents/BirthdayCake/BirthdayCakeCategorys/BirthdayCakeCategorys";
 import BirthdayCakeCard from "../Componnents/BirthdayCake/BirthdayCakeCard/BirthdayCakeCard";
 import BirthdayOrderForm from "../Componnents/BirthdayCake/BirthdayOrderForm/BirthdayOrderForm";
+import AddBirthdayCakeCatelog from "../Pages/Dashboard/AddBirthdayCakeCatelog/AddBirthdayCakeCatelog";
+import EditBirthdayCatelog from "../Pages/Dashboard/EditBirthdayCatelog/EditBirthdayCatelog";
 
 export const router = createBrowserRouter([
     {
@@ -169,6 +171,14 @@ export const router = createBrowserRouter([
                 {
                     path:'addAllProduct',
                     element:<AddAllProduct />
+                },
+                {
+                    path: 'addBirthdayCakeCatelog',
+                    element: <AddBirthdayCakeCatelog />
+                },
+                {
+                    path:'updateBirthdayCake',
+                    element:<EditBirthdayCatelog />
                 },
                 {
                     path:'allUsers',

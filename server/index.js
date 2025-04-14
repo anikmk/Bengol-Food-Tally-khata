@@ -657,6 +657,40 @@ app.post('/create/birthday/order/info',async(req,res) => {
   catch(err){res.send({message:"internal server error"})}
 })
 
+// birthday order handler:
+app.get('/find/all/birthday/cake/orders',async(req,res) => {
+  try{
+    const result = await birthdayOrderCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+
+app.delete('/remove/birthday/order/:id', async(req,res) => {
+  try{
+    const id = req.params.id;
+    const query = {_id: new ObjectId(id)};
+    const result = await birthdayOrderCollection.deleteOne(query);
+    if(result.deletedCount === 0){
+      res.status(400).send({message:"order not found"})
+    }
+    res.send(result)
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
+// add new cake design:
+app.put('/addBirthday/cake/design', async(req,res) => {
+  try{
+    const {flavor,size,design} = req.body;
+    const query = {flavor,size};
+    const update = {
+      $push: {designs: design}
+    };
+    const result = await birthdayCollection.updateOne(query,update);
+    res.send(result);
+  }
+  catch(err){res.send({message:"internal server error"})}
+})
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

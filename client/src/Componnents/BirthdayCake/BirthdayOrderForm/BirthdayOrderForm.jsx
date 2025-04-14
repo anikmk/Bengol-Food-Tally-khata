@@ -64,21 +64,21 @@ const handleAddressChange = (e) => {
   switch (selectedAddress) {
     case "rajnagar":
         setRajnagarCharge(30);
-      toast.success("ডেলিভারি চার্জঃ ১০ টাকা");
+      toast.success("ডেলিভারি চার্জঃ ৩০ টাকা");
       break;
     case "kharpara":
     case "bajua":
         setKharparaCharge(40);
-      toast.success("ডেলিভারি চার্জঃ ২০ টাকা");
+      toast.success("ডেলিভারি চার্জঃ ৪০ টাকা");
       break;
     case "parshipara":
     case "karnigram":
         setKarnigramCharge(50);
-      toast.success("ডেলিভারি চার্জঃ ৩০ টাকা");
+      toast.success("ডেলিভারি চার্জঃ ৫০ টাকা");
       break;
     case "mojidpur":
         setMojidpurCharge(60);
-      toast.success("ডেলিভারি চার্জঃ ৪০ টাকা");
+      toast.success("ডেলিভারি চার্জঃ ৬০ টাকা");
       break;
     default:
       break;
@@ -99,8 +99,19 @@ const handleOrderSubmit = async(e) => {
   const customerDescription = form.description.value;
   const availability = birthdayCakeAvailability;
   const cakeImage = birthdayCakeImage;
+  const birthdayDate = new Date(form.birthdayDate.value);
+  const birthdayHeading = form.birthdayHeading.value;
+            // ✅ Check if the selected date is less than or equal to 2 days from today
+            const today = new Date();
+            const diffTime = birthdayDate.getTime() - today.getTime();
+            const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        
+            if (diffDays <= 2) {
+              toast.error("দয়া করে কমপক্ষে ২ দিন পূর্বে অর্ডার করুন। 😊 সুবিধার্তে অনিক ফুড🥧");
+              return;
+            }
 
-  const customerOrderData = {cakeShapeName,quantity,totalCakePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,availability,cakeImage,moneyCharge,totalPriceWithCharge}
+  const customerOrderData = {cakeShapeName,quantity,totalCakePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,availability,cakeImage,moneyCharge,totalPriceWithCharge,birthdayDate,birthdayHeading}
 
   setLoad(true)
   try{
@@ -186,6 +197,20 @@ const handleOrderSubmit = async(e) => {
             <div className="divider"></div>
             <div className='md:flex items-center  gap-5'>
             <div className='w-full mb-2'>
+              <h3 className="mb-2 text-[15px] text-slate-700">জন্মদিনের তারিখ পিক করুন</h3>
+            <input name="birthdayDate" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="date" required/>
+            </div>
+
+            <div className='w-full'>
+              <h3 className="mb-2 text-[15px] text-slate-700">কেকের উপর কি লেখা থাকবে টাইপ করুন</h3>
+              <textarea className='border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm' name="birthdayHeading" placeholder='যেমনঃ হ্যাপি বার্থডে টু ইউ [ আপনার নাম ] বা অন্যান্য...' required></textarea>
+            </div>
+            </div>
+
+
+
+            <div className='md:flex items-center  gap-5'>
+            <div className='w-full mb-2'>
               <h3 className="mb-2 text-[15px] text-slate-700">আপনার সম্পূর্ণ নাম দিন</h3>
             <input name="fullName" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full text-sm" type="text" placeholder=' সম্পুর্ণ নাম লিখুন---' required/>
             </div>
@@ -222,7 +247,7 @@ const handleOrderSubmit = async(e) => {
             <div>
               <h3 className="mb-2 text-[15px] text-slate-700">বিস্তারিত আপনার বাসা/ঘর/রাস্তা লিখে দিন</h3>
               <p className="text-xs">সঠিক তথ্য দিয়ে সহযোগিতা করুন। যাতে আপনার তথ্য অনুযাই আমরা আপনার নিকট সহজে চলে আস্তে পারি।</p>
-            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] text-sm mt-2" type="text" placeholder='আপনার খাবার যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন---'/>
+            <textarea name="description" className="border-slate-300 border w-full focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[11px] text-sm mt-2" type="text" placeholder='আপনার বার্থডে কেক যেখান থেকে রিসিভ করবেন সেই জায়গার বিস্তারিত তথ্য দিন।যেমনঃ খাঁন ভাড়ি,মাস্টার ভাড়ি,সৈয়দ ভাড়ি' required/>
             </div>
             <div onClick={handleConfirmOrder} className="w-full p-2 text-neutral text-center bg-primary rounded font-medium">
             <button>{load === true ? <Load />:"অর্ডার করুন"}</button>

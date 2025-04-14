@@ -73,10 +73,20 @@ const Dashboard = () => {
         icon:<CiShop />,
         id:11
         },
+        {item:"কেকের ক্যাটালগ যুক্ত করুন",
+        link:"/dashboard/addBirthdayCakeCatelog",
+        icon:<CiShop />,
+        id:12
+        },
+        {item:"কেকের ক্যাটালগ আপডেট করুন",
+        link:"/dashboard/updateBirthdayCake",
+        icon:<CiShop />,
+        id:13
+        },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:12
+        id:14
         },
         
     ]
@@ -125,7 +135,7 @@ const Dashboard = () => {
 
             {/* sidebar content here */}
             {/* large device  */}
-            <div className="hidden lg:flex h-screen">
+            <div className="hidden lg:flex min-h-screen">
                 {/* sidebar menu items */}
                 <div className="w-1/4 shadow-xl p-5 z-10">
                     <ul>          
