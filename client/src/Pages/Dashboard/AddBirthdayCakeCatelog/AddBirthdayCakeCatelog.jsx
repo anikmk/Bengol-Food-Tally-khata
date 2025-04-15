@@ -55,7 +55,7 @@ const AddBirthdayCakeCatelog = () => {
         <div className="mb-5">
             <div className='space-y-3'>
             <div className="">
-            <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">* এখান থেকে ফাস্ট ফোড যোক্ত করুন *</h3>
+            <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">* এখান থেকে বার্থডে কেকের নতুন ডিজাইন যোক্ত করুন *</h3>
             <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">চাহিবা মাত্র তথ্য দিয়ে ফরম পূরণ করবেন ।।</span></p>
             </div>
             <div className="divider"></div>
@@ -96,15 +96,7 @@ const AddBirthdayCakeCatelog = () => {
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">কেকের আকার </h3>
-              <select
-                name="name"
-                className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full"
-                required>
-                <option value="" disabled selected>নির্বাচন করুন</option>
-                <option value="Round">Round</option>
-                <option value="Square">Square</option>
-                <option value="Heart-shaped">Heart-shaped</option>
-            </select>
+              <input name="name" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="text" placeholder='কেকের সেইফ/আকার' required/>
             </div>
             </div>
             <div className='md:flex items-center  gap-5'>

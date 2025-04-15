@@ -691,6 +691,37 @@ app.put('/addBirthday/cake/design', async(req,res) => {
   }
   catch(err){res.send({message:"internal server error"})}
 })
+
+// update cake design:
+app.put('/update/birthday/cake/design', async (req, res) => {
+  try {
+    const { flavor, size, design } = req.body;
+    const { name, image, price, availability, description } = design;
+
+    const query = {
+      flavor,
+      size,
+      "designs.name": name
+    };
+
+    // Dynamic update doc তৈরি করছি
+    const setDoc = {};
+    if (image !== undefined) setDoc["designs.$.image"] = image;
+    if (price !== undefined) setDoc["designs.$.price"] = price;
+    if (availability !== undefined) setDoc["designs.$.availability"] = availability;
+    if (description !== undefined) setDoc["designs.$.description"] = description;
+
+    const updateDoc = { $set: setDoc };
+
+    const result = await birthdayCollection.updateOne(query, updateDoc);
+    res.send(result);
+  } catch (err) {
+    console.error("Error updating design:", err);
+    res.status(500).send({ message: "internal server error" });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })

@@ -34,3 +34,7 @@ export const addBirthdayCakeDesign = async(payload) => {
     const {data} = await axiosPublic.put('/addBirthday/cake/design',payload);
     return data;
 }
+export const updateBirthdayCakeDesaign = async(payload) => {
+    const {data} = await axiosPublic.put('/update/birthday/cake/design',payload);
+    return data;
+}

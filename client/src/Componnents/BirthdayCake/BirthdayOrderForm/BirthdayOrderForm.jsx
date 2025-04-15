@@ -100,6 +100,7 @@ const handleOrderSubmit = async(e) => {
   const availability = birthdayCakeAvailability;
   const cakeImage = birthdayCakeImage;
   const birthdayDate = new Date(form.birthdayDate.value);
+  const plainDate = birthdayDate.toISOString().split("T")[0];
   const birthdayHeading = form.birthdayHeading.value;
             // ✅ Check if the selected date is less than or equal to 2 days from today
             const today = new Date();
@@ -111,7 +112,7 @@ const handleOrderSubmit = async(e) => {
               return;
             }
 
-  const customerOrderData = {cakeShapeName,quantity,totalCakePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,availability,cakeImage,moneyCharge,totalPriceWithCharge,birthdayDate,birthdayHeading}
+  const customerOrderData = {cakeShapeName,cakeSize,cakeFlavor,quantity,totalCakePrice,customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,availability,cakeImage,moneyCharge,totalPriceWithCharge,birthdayDate:plainDate,birthdayHeading}
 
   setLoad(true)
   try{
@@ -128,7 +129,7 @@ const handleOrderSubmit = async(e) => {
         {
           to_email: customerEmail,
           to_name: customerFullName,
-          food_name: birthdayCakeShapeName, cakeFlavor, cakeSize,
+          food_name: `${birthdayCakeShapeName} - ${cakeFlavor} - ${cakeSize}`,
           quantity: quantity,
           total_price: totalFoodPrice,
           total_charge: moneyCharge,
