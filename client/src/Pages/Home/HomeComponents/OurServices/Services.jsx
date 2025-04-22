@@ -1,6 +1,17 @@
-import React from "react";
+import { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ServicesSection = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      once: false,
+      easing: "ease-in-out",
+      offset: 100,
+    });
+  }, []);
+
   const services = [
     {
       id: 1,
@@ -31,30 +42,37 @@ const ServicesSection = () => {
       icon: "⏱️",
     },
     {
-        id: 5,
-        title: "এডমিন: অর্ডার রিপোর্ট",
-        description:
-          "এডমিনরা দৈনিক, সাপ্তাহিক এবং মাসিক অর্ডার রিপোর্ট জেনারেট করতে পারবেন।",
-        icon: "📊",
-      },
-      {
-        id: 6,
-        title: "গ্রাহক সহায়তা",
-        description:
-          "আমাদের ২৪/৭ গ্রাহক সহায়তা সিস্টেমের মাধ্যমে যে কোনো প্রশ্নের উত্তর পান।",
-        icon: "🤝",
-      },
+      id: 5,
+      title: "এডমিন: অর্ডার রিপোর্ট",
+      description:
+        "এডমিনরা দৈনিক, সাপ্তাহিক এবং মাসিক অর্ডার রিপোর্ট জেনারেট করতে পারবেন।",
+      icon: "📊",
+    },
+    {
+      id: 6,
+      title: "গ্রাহক সহায়তা",
+      description:
+        "আমাদের ২৪/৭ গ্রাহক সহায়তা সিস্টেমের মাধ্যমে যে কোনো প্রশ্নের উত্তর পান।",
+      icon: "🤝",
+    },
   ];
 
   return (
     <section className="bg-white py-12">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-8">আমাদের সার্ভিসসমূহ</h2>
+        <h2
+          className="text-3xl font-bold text-center mb-8"
+          data-aos="fade-up"
+        >
+          আমাদের সার্ভিসসমূহ
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
+          {services.map((service, index) => (
             <div
               key={service.id}
               className="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-lg transition"
+              data-aos="fade-up"
+              data-aos-delay={index * 100} // প্রতি কার্ডে ১০০ মিলিসেকেন্ড করে ডিলে
             >
               <div className="text-4xl mb-4">{service.icon}</div>
               <h3 className="text-xl font-semibold mb-2">{service.title}</h3>

@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { deleteCustomerOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
 import Loader from "../../../Componnents/Shared/Loader/Loader";
 import toast from "react-hot-toast"
 const OrderCard = ({order,loading,reFetch}) => {
     const {_id,customerFullName,customerPhone,foodName,totalFoodPrice,moneyCharge,totalFoodPriceWithCharge
-,      foodPrice,quantity,customerAddress,customerEmail,customerDescription} = order;
+,      quantity,customerAddress,customerDescription} = order;
 console.log(order);
     const customerOrderDeleteHandler = async (id) => {
       const isConfirmed = window.confirm(

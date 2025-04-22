@@ -12,7 +12,6 @@ const AllOrders = () => {
         queryKey:"customerOrderData",
         queryFn:async () => await getCustomersAllOrders() 
     })
-    
     return <div>
     <div className="my-10">
        <div className="text-center w-[95%] md:w-[600px] mx-auto mb-5">
