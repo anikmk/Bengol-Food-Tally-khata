@@ -35,7 +35,7 @@ const OrderDetailsPage = () => {
   })
 
   if (loading || isLoading) return <Loader />;
-  if (!detailsFood) return <div>Data not found!</div>;
+  if (!detailsFood) return <div>ডাটা খুঁজে পাওয়া যায় নি!</div>;
 
   let price = detailsFood?.foodPrice;
   const handleIncreseFood = () => {
@@ -43,7 +43,7 @@ const OrderDetailsPage = () => {
   }
   const hanldeDecreseFood = () => {
     if(quantity === 1 ){
-      return toast.error("quantity not down the zero")
+      return toast.error("মিনিমাম একটি প্রোডাক্ট ক্রয় করুন।")
     }
     setQuantity(quantity - 1)
   }
@@ -148,18 +148,13 @@ const handleOrderSubmit = async(e) => {
     
    return  <div>
    <Container>
-   <div className="my-14">
+   <div className="my-32">
     
      <div className="flex flex-col items-center justify-center ">
        <div className="border p-4 shadow-xl w-full md:w-[40%] relative">
         <div className="absolute -top-10 left-[42%] rounded-full overflow-hidden bg-primary w-24 h-24 flex flex-col items-center justify-center"><img className="w-24 h-24 rounded-full" src={detailsFood?.foodImg} alt="" /></div>
          <div className=" space-y-4">
-           <h2 className="font-medium text-xl text-black">{detailsFood?.foodName}</h2>
-           <div className="flex items-center gap-5">
-             <div>rating</div>
-             <span>2.4 (3)</span>
-           <div>SKU:25415</div>
-           </div>
+           <h2 className="font-medium text-xl text-black">_ {detailsFood?.foodName}</h2>
            <p className="text-black font-medium text-2xl ">{detailsFood?.foodPrice} টাকা</p>
            <p className="text-sm">{detailsFood?.foodDescription}</p>
            <div className="flex items-center justify-between md:gap-3">

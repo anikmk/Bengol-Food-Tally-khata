@@ -16,13 +16,13 @@ const About = () => {
               বিশেষ দিনে যেমন জন্মদিন, বিয়ে বা যেকোনো অনুষ্ঠানে আমাদের খাবার আপনাকে এবং 
               আপনার অতিথিদের মন জয় করবে।
             </p>
-            <p className="text-gray-700 mb-6 leading-relaxed">
+            <p className="text-gray-700 mb-12 leading-relaxed">
               আমাদের ফুড ডেলিভারি সেবার মাধ্যমে আপনি ঘরে বসে আপনার পছন্দের খাবার পেতে পারেন। 
               দ্রুত এবং নিরাপদ ডেলিভারি সেবা নিশ্চিত করার জন্য আমরা প্রতিজ্ঞাবদ্ধ।
             </p>
             <Link 
               to="/about" 
-              className="bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-secondary transition"
+              className="bg-primary text-white px-6 py-4 rounded-md shadow hover:bg-secondary transition"
             >
               বিস্তারিত জানুন
             </Link>

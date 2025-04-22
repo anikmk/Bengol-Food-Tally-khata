@@ -83,7 +83,7 @@ const EditFastFood = () => {
 
             <div className='w-full'>
               <h3 className="mb-2 text-[15px] text-slate-700">খাবারের দাম</h3>
-            <input name="foodPrice" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="number" placeholder='টাকার পরিমান সংখায় লিখুন---' required/>
+            <input name="foodPrice" className="border-slate-300 border focus:outline-none bg-transparent px-4 py-2 rounded-lg text-[16px] w-full" type="number" placeholder='টাকার পরিমান সংখায় লিখুন---'/>
             </div>
             </div>
            <div className="md:flex items-center gap-5">

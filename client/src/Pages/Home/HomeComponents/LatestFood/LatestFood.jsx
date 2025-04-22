@@ -27,7 +27,7 @@ console.log(fastFoods);
 
   if(isLoading) return <Loader />
   return (
-    <div className="my-10">
+    <div className="my-8">
       <Container>
         <Heading
           heading={"আপনার ফাস্ট ফোড"}

@@ -85,7 +85,7 @@ const Navbar = () => {
           </div>
           <div className='h-[73px]'>
             
-          <img className='h-full' src="./logo.png" alt="" />
+          <img className='h-full' src="./anik-confection.png" alt="" />
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -117,7 +117,7 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="menu menu-sm dropdown-content rounded-box z-[1] mt-[18px] -ml-8 space-y-[6px]">
+                  className="menu menu-sm dropdown-content rounded-box z-[1] mt-[18px] -ml-10 space-y-[6px]">
 
                   {
                     isAdmin && <li><Link to={'/dashboard'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">{isLoading ? <><Load /></>:"Dashboard"}</Link></li>

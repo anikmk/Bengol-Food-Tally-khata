@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
 const FoodCard = ({ food, loading }) => {
+  console.log(food);
   if (loading) return <Loader />;
 
   return (
@@ -35,10 +36,11 @@ const FoodCard = ({ food, loading }) => {
                   <p className="text-primary font-medium">⭐ Star</p>
                   <p
                     className={`${
-                      food?.available ? "text-green-700" : "text-red-500"
+                      food?.available === "true" ? "text-green-700" : "text-red-500"
                     } font-medium`}
                   >
-                    {food?.available ? "In Stock" : "Stock Out"}
+                    {food?.available === "true" ? "In Stock" : "Stock Out"}
+                   
                   </p>
                 </div>
 

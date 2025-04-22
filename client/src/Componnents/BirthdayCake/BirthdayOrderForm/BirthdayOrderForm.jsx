@@ -102,7 +102,7 @@ const handleOrderSubmit = async(e) => {
   const birthdayDate = new Date(form.birthdayDate.value);
   const plainDate = birthdayDate.toISOString().split("T")[0];
   const birthdayHeading = form.birthdayHeading.value;
-            // ✅ Check if the selected date is less than or equal to 2 days from today
+
             const today = new Date();
             const diffTime = birthdayDate.getTime() - today.getTime();
             const diffDays = diffTime / (1000 * 60 * 60 * 24);
@@ -117,12 +117,10 @@ const handleOrderSubmit = async(e) => {
   setLoad(true)
   try{
     const result = await submitBirthdayCakeOrderInfo(customerOrderData);
-    console.log(result);
     if(result.insertedId){
       toast.success("অভিনন্দন ! আপনার ইমেইল চেক করুণ",{duration:4000});
       form.reset();
       // here handle email js:
-        // ✅ EmailJS দিয়ে কাস্টোমারকে কনফার্মেশন ইমেইল পাঠানো হচ্ছে
       emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,

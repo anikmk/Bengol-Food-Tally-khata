@@ -24,7 +24,7 @@ const Hero = () => {
   if(loading || isLoading) return <Loader />
     return <>
       <div
-            className="hero min-h-screen"
+            className="hero h-96"
             style={{
               backgroundImage: `url(${img})`,
             }}
@@ -34,7 +34,7 @@ const Hero = () => {
               <div className="md:w-[550px]">
                 {/* sociol sign up */}
                 <div>
-                <h1 className="mb-5 text-2xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">{text}</h1>
+                <h1 className="mb-5 text-3xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">{text}</h1>
                 <Cursor cursorColor='white' />
                 <p className="text-sm text-neutral mb-5">মোঠো ফোন দিয়ে নিমিশেই দোকানের যাবতীয় হিসাব নিকাশ রাখুন </p>
                 <div className="flex items-center justify-center gap-5 md:gap-8">

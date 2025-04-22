@@ -7,7 +7,6 @@ import { useState } from "react";
 const ShoppingCart = () => {
   const [village,setVillage] = useState(0)
     const {user} = useAuth()
-    console.log(user?.email);
     const {data:cartProduct,isLoading} = useQuery({
         queryKey:"cartProduct",
         queryFn:async () => await getShopingCartProduct(user?.email) 
@@ -15,16 +14,20 @@ const ShoppingCart = () => {
     const total = cartProduct?.reduce((total, product) => {
       return total + (product?.totalFoodPrice || 0); 
   }, 0);
-    console.log(total);
-    console.log(cartProduct);
-    const handleVillageChange = (event) => {
-      const village = event.target.value;
-      if(village === "রাজনগর"){
-        setVillage(10)
-      }
-      else{setVillage(20)}
-      console.log(village);
-    };
+   
+  const handleVillageChange = (event) => {
+    const village = event.target.value;
+  
+    if (village === "রাজনগর") {
+      setVillage(10);
+    } else if (village === "খারপাড়া" || village === "বাজুয়া") {
+      setVillage(20);
+    } else if (village === "পার্শিপাড়া" || village === "কর্ণিগ্রাম") {
+      setVillage(30);
+    } else {
+      setVillage(40);
+    }
+  };
     const totalPrice = total; // মোট দাম
     const deliveryCharge = village; // ডেলিভারি চার্জ
     const finalTotal = totalPrice + deliveryCharge; // মোট দাম + ডেলিভারি চার্জ
@@ -35,7 +38,7 @@ const ShoppingCart = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* হেডার */}
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-gray-800">
-            🛒 আপনার শপিং কার্ট ফাস্ট ফুড অর্ডার এর জন্য
+            🛒 আপনার শপিং কার্ট
           </h2>
           <p className="text-center mb-5">{cartProduct?.length <= 0 && " দুঃখিত 😥। আপনি কোনো খাবার অর্ডার করেন নি!"}</p>
           <div className="space-y-6">
@@ -68,8 +71,8 @@ const ShoppingCart = () => {
                 <option value={"মহাসহস্র"}>মহাসহস্র</option>
                 <option value={"খারপাড়া"}>খারপাড়া</option>
                 <option value={"বাজুয়া"}>বাজুয়া</option>
-                <option value={"পারশিপাড়া"}>পারশিপাড়া</option>
-                <option value={"কণিগ্রাম"}>কণিগ্রাম</option>
+                <option value={"পার্শিপাড়া"}>পার্শিপাড়া</option>
+                <option value={"কর্ণিগ্রাম"}>কর্ণিগ্রাম</option>
                 <option value={"মজিদপুর"}>মজিদপুর</option>
               </select>
                 <span className="text-gray-600">চার্জ:</span>
