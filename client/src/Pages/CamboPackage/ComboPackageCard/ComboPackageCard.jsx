@@ -1,9 +1,10 @@
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Loader from "../../../Componnents/Shared/Loader/Loader";
 
 const ComboPackageCard = ({ items, loading }) => {
   const { packageName, packageImg, packageDes, _id } = items;
-  console.log(items);
+ if(loading) return <Loader />
   return (
     <>
       <div className="bg-white rounded-lg shadow-md overflow-hidden">

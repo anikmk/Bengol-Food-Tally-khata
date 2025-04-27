@@ -2,13 +2,12 @@ import { FaCartPlus } from "react-icons/fa";
 import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 import { Link } from "react-router-dom";
 const PackageCard = ({item,loading}) => {
-  console.log(item);
         const {packageName,packageImg,packageDes,_id} = item;
-        console.log(_id);
         if(loading) return <Loader />
+        
     return <>
-    <div
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+            <div
+             className="bg-white rounded-lg shadow-md overflow-hidden"
               >
                 <img
                   src={packageImg}

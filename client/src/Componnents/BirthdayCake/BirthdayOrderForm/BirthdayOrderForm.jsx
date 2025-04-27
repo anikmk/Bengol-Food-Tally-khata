@@ -33,7 +33,7 @@ const BirthdayOrderForm = () => {
   const birthdayCakeImage = searchParams.get("image");
   const cakeSize = searchParams.get("size");
   const cakeFlavor = searchParams.get("flavor");
-    console.log(birthdayCakeShapeName,birthdayCakePrice,birthdayCakeAvailability);
+  
   if (loading) return <Loader />;
 
   let price = birthdayCakePrice;

@@ -15,8 +15,6 @@ const MorePackages = () => {
     queryFn: async () => await getMorePackages(id),
   });
 
-  console.log(morePackages?.[0]?.packageOptions);
-
   if (isLoading) return <Loader />;
   return (
     <div className="min-h-screen bg-gray-50 py-10">

@@ -36,12 +36,12 @@ const Hero = () => {
                 <div>
                 <h1 className="mb-5 text-3xl md:text-4xl font-acme bg-gradient-to-r from-primary via-green-400 to-primary inline-block text-transparent bg-clip-text">{text}</h1>
                 <Cursor cursorColor='white' />
-                <p className="text-sm text-neutral mb-5">মোঠো ফোন দিয়ে নিমিশেই দোকানের যাবতীয় হিসাব নিকাশ রাখুন </p>
+                <p className="text-sm text-neutral mb-5">✨ মোবাইল ফোন দিয়ে নিমিষেই দোকানের সব হিসাব-নিকাশ সহজে করুন। </p>
                 <div className="flex items-center justify-center gap-5 md:gap-8">
                   {
                     dbUser?.status === "admin" ? <><div onClick={''} className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-primary to-green-800 text-neutral"><Link to={'/dashboard/addDebts'}>পাওনাদার যুক্ত করুন</Link></div>  <div className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-green-800 to-primary text-neutral"><Link to={'/dashboard/showAlldebts'}>পাওনাদার দেখুন</Link></div></>:<>
                     {
-                      user ? <><div className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-green-800 to-primary text-neutral"><Link to={'/OrderFastFood'}>order করুন</Link></div></>:<><div className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-green-800 to-primary text-neutral"><Link to={'/signUp'}>রেজিস্ট্রেশন করুন</Link></div></>
+                      user ? <><div className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-green-800 to-primary text-neutral"><Link to={'/OrderFastFood'}>অর্ডার করুন</Link></div></>:<><div className="md:text-xl text-base p-[6px] rounded cursor-pointer bg-gradient-to-r hover:bg-gradient-to-l  from-green-800 to-primary text-neutral"><Link to={'/signUp'}>রেজিস্ট্রেশন করুন</Link></div></>
                     }
                     </>
                   }

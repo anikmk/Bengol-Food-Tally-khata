@@ -2,8 +2,8 @@ import { CiHeart } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
-const FoodCard = ({ food, loading }) => {
-  console.log(food);
+const FoodCard = ({ food,loading }) => {
+  
   if (loading) return <Loader />;
 
   return (
@@ -18,7 +18,7 @@ const FoodCard = ({ food, loading }) => {
                 alt=""
               />
 
-              <div className="hoverEffect absolute top-0 -right-14 group-hover:right-2 transition-all duration-300 z-10">
+              <div className="hoverEffect absolute top-0 -right-14 group-hover:right-2 group-hover:top-2 transition-all duration-300 z-10">
                 <div className="hover:bg-neutral bg-primary hover:text-primary md:px-4 px-2 md:py-4 py-2 hover:cursor-pointer rounded-full shadow-md">
                   <CiHeart />
                 </div>

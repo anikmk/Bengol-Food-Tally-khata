@@ -5,15 +5,14 @@ import FoodCard from "./FoodCard";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {useQuery} from "@tanstack/react-query"
 import { getAllFastFood } from "../../../../Api/fastFoodRelatedApi/foodApi";
-import Loader from "../../../../Componnents/Shared/Loader/Loader";
 const LatestFood = () => {
   const carouselRef = useRef(null);
 
-  const {data:fastFoods,isLoading} = useQuery({
+  const {data:fastFoods = [],isLoading} = useQuery({
     queryKey:"fastFoods",
     queryFn:async()=> await getAllFastFood()
   })
-console.log(fastFoods);
+
   const scrollCarousel = (direction) => {
     if (carouselRef.current) {
       const cardWidth = carouselRef.current.firstChild.offsetWidth; 
@@ -25,7 +24,7 @@ console.log(fastFoods);
     }
   };
 
-  if(isLoading) return <Loader />
+  
   return (
     <div className="my-8">
       <Container>

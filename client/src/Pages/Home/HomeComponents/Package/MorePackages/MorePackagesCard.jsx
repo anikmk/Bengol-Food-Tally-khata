@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import Loader from "../../../../../Componnents/Shared/Loader/Loader";
 
 const MorePackagesCard = ({ item, loading }) => {
-    console.log(item);
 
     if (loading) return <Loader />;
 

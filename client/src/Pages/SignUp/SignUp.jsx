@@ -7,15 +7,18 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { postUser } from "../../Api/userRelatedApi/userApi";
 const SignUp = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
     const {createUser,signInGoogle} = useAuth();
     const [theLock,setTheLock] = useState();
     const [showPassword,setShowPassword] = useState(false);
     const [termsAndCondition,setTermsAndCondition] = useState(false);
-    const navigate = useNavigate();
+    
     const handleSignUp = async(e) => {
         e.preventDefault();
         const form = e.target;
@@ -36,7 +39,7 @@ const SignUp = () => {
             const result = await postUser(userData);
             if(result?.insertedId){
               toast.success("ধন্যবাদ আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।")
-              navigate('/')
+              navigate(from, { replace: true });
             }
           }  
         }
@@ -57,9 +60,8 @@ const SignUp = () => {
         const dbResult = await postUser(userData);
         if(dbResult?.insertedId){
           toast.success('ধন্যবাদ গুগল আপনার রেজিস্ট্রেশন সম্পুর্ন হয়েছে।')
-          navigate('/')
+          navigate(from, { replace: true });
         }
-        else{navigate('/')}
       }
      } 
      catch(err){

@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/packageOrderInfoForm',
-                element: <PackageOrderCustomerInfoForm />
+                element: <UserRoute><PackageOrderCustomerInfoForm /></UserRoute>
             },
             {
                 path:'/morePackagesForWedding',
@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/customPackageOrderForm',
-                element:<CustomOrderForm />
+                element:<UserRoute><CustomOrderForm /></UserRoute>
             },
             {
                 path:'/shopingCart',
@@ -93,7 +93,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'/birthdayOrderForm',
-                element:<BirthdayOrderForm />
+                element:<UserRoute><BirthdayOrderForm /></UserRoute>
             },
             {
                 path:"/about",
@@ -121,7 +121,7 @@ export const router = createBrowserRouter([
 
     {
         path:'/dashboard',
-        element:<Dashboard />,
+        element:<PrivetRoute><Dashboard /></PrivetRoute>,
         errorElement:<ErrorPage />,
         children:[
                 {

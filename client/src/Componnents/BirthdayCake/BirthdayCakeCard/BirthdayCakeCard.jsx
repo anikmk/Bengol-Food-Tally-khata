@@ -8,12 +8,10 @@ const BirthdayCakeCard = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
-    console.log(id);
     const {data:birthDayCardDetails,isLoading} = useQuery({
         queryKey:[id,"birthDayCardDetails"],
         queryFn:async()=>await getBirthdayCategoriesDetails(id)
     })
-    console.log(birthDayCardDetails?.size);
     return <>
     <Container>
 

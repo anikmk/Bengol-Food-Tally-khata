@@ -23,11 +23,6 @@ const PackageOrderCustomerInfoForm = () => {
   const numberOfPeople = searchParams.get("numberOfPeople");
   const packagePrice = searchParams.get("packagePrice");
   const packageDescription = searchParams.get("description");
-  console.log(packageName,numberOfPeople,packagePrice,packageDescription);
-
-  // todo: porer kaj hobe form ta update kora jokon kew package order korbe tokon 
-  // jeno eta sotik moto kaj kore 
-
 
   if (loading) return <Loader />;
 

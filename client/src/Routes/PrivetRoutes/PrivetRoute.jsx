@@ -3,7 +3,7 @@ import Loader from "../../Componnents/Shared/Loader/Loader";
 import useAuth from "../../hooks/useAuth";
 import { getSingleUser } from "../../Api/userRelatedApi/userApi";
 import { Navigate } from "react-router-dom";
-
+// admin route
 
 const PrivetRoute = ({children}) => {
     const {user,loading} = useAuth();

@@ -66,7 +66,6 @@ app.get('/', (req, res) => {
 app.post('/users',async(req,res) => {
   try{
     const usersData = req.body;
-    console.log(usersData);
     const query = {email:usersData.email};
     const existingUser = await userCollection.findOne(query);
     if(existingUser){
@@ -425,7 +424,6 @@ app.get("/morePackages/:id", async(req,res) => {
 app.get('/customPerKgPrice', async (req, res) => {
   try {
     const result = await CustomPriceCollection.findOne({ status: "perkg" });
-    console.log("PerKg Data:", result);
     
     if (result) {
       res.send(result);
@@ -463,7 +461,6 @@ app.patch('/updateCustomPerKgPrice', async (req, res) => {
 app.get('/customPerPichPrice', async (req, res) => {
   try {
     const result = await CustomPriceCollection.findOne({ status: "perPich" });
-    console.log("PerPich Data:", result);
     
     if (result) {
       res.send(result);
@@ -545,7 +542,6 @@ app.delete('/delete/main/package/order/:id', async(req,res) => {
 app.post('/user/create/order/withPackage',async(req,res) => {
   try{
     const data = req.body;
-    console.log(data);
     const result = await packageOrderCollection.insertOne(data);
     res.send(result);
   }
