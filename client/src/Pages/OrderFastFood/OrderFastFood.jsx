@@ -7,6 +7,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import { getFastFoodByEmail } from "../../Api/fastFoodRelatedApi/foodApi";
 import Loader from "../../Componnents/Shared/Loader/Loader";
+import { Helmet } from "react-helmet";
 const OrderFastFood = () => {
     const carouselRef = useRef(null);
     const [category,setCategory] = useState("");
@@ -37,7 +38,12 @@ const OrderFastFood = () => {
 
    
     return (
-        <div className="my-14">
+        <div className="py-14 bg-white">
+             <Helmet>
+      <title>অর্ডার ফাস্ট ফুড | Order Fast Food</title>
+      <meta name="description" content="জনপ্রিয় ও সুস্বাদু ফাস্ট ফুড অর্ডার করুন | Order delicious and popular fast food items from our shop." />
+      <meta name="keywords" content="ফাস্ট ফুড, অর্ডার, ফুড ডেলিভারি, ফুড ক্যাটেগরি, Fast Food, Order, Food Delivery, Burger, Pizza" />
+    </Helmet>
             <Container>
                 {/* Search Section */}
                 <div>

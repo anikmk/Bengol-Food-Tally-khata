@@ -8,7 +8,7 @@ const FoodCard = ({ food,loading }) => {
 
   return (
     <>
-      <div className="shadow-xl rounded-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-white">
+      <div className="shadow-lg rounded-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 bg-white">
         <div className="group relative flex flex-col h-full overflow-hidden">
           <div className="flex-grow">
             <div className="relative">

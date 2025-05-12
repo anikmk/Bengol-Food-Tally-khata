@@ -23,8 +23,8 @@ const OurPackage = () => {
   }, []);
 
   return (
-    <Container>
-      <div className="pb-14">
+    <div className="pb-14 bg-white">
+        <Container>
         <Heading
           heading={"আমাদের প্যাকেজ"}
           subHeading={"আপনার বিশেষ দিনের জন্য সেরা প্যাকেজটি বেছে নিন।"}
@@ -40,8 +40,8 @@ const OurPackage = () => {
             </div>
           ))}
         </div>
-      </div>
     </Container>
+      </div>
   );
 };
 

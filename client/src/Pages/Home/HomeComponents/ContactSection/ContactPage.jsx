@@ -1,8 +1,14 @@
+import { Helmet } from "react-helmet";
 import { FaPhoneVolume } from "react-icons/fa6";
 
 const ContactPage = () => {
   return (
     <div className="bg-gray-100 min-h-screen py-10">
+      <Helmet>
+        <title>যোগাযোগ করুন | Anik Confectionery</title>
+        <meta name="description" content="যোগাযোগ করুন আমাদের সাথে। আপনার নাম, ইমেইল এবং বার্তা পাঠিয়ে দিন অথবা আমাদের হেল্পলাইন নাম্বারে কল করুন।" />
+        <meta name="keywords" content="যোগাযোগ, কাস্টমার সার্ভিস, হেল্পলাইন, ইমেইল, ফোন নাম্বার" />
+      </Helmet>
       <div className="container mx-auto px-4 lg:px-20">
         <h1 className="text-4xl font-bold text-primary mb-8">
           যোগাযোগ করুন

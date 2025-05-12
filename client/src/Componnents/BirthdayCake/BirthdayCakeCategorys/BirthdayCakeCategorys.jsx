@@ -5,6 +5,7 @@ import Container from "../../Shared/Container/Container";
 import Loader from "../../Shared/Loader/Loader";
 import { useState } from "react";
 import Load from "../../Shared/Loader/load/Load";
+import { Helmet } from "react-helmet";
 
   
 const BirthdaycategoryCategorys = () => {
@@ -30,6 +31,17 @@ const BirthdaycategoryCategorys = () => {
   if(isLoading) return <Loader />
   return (
     <div className="min-h-screen px-5 py-10 bg-gradient-to-br from-pink-100 via-yellow-50 to-pink-50">
+      <Helmet>
+        <title>জন্মদিন কেক ক্যাটাগরি | Birthday Cake Categories</title>
+        <meta
+          name="description"
+          content="চকলেট ও ভ্যানিলা ফ্লেভারে বিভিন্ন সাইজের জন্মদিনের কেক ক্যাটাগরি দেখুন। Choose from a wide range of birthday cake designs."
+        />
+        <meta
+          name="keywords"
+          content="জন্মদিন কেক, কেক ক্যাটাগরি, চকলেট কেক, ভ্যানিলা কেক, Birthday Cake, Cake Categories, Bengali Birthday Cakes"
+        />
+      </Helmet>
       <h2 className="text-3xl md:text-4xl font-bold text-center text-pink-700 mb-10">
         🎂 জন্মদিন কেক ক্যাটাগরি 🎂
       </h2>

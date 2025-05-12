@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Created for Bengol Food -->
+
+  <url>
+    <loc>https://bengol-food.web.app/</loc>
+    <lastmod>2025-05-12T00:00:00+00:00</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/OrderFastFood</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/comboPackage</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/allProduct</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/shopingCart</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/customPackageOrderForm</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/signin</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/our-package</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/birthdayCakeCategory</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/contact</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bengol-food.web.app/about</loc>
+    <priority>0.7</priority>
+  </url>
+</urlset>

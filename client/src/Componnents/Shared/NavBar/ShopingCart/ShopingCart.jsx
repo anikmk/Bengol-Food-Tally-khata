@@ -3,6 +3,7 @@ import useAuth from "../../../../hooks/useAuth";
 import { getShopingCartProduct } from "../../../../Api/fastFoodRelatedApi/foodApi";
 import ShopingCard from "./ShopingCard";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const ShoppingCart = () => {
   const [village,setVillage] = useState(0)
@@ -35,6 +36,14 @@ const ShoppingCart = () => {
     return (
       <>
       <div className="bg-gray-100 min-h-screen py-12">
+      <Helmet>
+        <title>শপিং কার্ট | Anik Confectionery</title>
+        <meta
+          name="description"
+          content="আপনার শপিং কার্ট পেজে রয়েছে আপনার অর্ডার করা খাবারের তালিকা, মোট দাম এবং ডেলিভারি চার্জ।"
+        />
+        <meta name="keywords" content="শপিং কার্ট, খাবার অর্ডার, ডেলিভারি, অর্ডার চেকআউট" />
+      </Helmet>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* হেডার */}
           <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-gray-800">

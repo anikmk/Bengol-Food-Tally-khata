@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import ComboPackageCard from "./ComboPackageCard/ComboPackageCard";
 import { getAllPackages } from "../../Api/PackageRelatedApi/packageApi";
-
+import { Helmet } from "react-helmet";
 const ComboPackage = () => {
   
   const {data:packages,isLoading,} = useQuery({
@@ -11,6 +11,17 @@ const ComboPackage = () => {
 })
   return (
     <div className="bg-gray-100 py-10">
+      <Helmet>
+        <title>আমাদের প্যাকেজ | Our Combo Packages</title>
+        <meta
+          name="description"
+          content="আমাদের বিশেষ কম্বো প্যাকেজগুলো থেকে আপনার পছন্দেরটি বেছে নিন। Choose the best combo package for your special occasions."
+        />
+        <meta
+          name="keywords"
+          content="প্যাকেজ, কম্বো প্যাকেজ, ইভেন্ট, খাওয়া-দাওয়া, Combo Package, Event Catering, Bengali Food Packages"
+        />
+      </Helmet>
       <h1 className="text-center text-3xl font-bold text-primary mb-6">
         আমাদের প্যাকেজ
       </h1>

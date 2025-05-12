@@ -26,7 +26,7 @@ const LatestFood = () => {
 
   
   return (
-    <div className="my-8">
+    <div className="py-8 bg-white">
       <Container>
         <Heading
           heading={"আপনার ফাস্ট ফোড"}

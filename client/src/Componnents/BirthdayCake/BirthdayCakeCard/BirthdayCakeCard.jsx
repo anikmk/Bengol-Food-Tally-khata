@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { getBirthdayCategoriesDetails } from "../../../Api/BirthdayRelatedApi/birthday";
 import Container from "../../Shared/Container/Container";
 import BirthDayCardDetails from "./BirthdayCardDetails";
+import Loader from "../../Shared/Loader/Loader";
+import { Helmet } from "react-helmet";
 
 const BirthdayCakeCard = () => {
     const location = useLocation();
@@ -12,7 +14,12 @@ const BirthdayCakeCard = () => {
         queryKey:[id,"birthDayCardDetails"],
         queryFn:async()=>await getBirthdayCategoriesDetails(id)
     })
+    if(isLoading) return <Loader />
     return <>
+    <Helmet>
+    <title>🎂 কেকের বিস্তারিত তথ্য | Birthday Cake</title>
+    <meta name="description" content="বিভিন্ন ডিজাইনের জন্মদিনের কেক বেছে নিন এবং অর্ডার করুন Anik confectionary থেকে।" />
+  </Helmet>
     <Container>
 
     <div className="py-20">

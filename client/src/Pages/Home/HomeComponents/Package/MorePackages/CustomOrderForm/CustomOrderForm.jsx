@@ -15,6 +15,7 @@ import FormHeading from "./FormHeading/FormHeading";
 import { useQuery } from "@tanstack/react-query";
 import { createCustomWithOutPackageOrder, createCustomWithPackageOrder, getCustomPerKgProductPrice, getCustomPerPichProductPrice } from "../../../../../../Api/customOrderRelatedApi/customApi";
 import Loader from "../../../../../../Componnents/Shared/Loader/Loader";
+import { Helmet } from "react-helmet";
 const CustomOrderForm = () => {
     const [isCalculation,setIsCalculation] = useState(false)
     const [load,setLoad] = useState(false);
@@ -294,6 +295,21 @@ const CustomOrderForm = () => {
       }
       if(isLoading || singlePriceLoad) return <Loader />
     return <>
+    <Helmet>
+        
+        <meta name="description" content="Anik Confectionery offers custom Bengali food packages for various events. Order your personalized package now!" />
+        <meta name="keywords" content="Bengali food, custom packages, Anik Confectionery, catering services" />
+        <meta name="author" content="Anik Confectionery" />
+        
+        <title>কাস্টম প্যাকেজ অর্ডার - Anik Confectionery</title>
+
+        {/* Open Graph Meta Tags (for social media sharing) */}
+        <meta property="og:title" content="কাস্টম প্যাকেজ অর্ডার - Anik Confectionery" />
+        <meta property="og:description" content="Order your custom Bengali food package for your special events from Anik Confectionery. A variety of delicious options await!" />
+        <meta property="og:image" content="/path/to/social-image.jpg" />
+        <meta property="og:url" content="https://yourwebsite.com/custom-package-order" />
+        <meta property="og:type" content="website" />
+      </Helmet>
          <div>
    <Container>
    <div className="my-14">
