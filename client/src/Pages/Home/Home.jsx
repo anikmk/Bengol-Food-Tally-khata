@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet";
 const Home = () => {
     return (
 
-        <>
+        <div className="overflow-hidden">
         <Helmet>
         <title>Home - Anik Confectionery</title>
         <meta name="description" content="Welcome to Anik Confectionery. Explore our variety of Bengali food products and services for special events like weddings, birthdays, and more!" />
@@ -29,7 +29,7 @@ const Home = () => {
         <ServicesSection />
         <About />
         <ContactSection />
-        </>
+        </div>
     );
 };
 
