@@ -1,11 +1,26 @@
 import { useState, useEffect, useRef } from "react";
 import { FaFilter, FaMinus, FaPlus } from "react-icons/fa";
 import Section from "./Section";
+import { Link, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getAllProducts } from "../../Api/AllProductsRelatedApi/allProductsApi";
+import Loader from "../../Componnents/Shared/Loader/Loader";
 
 const AllProduct = () => {
+  const navigate = useNavigate();
+  const [totalPrice,setTotalPrice] = useState(0);
   const [showFilter, setShowFilter] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const filterRef = useRef(null);
+
+
+  const {data:allProducts = [],isLoading} = useQuery({
+    queryKey:'allProduct',
+    queryFn:async() => await getAllProducts()
+  }) 
+  console.log(allProducts);
+
+
   // Close modal on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -59,9 +74,15 @@ const AllProduct = () => {
   // order now button a click korle link kore ki order dicche tar items gula ami form er moddhe
   // patiye debo tar por useparamas er maddome get kore customer info soho data db te 
   // pass korbo tar por admin ke show up koriye dekiye debo : eta amar agami diner :TODO:
+  const handleCalculateTotalPrice = () => {
+    setTotalPrice(!totalPrice)
+    const calculateTotalPrice = selectedItems.reduce((sum,item) => sum + item.price * item.quantity,0);
+    setTotalPrice(calculateTotalPrice)
+  }
    const handleOrder  = () => {
-    console.log(selectedItems)
+    navigate('/checkOutForm',{state:selectedItems})
    }
+   if(isLoading) return <Loader />
   return (
     <div className="max-w-[98%] mx-auto px-2 md:px-4 py-6 relative">
       {/* Mobile Filter Button */}
@@ -121,22 +142,9 @@ const AllProduct = () => {
 
         {/* Products */}
         <main className="space-y-5 md:space-y-10">
-          <Section
-            title="টোস্ট বক্স"
-            items={[
-              { name: "মিল্ক টোস্ট", image: "milk.jpg", price: 100 },
-              { name: "ঘি টোস্ট", image: "ghee.jpg", price: 100 },
-            ]}
-            onSelect={handleSelect}
-          />
-          <Section
-            title="কেক বক্স"
-            items={[
-              { name: "ভ্যানিলা কেক", image: "vanilla.jpg", price: 200 },
-              { name: "চকলেট কেক", image: "choco.jpg", price: 200 },
-            ]}
-            onSelect={handleSelect}
-          />
+          {
+            allProducts?.map(items => <Section key={items?._id} title={items?.category} items={items?.items} onSelect={handleSelect} loading={isLoading}/>)
+          }
         </main>
 
         {/* Shopping Bag */}
@@ -172,8 +180,8 @@ const AllProduct = () => {
             </ul>
           )}
           <hr className="my-2" />
-          <button className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs">হিসাব করুন</button>
-          <button onClick={handleOrder} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs">অর্ডার করুন</button>
+          <button onClick={handleCalculateTotalPrice} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"> { totalPrice ? totalPrice : "হিসাব করুন" }</button>
+          <button onClick={handleOrder} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
         </aside>
       </div>
     </div>

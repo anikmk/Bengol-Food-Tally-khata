@@ -1,9 +1,12 @@
-const Section = ({ title, items, onSelect }) => {
+import Loader from "../../Componnents/Shared/Loader/Loader";
+
+const Section = ({ title, items, onSelect, loading }) => {
+  if(loading) return <Loader />
   return (
     <section>
       <h2 className="text-xl font-semibold text-primary mb-4 border-b pb-1">{title}</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items.map((item, index) => (
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {items?.map((item, index) => (
           <div key={index} className="border rounded p-0 md:p-3 text-center shadow hover:shadow-md transition">
             <div className="h-28 bg-gray-100 flex items-center justify-center rounded relative">
               <img src={item.image} alt={item.name} className="h-full w-full object-cover rounded" />

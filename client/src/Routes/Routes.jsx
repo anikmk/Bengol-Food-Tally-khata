@@ -36,6 +36,7 @@ import BirthdayCakeCard from "../Componnents/BirthdayCake/BirthdayCakeCard/Birth
 import BirthdayOrderForm from "../Componnents/BirthdayCake/BirthdayOrderForm/BirthdayOrderForm";
 import AddBirthdayCakeCatelog from "../Pages/Dashboard/AddBirthdayCakeCatelog/AddBirthdayCakeCatelog";
 import EditBirthdayCatelog from "../Pages/Dashboard/EditBirthdayCatelog/EditBirthdayCatelog";
+import CheckOutForm from "../Pages/AllProduct/AllProductOrderInfoForm/CheckOutForm";
 
 export const router = createBrowserRouter([
     {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
             {
                 path:'/allProduct',
                 element:<AllProduct />
+            },
+            {
+                path:'/checkOutForm',
+                element: <CheckOutForm />
             },
             {
                 path:'/birthdayCakeCategory',

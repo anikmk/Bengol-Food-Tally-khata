@@ -36,6 +36,7 @@ const CustomPriceCollection = client.db("BengolShop").collection("customPrices")
 const packageOrderCollection = client.db("BengolShop").collection("packageOrders");
 const birthdayCollection = client.db("BengolShop").collection("birthday");
 const birthdayOrderCollection = client.db("BengolShop").collection("birthdayOrders");
+const allProductCollection = client.db("BengolShop").collection("allProducts");
 
 async function run() {
   try {
@@ -712,10 +713,20 @@ app.put('/update/birthday/cake/design', async (req, res) => {
     const result = await birthdayCollection.updateOne(query, updateDoc);
     res.send(result);
   } catch (err) {
-    console.error("Error updating design:", err);
     res.status(500).send({ message: "internal server error" });
   }
 });
+
+// all product page handler here:
+app.get('/allProducts',async(req,res) => {
+  try{
+    const result = await allProductCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){
+    res.status(500).send({message:"internal server error"})
+  }
+})
 
 
 app.listen(port, () => {
