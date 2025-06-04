@@ -5,18 +5,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../../Api/AllProductsRelatedApi/allProductsApi";
 import Loader from "../../Componnents/Shared/Loader/Loader";
+import { filterOptions } from "./FilterData/FilterData";
 
 const AllProduct = () => {
   const navigate = useNavigate();
   const [totalPrice,setTotalPrice] = useState(0);
   const [showFilter, setShowFilter] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const filterRef = useRef(null);
 
+  const [selectedFilter,setSelectedFilter] = useState(null);
+  const filterRef = useRef(null);
+  
+  const handleFilterChange = (e) => {
+    const filterValue = e.target.value;
+    if(selectedFilter === filterValue){
+      setSelectedFilter(null)
+    }
+    else{
+
+      setSelectedFilter(filterValue)
+    }
+  }
 
   const {data:allProducts = [],isLoading} = useQuery({
-    queryKey:'allProduct',
-    queryFn:async() => await getAllProducts()
+    queryKey:['allProduct',selectedFilter],
+    queryFn:async() => await getAllProducts(selectedFilter)
   }) 
   console.log(allProducts);
 
@@ -71,9 +84,6 @@ const AllProduct = () => {
     );
   };
 
-  // order now button a click korle link kore ki order dicche tar items gula ami form er moddhe
-  // patiye debo tar por useparamas er maddome get kore customer info soho data db te 
-  // pass korbo tar por admin ke show up koriye dekiye debo : eta amar agami diner :TODO:
   const handleCalculateTotalPrice = () => {
     setTotalPrice(!totalPrice)
     const calculateTotalPrice = selectedItems.reduce((sum,item) => sum + item.price * item.quantity,0);
@@ -82,6 +92,7 @@ const AllProduct = () => {
    const handleOrder  = () => {
     navigate('/checkOutForm',{state:selectedItems})
    }
+     
    if(isLoading) return <Loader />
   return (
     <div className="max-w-[98%] mx-auto px-2 md:px-4 py-6 relative">
@@ -104,17 +115,13 @@ const AllProduct = () => {
             className="bg-white w-11/12 max-w-sm p-4 rounded shadow-lg space-y-3"
           >
             <h2 className="text-lg font-semibold mb-2 text-primary">ফিল্টার করুন</h2>
-            <div className="space-y-2">
-              <label className="block">
-                <input type="checkbox" /> টোস্ট
-              </label>
-              <label className="block">
-                <input type="checkbox" /> কেক
-              </label>
-              <label className="block">
-                <input type="checkbox" /> বিস্কিট
-              </label>
-            </div>
+            {
+                filterOptions?.map(filter => <label key={filter.value} className="block">
+                <input className="mr-2" type="checkbox" value={filter.value} onChange={handleFilterChange} checked={selectedFilter === filter.value}
+                />
+                {filter.label}
+              </label>)
+              }
             <div className="text-right">
               <button className="bg-primary p-2 rounded text-white mt-2 md:text-base text-sm">সার্চ করুন</button>
             </div>
@@ -127,17 +134,15 @@ const AllProduct = () => {
         {/* Filter (desktop) */}
         <aside className="hidden md:block border rounded p-4">
           <h2 className="text-lg font-semibold mb-3 text-primary">ফিল্টার</h2>
-          <div className="space-y-2">
-            <label className="block">
-              <input type="checkbox" /> টোস্ট
-            </label>
-            <label className="block">
-              <input type="checkbox" /> কেক
-            </label>
-            <label className="block">
-              <input type="checkbox" /> বিস্কিট
-            </label>
-          </div>
+           <div className="space-y-2">
+              {
+                filterOptions?.map(filter => <label key={filter.value} className="block">
+                <input className="mr-2" type="checkbox" value={filter.value} onChange={handleFilterChange} checked={selectedFilter === filter.value}
+                />
+                {filter.label}
+              </label>)
+              }
+            </div>
         </aside>
 
         {/* Products */}
@@ -181,7 +186,7 @@ const AllProduct = () => {
           )}
           <hr className="my-2" />
           <button onClick={handleCalculateTotalPrice} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"> { totalPrice ? totalPrice : "হিসাব করুন" }</button>
-          <button onClick={handleOrder} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
+          <button onClick={handleOrder} disabled={selectedItems.length === 0} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
         </aside>
       </div>
     </div>

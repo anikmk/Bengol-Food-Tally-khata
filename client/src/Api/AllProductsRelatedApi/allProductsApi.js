@@ -1,6 +1,7 @@
 import axiosPublic from "../../hooks/useAxiosPublic"
 
-export const getAllProducts = async() => {
-    const {data} = await axiosPublic.get('/allProducts');
+export const getAllProducts = async(filterCategory) => {
+    const url = filterCategory ? `/allProducts?category=${filterCategory}` : '/allProducts';
+    const {data} = await axiosPublic.get(url);
     return data;
 }

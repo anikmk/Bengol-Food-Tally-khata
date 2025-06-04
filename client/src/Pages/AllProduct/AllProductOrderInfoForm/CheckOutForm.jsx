@@ -70,41 +70,7 @@ const handleOrderSubmit = async(e) => {
 
   setLoad(true)
   try{
-    const result = await submitFastFoodOrder(customerOrderData);
-    if(result.insertedId){
-      toast.success("অভিনন্দন ! আপনার ইমেইল চেক করুণ",{duration:8000});
-      form.reset();
-      // here handle email js:
-        // ✅ EmailJS দিয়ে কাস্টোমারকে কনফার্মেশন ইমেইল পাঠানো হচ্ছে
-      emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          to_email: customerEmail,
-          to_name: customerFullName,
-        //   food_name: foodName,
-        //   quantity: quantity,
-        //   total_price: totalFoodPrice,
-          total_charge: moneyCharge,
-        //   total_money: totalFoodPriceWithCharge,
-          address: customerAddress,
-          shop_name: "অনিক কনফেকশন (বেজ্ঞল ফুড)",
-          from_name: "প্রোঃ অর্জুন",
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then(() => {
-        toast.success('আপনার কনফার্মেশন ইমেইল পাঠানো হয়েছে!', {
-          position: "bottom-center"
-        })
-      })
-      .catch((error) => {
-        console.error("ইমেইল পাঠাতে সমস্যা হয়েছে:", error);
-        toast.success('ইমেইল পাঠাতে ব্যর্থ। তবে অর্ডার সফল হয়েছে!', {
-          position: "bottom-center"
-        })
-      });
-    }
+    // submit order data to db
   }
   catch(err){
     console.log("দুঃখিত আপনার অর্ডার সম্পুর্ণ হয় নি। কিচ্ছুক্ষন পর আবার চেষ্টা করুন");

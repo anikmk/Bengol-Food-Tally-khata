@@ -718,15 +718,24 @@ app.put('/update/birthday/cake/design', async (req, res) => {
 });
 
 // all product page handler here:
-app.get('/allProducts',async(req,res) => {
-  try{
-    const result = await allProductCollection.find().toArray();
+app.get('/allProducts', async (req, res) => {
+  try {
+    const { category } = req.query;
+    const query = {};
+
+    if (category) {
+      // category থাকলে কেস-ইনসেন্সিটিভ সার্চ
+      query.category = { $regex: new RegExp(category, "i") };
+    }
+
+    const result = await allProductCollection.find(query).toArray();
     res.send(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "internal server error" });
   }
-  catch(err){
-    res.status(500).send({message:"internal server error"})
-  }
-})
+});
+
 
 
 app.listen(port, () => {
