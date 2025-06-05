@@ -6,10 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "../../Api/AllProductsRelatedApi/allProductsApi";
 import Loader from "../../Componnents/Shared/Loader/Loader";
 import { filterOptions } from "./FilterData/FilterData";
+import toast from "react-hot-toast";
 
 const AllProduct = () => {
   const navigate = useNavigate();
-  const [totalPrice,setTotalPrice] = useState(0);
   const [showFilter, setShowFilter] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -85,12 +85,11 @@ const AllProduct = () => {
   };
 
   const handleCalculateTotalPrice = () => {
-    setTotalPrice(!totalPrice)
     const calculateTotalPrice = selectedItems.reduce((sum,item) => sum + item.price * item.quantity,0);
-    setTotalPrice(calculateTotalPrice)
+    toast.success(`আপনার মোট হিসাব : ${calculateTotalPrice} টাকা`)
   }
    const handleOrder  = () => {
-    navigate('/checkOutForm',{state:selectedItems})
+      navigate('/checkOutForm',{state:selectedItems})
    }
      
    if(isLoading) return <Loader />
@@ -185,7 +184,7 @@ const AllProduct = () => {
             </ul>
           )}
           <hr className="my-2" />
-          <button onClick={handleCalculateTotalPrice} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"> { totalPrice ? totalPrice : "হিসাব করুন" }</button>
+          <button onClick={handleCalculateTotalPrice} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs">হিসাব করুন</button>
           <button onClick={handleOrder} disabled={selectedItems.length === 0} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
         </aside>
       </div>

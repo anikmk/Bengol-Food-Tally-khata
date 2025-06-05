@@ -20,73 +20,99 @@ const Dashboard = () => {
         icon:<CiHome />,
         id:1
         },
+        {item:"এনালিটিক্স",
+        link:"/dashboard/analytics",
+        icon:<CiHome />,
+        id:2
+        },
+        {item:"ক্যালকুলেটর",
+        link:"/dashboard/calculator",
+        icon:<CiHome />,
+        id:3
+        },
         {
         item:"ফাস্ট ফুডের অর্ডার দেখুন",
         link:"/dashboard/allOrders",
         icon: <AiOutlineProduct />,
-        id:2
+        id:4
         },
         {
         item:"প্যাকেজের অর্ডার দেখুন",
         link:"/dashboard/packageOrders",
         icon: <AiOutlineProduct />,
-        id:3
+        id:5
+        },
+        {
+        item:" অন্যান্য অর্ডার দেখুন",
+        link:"/dashboard/allPornoOrdersList",
+        icon: <AiOutlineProduct />,
+        id:6
         },
         {item:"পাওনাদার যুক্ত করুন",
         link:"/dashboard/addDebts",
         icon:<GrGallery />,
-        id:4
+        id:7
         },
         {item:"সব পাওনাদার দেখুন",
         link:"/dashboard/showAlldebts",
         icon:<CiShop />,
-        id:5
+        id:8
         },
         {item:"ফাস্ট ফোড যুক্ত করুন",
         link:"/dashboard/addFastFood",
         icon:<CiShop />,
-        id:6
+        id:9
         },
         {item:"ফাস্ট ফোড আপডেট করুন",
         link:"/dashboard/updateFastFood",
         icon:<CiShop />,
-        id:7
+        id:10
         },
         {item:"প্যাকেজ যুক্ত করুন",
         link:"/dashboard/addPackages",
         icon:<CiShop />,
-        id:8
+        id:11
         },
         {item:"প্যাকেজ আপডেট করুন",
         link:"/dashboard/updatePackage",
         icon:<CiShop />,
-        id:9
+        id:12
         },
         {item0:"কাস্টম প্রাইজ আপডেট করুন",
         link1:"/dashboard/updateCustomPrice",
         link2:"/dashboard/updateCustomPrice2",
         icon:<CiShop />,
-        id:10
+        id:13
         },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
         icon:<CiShop />,
-        id:11
+        id:14
         },
         {item:"কেকের ক্যাটালগ যুক্ত করুন",
         link:"/dashboard/addBirthdayCakeCatelog",
         icon:<CiShop />,
-        id:12
+        id:15
         },
         {item:"কেকের ক্যাটালগ আপডেট করুন",
         link:"/dashboard/updateBirthdayCake",
         icon:<CiShop />,
-        id:13
+        id:16
+        },
+        {item:"অন্যান্য পণ্য যুক্ত করুন",
+        link:"/dashboard",
+        icon:<CiShop />,
+        id:17
+        },
+        {item:"অন্যান্য পণ্য আপডেট করুন",
+        link:"/dashboard",
+        icon:<CiShop />,
+        id:18
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
         icon:<IoCreateOutline />,
-        id:14
+        id:19
         },
         
     ]

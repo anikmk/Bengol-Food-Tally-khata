@@ -37,6 +37,9 @@ import BirthdayOrderForm from "../Componnents/BirthdayCake/BirthdayOrderForm/Bir
 import AddBirthdayCakeCatelog from "../Pages/Dashboard/AddBirthdayCakeCatelog/AddBirthdayCakeCatelog";
 import EditBirthdayCatelog from "../Pages/Dashboard/EditBirthdayCatelog/EditBirthdayCatelog";
 import CheckOutForm from "../Pages/AllProduct/AllProductOrderInfoForm/CheckOutForm";
+import PornoOrderList from "../Pages/Dashboard/AllOrders/PornoOrdersList/PornoOrderList";
+import Calculator from "../Pages/Dashboard/Calculator/Calculator";
+import Analytics from "../Pages/Dashboard/Analytics/Analytics";
 
 export const router = createBrowserRouter([
     {
@@ -138,6 +141,10 @@ export const router = createBrowserRouter([
                     element:<PrivetRoute><PackageOrders /></PrivetRoute>
                 },
                 {
+                    path:'allPornoOrdersList',
+                    element:<PrivetRoute><PornoOrderList /></PrivetRoute>
+                },
+                {
                     path:'addDebts',
                     element:<PrivetRoute><AddDebts /></PrivetRoute>
                 },
@@ -189,6 +196,15 @@ export const router = createBrowserRouter([
                     path:'allUsers',
                     element:<PrivetRoute><AllUsers /></PrivetRoute>
                 },
+                {
+                    path:'calculator',
+                    element:<PrivetRoute><Calculator /></PrivetRoute>
+                },
+                {
+                    path:'analytics',
+                    element:<PrivetRoute><Analytics /></PrivetRoute>
+                },
+
         ]  
     }
 ])

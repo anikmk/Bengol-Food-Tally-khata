@@ -37,6 +37,7 @@ const packageOrderCollection = client.db("BengolShop").collection("packageOrders
 const birthdayCollection = client.db("BengolShop").collection("birthday");
 const birthdayOrderCollection = client.db("BengolShop").collection("birthdayOrders");
 const allProductCollection = client.db("BengolShop").collection("allProducts");
+const allProductsOrderCollection = client.db("BengolShop").collection("allProductOrders")
 
 async function run() {
   try {
@@ -735,7 +736,27 @@ app.get('/allProducts', async (req, res) => {
     res.status(500).send({ message: "internal server error" });
   }
 });
+// save all product order information:
+app.post('/allProducts/createOrders',async(req,res) => {
+  try{
+    const orderInfo = req.body;
+    const result = await allProductsOrderCollection.insertOne(orderInfo);
+    res.send(result);
+  }
+  catch(err){
+    res.status(500).send({message:"internal server error"})
+  }
+})
 
+app.get('/allProducts/allOrders',async(req,res) => {
+  try{
+    const result = await allProductsOrderCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){
+    res.status(500).send({message:"internal server error"})
+  }
+})
 
 
 app.listen(port, () => {

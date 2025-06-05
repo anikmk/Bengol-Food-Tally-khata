@@ -1,4 +1,3 @@
-import emailjs from '@emailjs/browser';
 import { IoHeartOutline, IoReload } from "react-icons/io5";
 import { MdDownloadDone } from "react-icons/md";
 import { MdOutlineDeliveryDining } from "react-icons/md";
@@ -7,12 +6,12 @@ import { SiFoodpanda } from "react-icons/si";
 import Container from "../../../Componnents/Shared/Container/Container";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { submitFastFoodOrder } from "../../../Api/fastFoodRelatedApi/foodApi";
 import toast from "react-hot-toast"
 import useAuth from "../../../hooks/useAuth";
 import Load from "../../../Componnents/Shared/Loader/load/Load";
-const CheckOutForm = () => {
+import { insertAllProductsData } from "../../../Api/AllProductsRelatedApi/allProductsApi";
 
+const CheckOutForm = () => {
   const {user} = useAuth();
   const [rajnagarCharge,setRajnagarCharge] = useState(0)
   const [karnigramCharge,setKarnigramCharge] = useState(0)
@@ -23,8 +22,6 @@ const CheckOutForm = () => {
   const [load,setLoad] = useState(false);
   const location = useLocation();
   const selectedItems = location.state;
-  console.log(selectedItems);
-
 
 const handleAddressChange = (e) => {
   const selectedAddress = e.target.value;
@@ -66,11 +63,15 @@ const handleOrderSubmit = async(e) => {
   const customerPhone = form.phone.value;
   const customerEmail = form.email.value;
   const customerDescription = form.description.value;
-  const customerOrderData = {customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,moneyCharge}
+  const customerOrderData = {customerFullName,customerAddress,customerPhone,customerEmail,customerDescription,moneyCharge,selectedItems}
 
   setLoad(true)
   try{
-    // submit order data to db
+    const result = await insertAllProductsData(customerOrderData);
+    if(result?.insertedId){
+      toast.success("আপনার অর্ডার সম্পুর্ণ হয়েছে! কিচ্ছুক্ষনের মধ্যে অনিক কনফেকশনারী বেজ্ঞল ফুড থেকে আপনার সাথে যোগাযোগ করা হবে।",{duration:8000})
+      form.reset();
+    }
   }
   catch(err){
     console.log("দুঃখিত আপনার অর্ডার সম্পুর্ণ হয় নি। কিচ্ছুক্ষন পর আবার চেষ্টা করুন");
