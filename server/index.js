@@ -37,7 +37,8 @@ const packageOrderCollection = client.db("BengolShop").collection("packageOrders
 const birthdayCollection = client.db("BengolShop").collection("birthday");
 const birthdayOrderCollection = client.db("BengolShop").collection("birthdayOrders");
 const allProductCollection = client.db("BengolShop").collection("allProducts");
-const allProductsOrderCollection = client.db("BengolShop").collection("allProductOrders")
+const allProductsOrderCollection = client.db("BengolShop").collection("allProductOrders");
+const calculatorCollection = client.db("BengolShop").collection("calculatar")
 
 async function run() {
   try {
@@ -758,6 +759,36 @@ app.get('/allProducts/allOrders',async(req,res) => {
   }
 })
 
+// calculatar
+app.post('/dailySellMoney', async(req,res) => {
+  try{
+    const data = req.body;
+    const result = await calculatorCollection.insertOne(data);
+    res.send(result);
+  }
+  catch(err){res.status(500).send({message:"internal server error"})}
+})
+app.get('/findDailySellMoney',async(req,res) => {
+  try{
+    const result = await calculatorCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){
+    res.status(500).send({message:"internal server error"})
+  }
+})
+app.delete("/deleteAllDailyCalculateMoney", async(req,res) => {
+  try{
+    const result = await calculatorCollection.deleteMany({});
+    res.send({
+      success:true,
+      message:"আগের দিনের হিসাব মুছে ফেলা হলো"
+    })
+  }
+  catch(err){
+    res.send(500).send({message:"internal server error"})
+  }
+})
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
