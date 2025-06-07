@@ -1,15 +1,29 @@
 /* eslint-disable react/prop-types */
 
+import toast from "react-hot-toast";
+import { deleteSinglePornoOrder } from "../../../../Api/AllProductsRelatedApi/allProductsApi";
 import Loader from "../../../../Componnents/Shared/Loader/Loader";
 
 
 const PornoOrderCard = ({order,loading,reFetch}) => {
     const {_id,customerFullName,customerPhone,moneyCharge,customerAddress,customerDescription,selectedItems} = order;
-console.log(order);
+
   
     const totalFoodPriceWithCharge = selectedItems?.reduce((sum,item) => sum + item?.price * item?.quantity,0)
-    console.log(totalFoodPriceWithCharge);
+    
+    const handleDelete = async(id) => {
+        try{
+            const result = await deleteSinglePornoOrder(id);
+            if(result?.deletedCount){
+                reFetch();
+                toast.success("অর্ডার মুছে ফেলা হয়েছে")
+            }
+        }
+        catch(err){
+            toast.error("দুঃখিত আবার চেষ্টা করুন")
+        }
 
+    }
 if(loading) return <Loader />
     return <>
     
@@ -23,7 +37,7 @@ if(loading) return <Loader />
             <td className="py-2 px-4 border">{moneyCharge} BDT</td>
             <td className="py-2 px-4 border">{totalFoodPriceWithCharge} BDT</td>
             <td className="py-2 px-4 border">
-                <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                <button onClick={()=>handleDelete(_id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
             </td>
         </tr>
 

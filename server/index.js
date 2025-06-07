@@ -737,6 +737,18 @@ app.get('/allProducts', async (req, res) => {
     res.status(500).send({ message: "internal server error" });
   }
 });
+app.post("/createPornoData",async(req,res) => {
+  try{
+    const pornoData = req.body;
+    const result = await allProductCollection.insertOne(pornoData);
+    res.send(result);
+
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "internal server error" });
+  }
+})
 // save all product order information:
 app.post('/allProducts/createOrders',async(req,res) => {
   try{
@@ -752,6 +764,17 @@ app.post('/allProducts/createOrders',async(req,res) => {
 app.get('/allProducts/allOrders',async(req,res) => {
   try{
     const result = await allProductsOrderCollection.find().toArray();
+    res.send(result);
+  }
+  catch(err){
+    res.status(500).send({message:"internal server error"})
+  }
+})
+app.delete('/snglePornoOrderDelete/:id', async(req,res) => {
+  try{
+    const {id} = req.params;
+    const query = {_id: new ObjectId(id)};
+    const result = await allProductsOrderCollection.deleteOne(query);
     res.send(result);
   }
   catch(err){

@@ -40,6 +40,7 @@ import CheckOutForm from "../Pages/AllProduct/AllProductOrderInfoForm/CheckOutFo
 import PornoOrderList from "../Pages/Dashboard/AllOrders/PornoOrdersList/PornoOrderList";
 import Calculator from "../Pages/Dashboard/Calculator/Calculator";
 import Analytics from "../Pages/Dashboard/Analytics/Analytics";
+import AddAnotherPorno from "../Pages/Dashboard/AddAnotherPorno/AddAnotherPorno";
 
 export const router = createBrowserRouter([
     {
@@ -183,6 +184,10 @@ export const router = createBrowserRouter([
                 {
                     path:'addAllProduct',
                     element:<AddAllProduct />
+                },
+                {
+                    path:'anotherPorno',
+                    element:<AddAnotherPorno />
                 },
                 {
                     path: 'addBirthdayCakeCatelog',

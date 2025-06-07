@@ -100,7 +100,7 @@ const Dashboard = () => {
         id:16
         },
         {item:"অন্যান্য পণ্য যুক্ত করুন",
-        link:"/dashboard",
+        link:"/dashboard/anotherPorno",
         icon:<CiShop />,
         id:17
         },

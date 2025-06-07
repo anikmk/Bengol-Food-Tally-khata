@@ -58,7 +58,7 @@ const Calculator = () => {
     }
   };
 
-  // সব ডেটা রিসেট (এখন শুধু console করছে, চাইলে API call করে দাও)
+  // all data reset func 
   const handleReset = async() => {
     setResetLoader(true)
     try{
@@ -90,14 +90,11 @@ const banglaDay = date.toLocaleDateString("bn-BD", {
   weekday: "long",
 });
 
-console.log("বাংলা তারিখ:", banglaDate);
-console.log("বাংলা সপ্তাহের নাম:", banglaDay);
-
   if (isLoading) return <Loader />;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-      <div className="bg-white rounded shadow p-6 w-full max-w-lg space-y-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="bg-neutral rounded shadow-xl p-6 w-full max-w-lg space-y-4">
         <h1 className="text-2xl font-bold text-center text-primary">ডেইলি বিক্রির হিসাব</h1>
         <div className="flex items-center justify-center gap-4 text-sm font-semibold">
         <p>{banglaDay}  </p>

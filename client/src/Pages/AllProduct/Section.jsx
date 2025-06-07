@@ -12,7 +12,11 @@ const Section = ({ title, items, onSelect, loading }) => {
               <img src={item.image} alt={item.name} className="h-full w-full object-cover rounded" />
               <div className="absolute bottom-0 bg-white/80 w-full px-1 py-1">
                 <h3 className="font-medium md:text-base text-sm">{item.name}</h3>
-                <p className="text-primary font-semibold text-sm">৳{item.price}</p>
+                <div className="flex items-center justify-around">
+                  <p className="text-primary font-semibold text-sm">{item.price} টাকা</p>
+                  <div className="text-primary">|</div>
+                  <p className="text-primary font-semibold text-sm">{item.avilability === true ? "স্টোক আছে":"স্টোকে নাই"}</p>
+                </div>
               </div>
               <div className="absolute top-0 right-0">
                 <input
