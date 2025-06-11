@@ -38,10 +38,16 @@ const Navbar = () => {
       link:'/allProduct'
     },
     {
+      id:5,
+      text:'নোটিশ বোর্ড',
+      link:'/noticeBoard'
+    },
+    {
       id:4,
       text:<BsCart2 />,
       link:'/shopingCart'
     },
+    
   ]
 
   const {data:singleUser = {}, isLoading} = useQuery({

@@ -41,6 +41,7 @@ import PornoOrderList from "../Pages/Dashboard/AllOrders/PornoOrdersList/PornoOr
 import Calculator from "../Pages/Dashboard/Calculator/Calculator";
 import Analytics from "../Pages/Dashboard/Analytics/Analytics";
 import AddAnotherPorno from "../Pages/Dashboard/AddAnotherPorno/AddAnotherPorno";
+import NoticeBoard from "../Pages/NoticeBoardPage/NoticeBoard";
 
 export const router = createBrowserRouter([
     {
@@ -75,6 +76,10 @@ export const router = createBrowserRouter([
             {
                 path:'/customPackageOrderForm',
                 element:<UserRoute><CustomOrderForm /></UserRoute>
+            },
+            {
+                path:'/noticeBoard',
+                element:<NoticeBoard />
             },
             {
                 path:'/shopingCart',

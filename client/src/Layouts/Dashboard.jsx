@@ -1,11 +1,13 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { RiMenu5Line } from "react-icons/ri";
 import { CiHome } from "react-icons/ci";
-import { GrGallery } from "react-icons/gr";
-import { CiShop } from "react-icons/ci";
-import { IoCreateOutline } from "react-icons/io5";
-import { AiOutlineProduct } from "react-icons/ai";
 import { BsArrow90DegDown } from "react-icons/bs";
+import { GrAnalytics } from "react-icons/gr";
+import { FcCalculator } from "react-icons/fc";
+import { VscDiffAdded } from "react-icons/vsc";
+import { RxUpdate } from "react-icons/rx";
+import { PiUsersThree } from "react-icons/pi";
+import { FiBookOpen } from "react-icons/fi";
 const Dashboard = () => {
 
     const closeDrawer = () => {
@@ -22,96 +24,96 @@ const Dashboard = () => {
         },
         {item:"এনালিটিক্স",
         link:"/dashboard/analytics",
-        icon:<CiHome />,
+        icon:<GrAnalytics />,
         id:2
         },
         {item:"ক্যালকুলেটর",
         link:"/dashboard/calculator",
-        icon:<CiHome />,
+        icon:<FcCalculator />,
         id:3
         },
         {
         item:"ফাস্ট ফুডের অর্ডার দেখুন",
         link:"/dashboard/allOrders",
-        icon: <AiOutlineProduct />,
+        icon: <FiBookOpen />,
         id:4
         },
         {
         item:"প্যাকেজের অর্ডার দেখুন",
         link:"/dashboard/packageOrders",
-        icon: <AiOutlineProduct />,
+        icon: <FiBookOpen />,
         id:5
         },
         {
         item:" অন্যান্য অর্ডার দেখুন",
         link:"/dashboard/allPornoOrdersList",
-        icon: <AiOutlineProduct />,
+        icon: <FiBookOpen />,
         id:6
         },
         {item:"পাওনাদার যুক্ত করুন",
         link:"/dashboard/addDebts",
-        icon:<GrGallery />,
+        icon:<VscDiffAdded />,
         id:7
         },
         {item:"সব পাওনাদার দেখুন",
         link:"/dashboard/showAlldebts",
-        icon:<CiShop />,
+        icon:<FiBookOpen />,
         id:8
         },
         {item:"ফাস্ট ফোড যুক্ত করুন",
         link:"/dashboard/addFastFood",
-        icon:<CiShop />,
+        icon:<VscDiffAdded />,
         id:9
         },
         {item:"ফাস্ট ফোড আপডেট করুন",
         link:"/dashboard/updateFastFood",
-        icon:<CiShop />,
+        icon:<RxUpdate />,
         id:10
         },
         {item:"প্যাকেজ যুক্ত করুন",
         link:"/dashboard/addPackages",
-        icon:<CiShop />,
+        icon:<VscDiffAdded />,
         id:11
         },
         {item:"প্যাকেজ আপডেট করুন",
         link:"/dashboard/updatePackage",
-        icon:<CiShop />,
+        icon:<RxUpdate />,
         id:12
         },
         {item0:"কাস্টম প্রাইজ আপডেট করুন",
         link1:"/dashboard/updateCustomPrice",
         link2:"/dashboard/updateCustomPrice2",
-        icon:<CiShop />,
+        icon:<RxUpdate />,
         id:13
         },
         {item:"সব প্রডাক্ট যুক্ত করুন",
         link:"/dashboard/addAllProduct",
-        icon:<CiShop />,
+        icon:<VscDiffAdded />,
         id:14
         },
         {item:"কেকের ক্যাটালগ যুক্ত করুন",
         link:"/dashboard/addBirthdayCakeCatelog",
-        icon:<CiShop />,
+        icon:<VscDiffAdded />,
         id:15
         },
         {item:"কেকের ক্যাটালগ আপডেট করুন",
         link:"/dashboard/updateBirthdayCake",
-        icon:<CiShop />,
+        icon:<RxUpdate />,
         id:16
         },
         {item:"অন্যান্য পণ্য যুক্ত করুন",
         link:"/dashboard/anotherPorno",
-        icon:<CiShop />,
+        icon:<VscDiffAdded />,
         id:17
         },
         {item:"অন্যান্য পণ্য আপডেট করুন",
         link:"/dashboard",
-        icon:<CiShop />,
+        icon:<RxUpdate />,
         id:18
         },
         {item:"সব ব্যবহারকারী দেখুন",
         link:"/dashboard/allUsers",
-        icon:<IoCreateOutline />,
+        icon:<PiUsersThree />,
         id:19
         },
         

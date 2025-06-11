@@ -94,7 +94,7 @@ const AllProduct = () => {
      
    if(isLoading) return <Loader />
   return (
-    <div className="max-w-[98%] mx-auto px-2 md:px-4 py-6 relative">
+    <div className="md:max-w-[98%] max-w-[99%] mx-auto px-2 md:px-4 py-6 relative">
       {/* Mobile Filter Button */}
       <div className="md:hidden flex justify-end mb-4">
         <button
@@ -152,14 +152,14 @@ const AllProduct = () => {
         </main>
 
         {/* Shopping Bag */}
-        <aside className="border rounded md:p-4 p-2 md:block">
-          <h2 className="text-base md:text-lg font-semibold text-primary mb-2">🛒 শপিং ব্যাগ</h2>
+        <aside className="border rounded md:p-4 p-1 md:block">
+          <h2 className="text-sm md:text-lg font-semibold text-primary mb-2">🛒শপিং ব্যাগ</h2>
           {selectedItems.length === 0 ? (
             <p className="text-xs text-gray-600">কোনো প্রোডাক্ট এখনো নেই</p>
           ) : (
             <ul className="space-y-2">
               {selectedItems.map((item, idx) => (
-                <li key={idx} className="flex items-center gap-2 md:gap-3">
+                <li key={idx} className="flex items-center gap-1 md:gap-3">
                   <div className="text-sm border md:h-24 md:w-32 h-16 w-16 overflow-hidden flex flex-col items-center justify-center">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     <p>{item.name}</p>
@@ -167,14 +167,14 @@ const AllProduct = () => {
                   <div className="space-y-[1px] grid grid-cols-1 place-items-center">
                     <div
                       onClick={() => handleIncreaseQuantity(item.name)}
-                      className="bg-primary text-white rounded-full flex items-center justify-center md:text-xs md:w-5 md:h-5 text-xs w-4 h-4 cursor-pointer"
+                      className="bg-primary text-white rounded-full flex items-center justify-center md:text-xs md:w-5 md:h-5 text-xs w-[18px] h-[18px] cursor-pointer"
                     >
                       <FaPlus />
                     </div>
                     <div className="font-semibold text-md">{item.quantity}</div>
                     <div
                       onClick={() => handleDecreaseQuantity(item.name)}
-                      className="bg-primary text-white rounded-full flex items-center justify-center md:text-xs md:w-5 md:h-5 text-xs w-4 h-4 cursor-pointer"
+                      className="bg-primary text-white rounded-full flex items-center justify-center md:text-xs md:w-5 md:h-5 text-xs w-[18px] h-[18px] cursor-pointer"
                     >
                       <FaMinus />
                     </div>
@@ -184,8 +184,8 @@ const AllProduct = () => {
             </ul>
           )}
           <hr className="my-2" />
-          <button onClick={handleCalculateTotalPrice} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs">হিসাব করুন</button>
-          <button onClick={handleOrder} disabled={selectedItems.length === 0} className="bg-primary p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
+          <button onClick={handleCalculateTotalPrice} className="bg-primary p-[6px] md:p-2 rounded text-white w-full mt-2 md:text-base text-xs">হিসাব করুন</button>
+          <button onClick={handleOrder} disabled={selectedItems.length === 0} className="bg-primary p-[6px] md:p-2 rounded text-white w-full mt-2 md:text-base text-xs"><Link>চেক আউট</Link></button>
         </aside>
       </div>
     </div>
