@@ -10,6 +10,7 @@ import { getSingleUser } from '../../../Api/userRelatedApi/userApi';
 import { FiSettings } from "react-icons/fi";
 import { BsCart2 } from "react-icons/bs";
 import Load from '../Loader/load/Load';
+import { PiDropboxLogoFill } from "react-icons/pi";
 import { getShopingCartProduct } from '../../../Api/fastFoodRelatedApi/foodApi';
 const Navbar = () => {
   const {user,logOut,} = useAuth();
@@ -36,6 +37,11 @@ const Navbar = () => {
       id:3,
       text:'সব পণ্য',
       link:'/allProduct'
+    },
+    {
+      id:6,
+      text:'কাস্টম অর্ডার',
+      link:'/customPackageOrderForm'
     },
     {
       id:5,
@@ -89,9 +95,9 @@ const Navbar = () => {
              }
             </ul>
           </div>
-          <div className='h-[73px]'>
-            
-          <img className='h-full' src="./anik-confection.png" alt="" />
+          <div className='ml-2'>
+          <p className='text-white text-lg flex items-center gap-[3px]'> <PiDropboxLogoFill /> <p>অনিক</p></p>
+          <h1 className='text-white text-sm'> কনফেকশনারী</h1> 
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -126,7 +132,7 @@ const Navbar = () => {
                   className="menu menu-sm dropdown-content rounded-box z-[1] mt-[18px] -ml-10 space-y-[6px]">
 
                   {
-                    isAdmin && <li><Link to={'/dashboard'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">{isLoading ? <><Load /></>:"Dashboard"}</Link></li>
+                    isAdmin && <li><Link to={'/dashboard/calculator'} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">{isLoading ? <><Load /></>:"Dashboard"}</Link></li>
                   }
 
                   <li><Link onClick={handleLogOut} className="bg-gradient-to-r hover:bg-gradient-to-l from-primary to-green-600 text-neutral rounded-lg text-sm p-2 shadow-lg">logout</Link></li>
