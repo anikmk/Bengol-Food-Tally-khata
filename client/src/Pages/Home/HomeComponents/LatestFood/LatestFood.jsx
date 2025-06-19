@@ -29,7 +29,7 @@ const LatestFood = () => {
     <div className="py-8 bg-white">
       <Container>
         <Heading
-          heading={"আপনার ফাস্ট ফোড"}
+          heading={"আপনার ফাস্ট ফুড"}
           subHeading={"আপনি কি খাবেন? তাহলে অর্ডার করুন।"}
         />
 

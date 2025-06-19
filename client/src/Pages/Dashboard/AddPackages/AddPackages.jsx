@@ -25,7 +25,7 @@ const AddPackages = () => {
         <div className="mb-5">
             <div className='space-y-3'>
             <div className="">
-            <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">* এখান থেকে ফাস্ট ফোড যোক্ত করুন *</h3>
+            <h3 className="text-center uppercase text-xl mb-3 text-primary font-medium">* এখান থেকে প্যাকেজ যোক্ত করুন *</h3>
             <p className="text-center md:text-sm text-xs"><span className="text-green-700">মনে রাখুনঃ</span> <span className="text-slate-700">চাহিবা মাত্র তথ্য দিয়ে ফরম পূরণ করবেন ।।</span></p>
             </div>
             <div className="divider"></div>

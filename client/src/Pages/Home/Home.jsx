@@ -8,6 +8,7 @@ import ServicesSection from "./HomeComponents/OurServices/Services";
 import CustomOrder from "./HomeComponents/CustomOrder/CustomOrder";
 import OurPackage from "./HomeComponents/Package/OurPackage/OurPackage";
 import { Helmet } from "react-helmet";
+import Gallary from "./HomeComponents/OurGallary/Gallary";
 
 const Home = () => {
     return (
@@ -26,6 +27,7 @@ const Home = () => {
         <LatestFood />
         <OurPackage />
         <CustomOrder />
+        <Gallary />
         <ServicesSection />
         <About />
         <ContactSection />

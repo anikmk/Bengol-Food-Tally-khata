@@ -25,7 +25,7 @@ const Navbar = () => {
    const navLink = [
     {
       id:1,
-      text:'ফাস্ট ফোড',
+      text:'ফাস্ট ফুড',
       link:'/OrderFastFood'
     },
     {
