@@ -18,7 +18,7 @@ const Section = ({ title, items, onSelect, loading }) => {
                     <p className="font-semibold text-sm md:text-base">{item.price}</p> <div className="text-xs"><FaBangladeshiTakaSign /></div>
                     </div>
                   <div className="">|</div>
-                  <p className=" font-medium text-xs md:text-base">{item.avilability === "true" ? "স্টোক আছে":"স্টোকে নাই"}</p>
+                  <p className=" font-medium text-xs md:text-base">{item.avilability === "true" | true ? "স্টোক আছে":"স্টোকে নাই"}</p>
                 </div>
               </div>
               <div className="absolute top-0 right-0">
