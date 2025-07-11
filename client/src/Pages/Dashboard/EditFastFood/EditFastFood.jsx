@@ -74,7 +74,7 @@ const EditFastFood = () => {
                 <option value="Vegetable Roll">সবজি রুল</option>
                 <option value="Pizza">পিজ্জা</option>
                 <option value="Chicken Pizza">চিকেন পিজ্জা</option>
-                <option value="Long burgar">লম্বা বার্গার</option>
+                <option value="Long burger">লম্বা বার্গার</option>
                 <option value="Burger">বার্গার</option>
                 <option value="Ice Cream">আইসক্রিম</option>
                 <option value="Chicken Roll">চিকেন রুল</option>
@@ -85,9 +85,10 @@ const EditFastFood = () => {
                 <option value="White pich cake">সাদা পীচ কেক</option>
                 <option value="Yellow pich cake">হলুদ পীচ কেক
                 </option>
-                <option value="Fob chomoca">ফব চমচা</option>
+                <option value="pop chomoca">পপ চমচা</option>
                 <option value="Chicken bon">চিকেন বন</option>
-                <option value="jhali khabab">জালি কাবাব</option>
+                <option value="Pati chapta">পাঠি চাপ্টা</option>
+                <option value="Sandwich">স্যান্ডউইচ</option>
             </select>
              </div>
 

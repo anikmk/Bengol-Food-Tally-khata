@@ -63,6 +63,26 @@ export const foodCategorys = [
     },
     {
         id: 16,
+        item: "Sandwich",
+    },
+    {
+        id: 17,
+        item: "Long burger",
+    },
+    {
+        id: 18,
+        item: "Pop chomoca",
+    },
+    {
+        id: 19,
+        item: "Pati chapta",
+    },
+    {
+        id: 20,
+        item: "Chicken bon",
+    },
+    {
+        id: 21,
         item: "Others",
     },
 ];
